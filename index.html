@@ -197,7 +197,7 @@ body.gx #gp{flex-wrap:wrap;justify-content:center;overflow:visible}
 </head>
 <body>
 <header>
-  <div class="badges"><span class="badge eg">🇪🇬 مصر</span><span class="badge">كل المراحل</span><span class="badge">تفاعلي</span><span class="badge gold">معمل افتراضي</span></div>
+  <div class="badges"><span class="badge eg">🇪🇬 مصر</span><span class="badge">كل مراحل التعليم: ابتدائي • إعدادي • ثانوي</span><span class="badge">تفاعلي</span><span class="badge gold">معمل افتراضي</span></div>
   <h1>🧪 المختبر الكيميائي الشامل — تجارب تفاعلية</h1>
   <div class="sub">استكشف تفاعلات الاتزان الكيميائي وتأثير التركيز والحرارة • اسحب الكأس لتدويره</div>
   <div class="prog"><span id="progT">0 / 7</span><i><span id="progB"></span></i></div>
@@ -209,12 +209,12 @@ body.gx #gp{flex-wrap:wrap;justify-content:center;overflow:visible}
     <div class="stage">
       <canvas id="scene" role="img" aria-label="محاكاة معمل كيمياء ثلاثي الأبعاد لكأس زجاجي يحتوي على سوائل متفاعلة"></canvas>
       <div class="pills">
-        <button class="pill b" data-a="fe0" title="FeCl₃ 0.0020 M">FeCl₃ 10 mL</button>
-        <button class="pill b" data-a="scn0" title="KSCN 0.0020 M">KSCN 10 mL</button>
+        <button class="pill b" data-a="fe0" title="FeCl₃ 0.0020 M">FeCl₃ (كلوريد الحديد III) 10 mL</button>
+        <button class="pill b" data-a="scn0" title="KSCN 0.0020 M">KSCN (ثيوسيانات البوتاسيوم) 10 mL</button>
         <button class="pill o" data-a="fe" title="FeCl₃ 0.10 M">＋ Fe³⁺ ٥ قطرات</button>
         <button class="pill o" data-a="scn" title="KSCN 0.10 M">＋ SCN⁻ ٥ قطرات</button>
-        <button class="pill p" data-a="remfe" title="NaF 0.10 M">NaF 1 mL</button>
-        <button class="pill p" data-a="remscn" title="AgNO₃ 0.10 M">AgNO₃ ٣ قطرات</button>
+        <button class="pill p" data-a="remfe" title="NaF 0.10 M">NaF (فلوريد الصوديوم) 1 mL</button>
+        <button class="pill p" data-a="remscn" title="AgNO₃ 0.10 M">AgNO₃ (نترات الفضة) ٣ قطرات</button>
         <button class="pill b" data-a="water" title="ماء مقطّر">ماء 10 mL</button>
         <button class="pill g" id="reset">↺ كأس جديد</button>
       </div>
@@ -258,10 +258,10 @@ body.gx #gp{flex-wrap:wrap;justify-content:center;overflow:visible}
       <div class="card" id="myIntro">
         <h3>🧮 تجربتي — صمّم تجربتك واحسب الكميات</h3>
         <div class="note">اختر أي مواد من المعمل وأضفها بنفسك وحدّد الشروط؛ يحوّلها التطبيق إلى معادلة موزونة ويحسب عدد المولات والكتل والمادة المحدِّدة.</div>
-        <div class="row"><button class="pill b" data-my="">🧪 ابدأ تجربة حرة</button><button class="pill o" id="myCur" data-my="" hidden></button></div>
+        <div class="row"><button class="pill b" data-my="">✨ اختر تجربتك بنفسك</button><button class="pill o" id="myCur" data-my="" hidden></button></div>
       </div>
       <div class="card" id="cbCard"><details id="cbD" open>
-        <summary>🧪 تجربة حرة — اختر موادك <span id="cbN">— 0 من 8</span></summary>
+        <summary>✨ اختر تجربتك بنفسك <span id="cbN">— 0 من 8</span></summary>
         <div class="row"><input id="cbQ" class="cbq" type="search" placeholder="🔎 ابحث عن مادة…" aria-label="بحث"><select id="cbPre" class="cbpre" aria-label="املأ من تجربة جاهزة"></select></div>
         <div id="cbL"></div>
         <div class="note" id="cbInfo" style="margin-top:8px"></div>
@@ -296,7 +296,7 @@ body.gx #gp{flex-wrap:wrap;justify-content:center;overflow:visible}
 
       <div class="card" id="calcCard">
         <h3>🧮 حاسبة المعادلة والكميات</h3>
-        <div class="note" id="calcInfo">اختر مواد من بطاقة «تجربة حرة» (مثلًا AgNO₃ و NaCl) ثم أدخل الكمية.</div>
+        <div class="note" id="calcInfo">اختر مواد من بطاقة «اختر تجربتك بنفسك» (مثلًا AgNO₃ و NaCl) ثم أدخل الكمية.</div>
         <div id="calcRows"></div>
         <div class="row">
           <label>🌡️ <select id="cdT" class="cdin"><option value="n">حرارة عادية</option><option value="h">تسخين (Δ)</option></select></label>
@@ -1218,12 +1218,12 @@ e|التحليل الكهربي للماء|يتصاعد H₂ عند الكاثو
 2|تأثير التركيز في سرعة التفاعل (Na₂S₂O₃ + HCl)|يظهر التعكّر (كبريت) أسرع كلما زاد التركيز.
 2|تأثير درجة الحرارة في سرعة التفاعل|ترتفع السرعة تقريبًا إلى الضعف لكل 10°م.
 2|تأثير العامل المساعد (MnO₂ مع H₂O₂)|يتصاعد O₂ أسرع بوجود العامل المساعد دون استهلاكه.
-2|تحضير الإيثين وكشفه (إيثانول + H₂SO₄ مركز)|يزول لون ماء البروم لأن الرابطة المزدوجة غير مشبعة.
-2|تحضير الأسيتيلين (CaC₂ + H₂O)|CaC₂ + 2H₂O → C₂H₂ + Ca(OH)₂ ويحترق بلهب مضيء مدخّن.
-2|تحضير الإستر (حمض أسيتيك + إيثانول)|تظهر رائحة فاكهية بوجود H₂SO₄ المركز عاملًا مساعدًا.
-2|تفاعل الصوديوم مع الإيثانول وكشف الحمض بكربونات الصوديوم|يتصاعد H₂ في الأول، ويحدث فوران CO₂ مع الحمض الكربوكسيلي.
-2|تحضير الصابون (التصبّن)|دهن + NaOH بالتسخين ثم ملح الطعام يفصل الصابون طافيًا.
-2|الكشف عن الكربوهيدرات (فهلنج واليود)|السكر المختزل يعطي Cu₂O أحمر طوبي، واليود مع النشا أزرق داكن.
+3|تحضير الإيثين وكشفه (إيثانول + H₂SO₄ مركز)|يزول لون ماء البروم لأن الرابطة المزدوجة غير مشبعة.
+3|تحضير الأسيتيلين (CaC₂ + H₂O)|CaC₂ + 2H₂O → C₂H₂ + Ca(OH)₂ ويحترق بلهب مضيء مدخّن.
+3|تحضير الإستر (حمض أسيتيك + إيثانول)|تظهر رائحة فاكهية بوجود H₂SO₄ المركز عاملًا مساعدًا.
+3|تفاعل الصوديوم مع الإيثانول وكشف الحمض بكربونات الصوديوم|يتصاعد H₂ في الأول، ويحدث فوران CO₂ مع الحمض الكربوكسيلي.
+3|تحضير الصابون (التصبّن)|دهن + NaOH بالتسخين ثم ملح الطعام يفصل الصابون طافيًا.
+3|الكشف عن الكربوهيدرات (فهلنج واليود)|السكر المختزل يعطي Cu₂O أحمر طوبي، واليود مع النشا أزرق داكن.
 3|الاتزان: تأثير التركيز والتخفيف والحرارة على Fe³⁺ + SCN⁻ ⇌ [Fe(SCN)]²⁺|محاكاة كاملة في المعمل: ماء وقطرات NaF وAgNO₃ ورفع الحرارة.|L
 3|اتزان Co²⁺ + Cl⁻ ⇌ [CoCl₄]²⁻ بالتسخين والتبريد|الوردي يتحول إلى أزرق بالتسخين لأن التفاعل الطردي ماص.
 3|اتزان N₂O₄ ⇌ 2NO₂ مع الحرارة|اللون البني يغمق بالتسخين لأن الطردي ماص.
@@ -1242,20 +1242,51 @@ e|التحليل الكهربي للماء|يتصاعد H₂ عند الكاثو
 3|التحليل الكيفي للأنيونات (Cl⁻ وSO₄²⁻ وCO₃²⁻ وNO₃⁻)|AgNO₃ مع Cl⁻ راسب أبيض، BaCl₂ مع SO₄²⁻ راسب أبيض، الحمض مع CO₃²⁻ فوران، والحلقة البنية لـ NO₃⁻.
 3|التحليل الكيفي للكاتيونات (Fe³⁺ وFe²⁺ وCu²⁺ وNH₄⁺)|Fe(OH)₃ بني محمر، Fe(OH)₂ أخضر، Cu(OH)₂ أزرق، NH₄⁺ بالقلوي والتسخين تنطلق NH₃.
 3|تحضير غاز الكلور وأكسدة الحديد الثنائي (إثرائي)|MnO₂ + 4HCl → MnCl₂ + Cl₂ + 2H₂O، غاز أصفر مخضر سام.|E
-3|تفاعل الترسيب اللوني (إثرائي)|تكوين معقدات نحاسية مائية وأمونية متعددة الألوان.|E`
+3|تفاعل الترسيب اللوني (إثرائي)|تكوين معقدات نحاسية مائية وأمونية متعددة الألوان.|E
+p|الكشف عن النشا باليود|يتحول اليود البني إلى أزرق داكن بوجود النشا.
+e|الكشف عن الماء بكبريتات النحاس اللامائية|يتحول الأبيض إلى أزرق عند إضافة الماء.
+e|الإحلال البسيط: الحديد في محلول CuSO₄|يترسب نحاس أحمر ويتكوّن FeSO₄ أخضر باهت.
+3|الكشف عن Fe²⁺ وFe³⁺ بفيروسيانيد وفريسيانيد البوتاسيوم|Fe²⁺ مع فريسيانيد يعطي راسبًا أزرق، وFe³⁺ مع فيروسيانيد يعطي أزرق بروسيا.
+3|تفاعل برمنجنات البوتاسيوم مع Fe²⁺ في وسط حمضي|يزول اللون البنفسجي لاختزال MnO₄⁻ إلى Mn²⁺ ويتأكسد Fe²⁺ إلى Fe³⁺.
+3|أكسدة الإيثانول بدايكرومات البوتاسيوم|يتحول البرتقالي إلى أخضر Cr³⁺ لأن الكحول يتأكسد.
+3|الكشف عن الكربونات والكبريتيت بالأحماض المخففة|CO₃²⁻ يعطي CO₂ يعكّر ماء الجير، وSO₃²⁻ يعطي SO₂ برائحة نفاذة.
+3|الكشف عن الكبريتيد بورق خلات الرصاص|H₂S برائحة البيض الفاسد يسوّد ورقة خلات الرصاص (PbS).
+3|الكشف عن النترات بالحلقة البنية|تظهر حلقة بنية عند التقاء H₂SO₄ المركز بالمحلول.
+3|الكشف عن Al³⁺ وZn²⁺ وخاصية التردد|يترسب هيدروكسيد أبيض ويذوب في زيادة القلوي.
+3|ترسيب PbI₂ والكشف عن Pb²⁺|راسب أصفر ذهبي من يوديد الرصاص II.
+3|قياس pH الأحماض والقواعد بالكاشف العام|يتدرج اللون من الأحمر للحمض القوي إلى الأزرق للقاعدة القوية.
+3|التحليل الكهربي لمحلول كلوريد الصوديوم|يتصاعد H₂ عند الكاثود وCl₂ عند الأنود ويتكوّن NaOH في المحلول.
+3|التمييز بين الألكان والألكين بماء البروم|يزول لون البروم مع الألكين فقط لأنه غير مشبع.
+3|التمييز بين الألدهيد والكيتون (فهلنج وتولنز)|الألدهيد يعطي Cu₂O أحمر ومرآة فضة بالتسخين والكيتون لا يتفاعل.
+3|الكشف عن الفينول بكلوريد الحديد III|يظهر لون بنفسجي مميز.
+3|تحضير الميثان من أسيتات الصوديوم والجير الصودي|تسخين الخليط يطلق CH₄ الذي يحترق بلهب أزرق شاحب.
+3|تخمر الجلوكوز وكشف CO₂|الخميرة تحوّل الجلوكوز إلى إيثانول وCO₂ الذي يعكّر ماء الجير.`
 .trim().split('\n').map(l=>{const[s,t,n,l2,l3]=l.split('|');return{s,t,n,l:!!l2,en:!!l3}});
+const TOPICS=[
+ {k:'trans',t:'🔩 تجارب العناصر الانتقالية',ix:[34,36,50,51,55,56]},
+ {k:'anal',t:'🔬 تجارب التحليل الكيميائي',ix:[48,49,42,58,59,60,61,62]},
+ {k:'ionic',t:'💧 تجارب الاتزان الأيوني',ix:[33,35,37,38,39,40,41,63]},
+ {k:'electro',t:'⚡ تجارب الكيمياء الكهربية',ix:[43,44,45,46,47,64]},
+ {k:'org',t:'🧪 تجارب الكيمياء العضوية',ix:[27,28,29,30,31,32,57,65,66,67,68,69]}];
+{const used=new Set(TOPICS.flatMap(t=>t.ix));TOPICS.push({k:'rev',t:'📘 مراجعة المراحل السابقة',ix:EXP.map((x,i)=>i).filter(i=>!used.has(i))})}
+const TOPIC_OF=[];TOPICS.forEach(t=>t.ix.forEach(i=>{if(TOPIC_OF[i])console.warn('مكررة',i);TOPIC_OF[i]=t}));
+EXP.forEach((x,i)=>{if(!TOPIC_OF[i])console.warn('بدون تصنيف',i)});
 let fs='all',fq='',done=new Set();
 try{done=new Set(JSON.parse(localStorage.getItem('chemDone')||'[]'))}catch(e){console.warn('LocalStorage unavailable');}
 const exSave=()=>{try{localStorage.setItem('chemDone',JSON.stringify([...done]))}catch(e){console.warn('Cannot save to LocalStorage');}};
 const exCount=()=>{$('#exP').textContent=done.size+' / '+EXP.length;$('#exB').style.width=done.size/EXP.length*100+'%'};
 
+const CUSTOM_CARD='<div class="cbg">✨ اختر تجربتك بنفسك</div><div class="card" style="margin-top:6px"><div class="note">اختر المواد والشروط بنفسك، ويحوّلها المعمل إلى معادلة موزونة ويحسب المولات والكتل والمادة المحدِّدة.</div><div class="row"><button class="pill b" data-my="">✨ ابدأ تجربتك بنفسك</button></div></div>';
 function exRender(){
-  const list=EXP.map((x,i)=>({...x,i})).filter(x=>(fs==='all'||x.s===fs)&&(!fq||(x.t+x.n).includes(fq)));
-  $('#exList').innerHTML=list.map(x=>{
+  const list=fs==='custom'?[]:EXP.map((x,i)=>({...x,i})).filter(x=>(fs==='all'||TOPIC_OF[x.i].k===fs)&&(!fq||(x.t+x.n).includes(fq)));
+  const ord=TOPICS.map(t=>t.k);list.sort((a,b)=>ord.indexOf(TOPIC_OF[a.i].k)-ord.indexOf(TOPIC_OF[b.i].k)||a.i-b.i);let lastT='';
+  const cc=(fs==='all'||fs==='custom')&&!fq?CUSTOM_CARD:'';
+  $('#exList').innerHTML=cc+list.map(x=>{
+    const tpc=TOPIC_OF[x.i],hd=tpc.k!==lastT?`<div class="cbg" style="margin-top:12px">${tpc.t}</div>`:'';lastT=tpc.k;
     const d=done.has(x.i);
     const enBadge = x.en ? '<span class="badge en" style="margin-inline-start:6px;font-size:.6rem;padding:0 6px">إثرائي</span>' : '';
-    return `<details class="${d?'dn':''}" data-idx="${x.i}"><summary><span>${d?'✓ ':''}${x.t}${enBadge}<span class="exs">${STG[x.s]}</span></span></summary><p>🔎 ${x.n}</p><div class="exb"><button data-k="${x.i}">${d?'↩ إلغاء':'✓ اختبر فهمي'}</button><button data-go="${x.i}">▶ افتح في المعمل</button>${x.l?'':`<button data-my="${x.i}">🧪 تجربتي بنفس المواد</button>`}</div></details>`
-  }).join('')||'<div class="note">لا توجد نتائج.</div>';
+    return hd+`<details class="${d?'dn':''}" data-idx="${x.i}"><summary><span>${d?'✓ ':''}${x.t}${enBadge}<span class="exs">${STG[x.s]}</span></span></summary><p>🔎 ${x.n}</p><div class="exb"><button data-k="${x.i}">${d?'↩ إلغاء':'✓ اختبر فهمي'}</button><button data-go="${x.i}">▶ افتح في المعمل</button>${x.l?'':`<button data-my="${x.i}">🧪 تجربتي بنفس المواد</button>`}</div></details>`
+  }).join('')||(cc?'':'<div class="note">لا توجد نتائج.</div>');
   exCount();
 }
 
@@ -1269,7 +1300,7 @@ const quickQuiz = {
 // Default generic question if not found
 const genericQ = {q: 'هل لاحظت النتيجة المتوقعة في التجربة؟', o: ['نعم، فهمت التفسير العلمي', 'لا، أحتاج لمراجعة المنهج'], a: 0};
 
-$('#exF').innerHTML=[['all','الكل ('+EXP.length+')'],...Object.entries(STG).map(([k,v])=>[k,v+' ('+EXP.filter(x=>x.s===k).length+')'])].map(([k,v])=>`<button class="chip${k==='all'?' on':''}" data-s="${k}">${v}</button>`).join('');
+$('#exF').innerHTML=[['all','الكل ('+EXP.length+')'],['custom','✨ اختر تجربتك بنفسك'],...TOPICS.map(t=>[t.k,t.t.replace('تجارب ','')+' ('+t.ix.length+')'])].map(([k,v])=>`<button class="chip${k==='all'?' on':''}" data-s="${k}">${v}</button>`).join('');
 $('#exF').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;fs=b.dataset.s;document.querySelectorAll('#exF .chip').forEach(c=>c.classList.toggle('on',c===b));exRender()});
 $('#exq').addEventListener('input',e=>{fq=e.target.value.trim();exRender()});
 
@@ -1390,7 +1421,10 @@ DS[48]='Cl⁻:3|SO₄²⁻:3|Ag⁺:3|Ba²⁺:3|02>#f5f5f5,.4,6,#fafafa,0,,راس
 DS[49]='Fe³⁺#e8c040:5|Fe²⁺#b8d8a0:5|Cu²⁺#2a8fe0:5|NaOH:5|03>#e8c040,.35,6,#8b3a1f,0,,Fe(OH)₃ بني محمر|13>#b8d8a0,.3,6,#6d9a60,0,,Fe(OH)₂ أخضر|23>#bfd8f2,.3,6,#3a7bd5,0,,Cu(OH)₂ أزرق';
 DS[50]='MnO₂*#222222:1|HCl:10|01>#e9f2f7,.18,2,#222222,5,,Cl₂ غاز أصفر مخضر سام';
 DS[51]='CuSO₄#2a8fe0:10|NH₃:5|01>#2a8fe0,.5,0,,0,,أزرق فاتح|012>#2a4bd8,.7,0,,0,,أزرق داكن: معقد نحاس أموني';
+DS[52]='نشا*#f4f4f4:2|يود#c8742a:2|ماء:10|01>#1b1f6b,.8,0,,0,,أزرق داكن: وجود النشا';DS[53]='CuSO₄ لامائي*#f2f2f2:1|ماء:5|01>#2a8fe0,.5,0,,0,,من أبيض إلى أزرق: وجود الماء';DS[54]='CuSO₄#2a8fe0:10|Fe*#6b6b6b:1|01>#cfe8c8,.2,5,#b4532a,0,,يترسب نحاس ويزول اللون الأزرق';DS[55]='Fe²⁺#b8d8a0:5|Fe³⁺#e8c040:5|K₃[Fe(CN)₆]#e8a030:5|K₄[Fe(CN)₆]#f0e060:5|02>#1f3fa8,.75,5,#1f3fa8,0,,راسب أزرق: Fe²⁺|13>#1f3fa8,.75,5,#1f3fa8,0,,راسب أزرق بروسيا: Fe³⁺';DS[56]='KMnO₄#8a1fa8:5|H₂SO₄:3|FeSO₄#b8d8a0:10|01>#8a1fa8,.6,0,,0,,بنفسجي: برمنجنات في وسط حمضي|012>#e8d8a0,.3,0,,0,,يزول البنفسجي: اختزال MnO₄⁻ إلى Mn²⁺';DS[57]='K₂Cr₂O₇#f08a1e:5|H₂SO₄:3|إيثانول:3|01>#f08a1e,.7,0,,0,,برتقالي|012h>#4a9a5a,.65,0,,0,,أخضر Cr³⁺: الكحول يتأكسد';DS[58]='Na₂CO₃*#ffffff:1|Na₂SO₃*#ffffff:1|HCl:10|ماء جير#f0f4f8:6|02>#e9f2f7,.18,2,#fafafa,5,,فوران CO₂ دون رائحة|12>#e9f2f7,.18,2,#fafafa,3,,SO₂ برائحة نفاذة|023>#f2f2f2,.55,5,#fafafa,3,,يتعكّر ماء الجير: CO₂';DS[59]='Na₂S*#e8e0a0:1|HCl:10|خلات رصاص#f0f0f0:3|01>#e9f2f7,.18,2,#e8e0a0,3,,H₂S برائحة البيض الفاسد|012>#222222,.45,6,#222222,3,,يسوّد الورق: PbS';DS[60]='NaNO₃:5|FeSO₄#b8d8a0:5|H₂SO₄ مركز:3|01>#b8d8a0,.3,0,,0,,لا تغيّر بعد|012>#8b5a2b,.6,0,,0,,حلقة بنية: NO₃⁻';DS[61]='Al³⁺:5|Zn²⁺:5|NaOH:5|NaOH زائد:10|02>#f5f5f5,.4,6,#fafafa,0,,راسب Al(OH)₃ أبيض|023>#e9f2f7,.18,0,,0,,يذوب الراسب: متردد|12>#f5f5f5,.4,6,#fafafa,0,,راسب Zn(OH)₂ أبيض|123>#e9f2f7,.18,0,,0,,يذوب الراسب: متردد';DS[62]='Pb(NO₃)₂:5|KI:5|01>#f0d020,.4,6,#f0d020,0,,راسب PbI₂ أصفر ذهبي';DS[63]='كاشف عام#7ac143:1|HCl:5|CH₃COOH:5|NaOH:5|NH₄OH:5|01>#e0243a,.7,0,,0,,أحمر: pH ≈ 1|02>#f08a1e,.7,0,,0,,برتقالي: pH ≈ 3|03>#4a2fa0,.7,0,,0,,بنفسجي: pH ≈ 13|04>#2f6fe0,.7,0,,0,,أزرق: pH ≈ 11';DS[64]='NaCl:10|كاشف#7ac143:1|تيار#ffd34d:.1|012>#2f6fe0,.6,0,,4,,H₂ وCl₂ ويتكوّن NaOH (قلوي)';DS[65]='هكسان:5|هكسين:5|ماء بروم#f0a030:5|02>#f0a030,.6,0,,0,,لا يزول اللون: مشبع|12>#f7f1e4,.15,0,,0,,يزول اللون: غير مشبع';DS[66]='أسيتالدهيد:5|أسيتون:5|فهلنج#2a60e0:6|تولنز#f0f0f0:6|02h>#c0392b,.6,5,#b5332a,0,,Cu₂O أحمر طوبي: ألدهيد|12>#2a60e0,.5,0,,0,,لا تفاعل: كيتون|03h>#c8ccd0,.5,5,#e8e8e8,0,,مرآة فضة: ألدهيد';DS[67]='C₆H₅OH:5|FeCl₃#e8c040:3|01>#7a2fa0,.65,0,,0,,بنفسجي: وجود الفينول';DS[68]='CH₃COONa*#ffffff:2|جير صودي*#f4f4f4:2|لهب*#ff9a2e:.3|01h>#eeeeee,.2,2,#eeeeee,3,,يتصاعد CH₄|012>#ffd9a0,.3,2,#eeeeee,3,,يحترق CH₄ بلهب أزرق شاحب';DS[69]='جلوكوز*#ffffff:2|خميرة*#d8c090:1|ماء جير#f0f4f8:6|01>#f0e8c8,.4,0,,3,,يتصاعد CO₂ ويتكوّن الإيثانول|012>#f2f2f2,.55,5,#fafafa,3,,يتعكّر ماء الجير';
 window.GX=null;const STEPS0=STEPS.slice(),H0=[$('h1').innerHTML,$('header .sub').innerHTML];
+const AR={'Fe':'حديد','S':'كبريت','Mg':'ماغنسيوم','Zn':'خارصين (زنك)','Cu':'نحاس','Na':'صوديوم','Ca':'كالسيوم','H₂O₂':'فوق أكسيد الهيدروجين','MnO₂':'ثاني أكسيد المنجنيز','CaCO₃':'كربونات الكالسيوم','HCl':'حمض الهيدروكلوريك','NaOH':'هيدروكسيد الصوديوم','H₂SO₄':'حمض الكبريتيك','Na⁺':'أيون الصوديوم','K⁺':'أيون البوتاسيوم','Ca²⁺':'أيون الكالسيوم','Cu²⁺':'أيون النحاس II','CuSO₄':'كبريتات النحاس II','AgNO₃':'نترات الفضة','NaCl':'كلوريد الصوديوم','BaCl₂':'كلوريد الباريوم','Na₂SO₄':'كبريتات الصوديوم','CuO':'أكسيد النحاس II','Na₂S₂O₃':'ثيوكبريتات الصوديوم','CaC₂':'كربيد الكالسيوم','CH₃COOH':'حمض الأسيتيك','C₂H₅OH':'الإيثانول','Na₂CO₃':'كربونات الصوديوم','CoCl₂':'كلوريد الكوبالت II','NO₂':'ثاني أكسيد النيتروجين','K₂CrO₄':'كرومات البوتاسيوم','NH₄OH':'هيدروكسيد الأمونيوم','NH₄Cl':'كلوريد الأمونيوم','CH₃COONa':'أسيتات الصوديوم','ZnSO₄':'كبريتات الخارصين','NH₄NO₃':'نترات الأمونيوم','Cl⁻':'أيون الكلوريد','SO₄²⁻':'أيون الكبريتات','Ag⁺':'أيون الفضة','Ba²⁺':'أيون الباريوم','Fe³⁺':'أيون الحديد III','Fe²⁺':'أيون الحديد II','NH₃':'الأمونيا','CuSO₄ لامائي':'كبريتات النحاس II اللامائية','K₃[Fe(CN)₆]':'فريسيانيد البوتاسيوم','K₄[Fe(CN)₆]':'فيروسيانيد البوتاسيوم','KMnO₄':'برمنجنات البوتاسيوم','FeSO₄':'كبريتات الحديد II','K₂Cr₂O₇':'دايكرومات البوتاسيوم','Na₂SO₃':'كبريتيت الصوديوم','Na₂S':'كبريتيد الصوديوم','NaNO₃':'نترات الصوديوم','Al³⁺':'أيون الألومنيوم','Zn²⁺':'أيون الخارصين','Pb(NO₃)₂':'نترات الرصاص II','KI':'يوديد البوتاسيوم','FeCl₃':'كلوريد الحديد III','KSCN':'ثيوسيانات البوتاسيوم','NaF':'فلوريد الصوديوم','C₆H₅OH':'الفينول (حمض الكربوليك)','HCl مركز':'حمض هيدروكلوريك مركز','H₂SO₄ مركز':'حمض كبريتيك مركز','NaCl مشبع':'محلول مشبع من كلوريد الصوديوم','NaOH زائد':'زيادة من هيدروكسيد الصوديوم','أنود Cu':'أنود من النحاس','فينول':'الفينولفثالين','ميثيل':'ميثيل البرتقالي'};
+const dn=l=>{const b=l.replace(' (صلب)',''),a=AR[b];return a?l+' ('+a+')':l};
 function gxParse(s){const r=[],x=[];s.split('|').forEach(p=>{const i=p.indexOf('>');
   if(i>0){const a=p.slice(i+1).split(',');x.push({k:p.slice(0,i),col:a[0],a:a[1],ppt:a[2],pc:a[3],g:a[4],T:a[5],txt:a.slice(6).join(',')})}
   else{const m=p.match(/^(.*?)(#[0-9a-f]{6})?:([\d.]+)$/i);let l=m[1];const sol=l.endsWith('*');if(sol)l=l.slice(0,-1);r.push({l,col:m[2]||CLR,v:+m[3],sol})}});return{r,x}}
@@ -1483,14 +1517,14 @@ function gxLoad(i){
   if(act)return;resetAll();document.body.classList.remove('cb');
   const eq=i===EQ||!DS[i];document.body.classList.toggle('gx',!eq);STEPS.length=0;
   if(eq){window.GX=null;STEPS.push(...STEPS0);$('h1').innerHTML=H0[0];$('header .sub').innerHTML=H0[1];stepsUpdate();setButtons();myIntro();return}
-  gxStart(gxParse(DS[i]),i,'🧪 '+EXP[i].t,STG[EXP[i].s]+' — أضف المواد بالترتيب • اسحب الكأس لتدويره',EXP[i].n,false);
+  gxStart(gxParse(DS[i]),i,'🧪 '+EXP[i].t,TOPIC_OF[i].t+' — أضف المواد بالترتيب • اسحب الكأس لتدويره',EXP[i].n,false);
 }
 function gxStart(c,i,title,sub,note,custom){
   STEPS.length=0;window.GX={c,i,n:note,custom,set:new Set(),order:[],rgb:HX(CLR),tr:HX(CLR),a:.15,ta:.15,g:0,pc:'#fafafa',heated:0,cooled:0,fb:0,ft:0,fc:'#ff9a2e',fbA:0,ftA:0,hl:0,lo:0,lA:0};
   Object.keys(ACT).filter(k=>k[0]==='g').forEach(k=>delete ACT[k]);
-  c.r.forEach((q,k)=>{const ob=!!objKind(q.l);ACT['g'+k]={gx:k,dv:ob?0:q.v,m:{},obj:ob,drops:ob?1:q.sol?5:10,gap:q.sol?.2:.09,col:ob?'#0000':q.col,chip:q.l}});
-  $('#gp').innerHTML=c.r.map((q,k)=>`<button class="pill b" data-a="g${k}">${q.sol?'＋ ':''}${q.l}${q.sol||objKind(q.l)?'':' '+q.v+' mL'}</button>`).join('')+'<button class="pill g" id="gr">↺ كأس جديد</button>';
-  c.r.forEach((q,k)=>STEPS.push(['أضف '+q.l+(q.sol||objKind(q.l)?'':' ('+q.v+' mL)'),()=>window.GX&&window.GX.set.has(k)]));
+  c.r.forEach((q,k)=>{const ob=!!objKind(q.l);ACT['g'+k]={gx:k,dv:ob?0:q.v,m:{},obj:ob,drops:ob?1:q.sol?5:10,gap:q.sol?.2:.09,col:ob?'#0000':q.col,chip:dn(q.l)}});
+  $('#gp').innerHTML=c.r.map((q,k)=>`<button class="pill b" data-a="g${k}">${q.sol?'＋ ':''}${dn(q.l)}${q.sol||objKind(q.l)?'':' '+q.v+' mL'}</button>`).join('')+'<button class="pill g" id="gr">↺ كأس جديد</button>';
+  c.r.forEach((q,k)=>STEPS.push(['أضف '+dn(q.l)+(q.sol||objKind(q.l)?'':' ('+q.v+' mL)'),()=>window.GX&&window.GX.set.has(k)]));
   const hs=c.x.some(r=>/[hb]/.test(r.k)),cs=c.x.some(r=>/c/.test(r.k));
   if(hs)STEPS.push(['سخّن الحمّام المائي إلى 50°م أو أكثر ولاحظ',()=>window.GX&&window.GX.heated]);
   if(cs)STEPS.push(['برّد إلى 12°م أو أقل ولاحظ',()=>window.GX&&window.GX.cooled]);
@@ -1521,9 +1555,9 @@ function cbBuild(keys){
 function cbRender(){
   const q=$('#cbQ').value.trim().toLowerCase(),full=CB.sel.length>=CB.max;
   $('#cbL').innerHTML=CB_CATS.map((t,ci)=>{
-    const its=[...CB.items.values()].filter(it=>it.cat===ci&&(!q||it.l.toLowerCase().includes(q)));
+    const its=[...CB.items.values()].filter(it=>it.cat===ci&&(!q||dn(it.l).toLowerCase().includes(q)));
     return its.length?`<div class="cbg">${t}</div><div class="cbc">`+its.map(it=>{const on=CB.sel.includes(it.key);
-      return `<button data-k="${it.key.replace(/"/g,'&quot;')}" class="${on?'on':''}" ${!on&&full?'disabled':''} aria-pressed="${on}"><i class="sw" style="background:${it.col}"></i>${it.l}</button>`}).join('')+'</div>':''}).join('')||'<div class="note">لا توجد نتائج.</div>';
+      return `<button data-k="${it.key.replace(/"/g,'&quot;')}" class="${on?'on':''}" ${!on&&full?'disabled':''} aria-pressed="${on}"><i class="sw" style="background:${it.col}"></i>${dn(it.l)}</button>`}).join('')+'</div>':''}).join('')||'<div class="note">لا توجد نتائج.</div>';
   $('#cbN').textContent='— '+CB.sel.length+' من '+CB.max;
   const n=CB.sel.length?cbBuild(CB.sel).x.length:0;
   $('#cbInfo').textContent=!CB.sel.length?'اضغط على المواد التي تريدها (حتى '+CB.max+').':CB.sel.length<2?'اختر مادتين على الأقل.':n?'✅ نتائج مسجّلة بين المواد المختارة: '+n:'⚠️ لا يوجد تفاعل مسجّل بين هذه المواد — جرّب مادة أخرى أو ابدأ من تجربة جاهزة.';
@@ -1533,15 +1567,15 @@ function cbRender(){
 function cbOpen(){
   if(act)return;resetAll();
   document.body.classList.add('gx','cb');$('#cbD').open=true;
-  gxStart({r:[],x:[]},'custom','🧪 تجربة حرة','اختر موادك ثم أضفها إلى الكأس بالترتيب الذي تريده • اسحب الكأس لتدويره','',true);
+  gxStart({r:[],x:[]},'custom','✨ اختر تجربتك بنفسك','اختر موادك ثم أضفها إلى الكأس بالترتيب الذي تريده • اسحب الكأس لتدويره','',true);
   STEPS.push(['اختر المواد من القائمة ثم اضغط «ابدأ التجربة»',()=>false]);stepsUpdate();
-  $('#why').textContent='اختر المواد من بطاقة «تجربة حرة» ثم اضغط «ابدأ التجربة».';
+  $('#why').textContent='اختر المواد من بطاقة «اختر تجربتك بنفسك» ثم اضغط «ابدأ التجربة».';
   cbRender();
 }
 function cbStart(){
   if(act||CB.sel.length<2)return;resetAll();
   document.body.classList.add('gx','cb');
-  gxStart(cbBuild(CB.sel),'custom','🧪 تجربة حرة','أضف المواد المختارة بالترتيب الذي تريده • اسحب الكأس لتدويره','',true);
+  gxStart(cbBuild(CB.sel),'custom','✨ اختر تجربتك بنفسك','أضف المواد المختارة بالترتيب الذي تريده • اسحب الكأس لتدويره','',true);
   $('#cbD').open=false;
 }
 $('#cbL').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const k=b.dataset.k,i=CB.sel.indexOf(k);
@@ -1672,7 +1706,7 @@ function calcRows(){
   $('#calcRows').innerHTML=ok.map(({k,it,sp,v})=>`<div class="crow" data-k="${k.replace(/"/g,'&quot;')}" data-u="${v.u}"><b>${sp.n}</b><span class="cf">${fd(sp.f)} · M = <span class="mm"></span></span>
     <select data-f="u"><option value="g"${v.u==='g'?' selected':''}>جرام g</option><option value="mol"${v.u==='mol'?' selected':''}>مول</option>${sp.d?`<option value="mL"${v.u==='mL'?' selected':''}>mL نقي</option>`:''}<option value="mLM"${v.u==='mLM'?' selected':''}>mL × تركيز</option></select>
     <input type="number" data-f="a" min="0" step="any" value="${v.a}" aria-label="الكمية"><span class="cc">× <input type="number" data-f="c" min="0" step="any" value="${v.c}" aria-label="التركيز"> M</span></div>`).join('');
-  $('#calcInfo').textContent=!CB.sel.length?'اختر مواد من بطاقة «تجربة حرة» (مثلًا AgNO₃ و NaCl) ثم أدخل الكمية.':no.length?'لا توجد بيانات حسابية للمواد: '+no.join('، ')+' (مثل الألوان والكواشف).':'أدخل كمية كل مادة واختر شروط التفاعل — الحساب يتحدّث تلقائيًا.';
+  $('#calcInfo').textContent=!CB.sel.length?'اختر مواد من بطاقة «اختر تجربتك بنفسك» (مثلًا AgNO₃ و NaCl) ثم أدخل الكمية.':no.length?'لا توجد بيانات حسابية للمواد: '+no.join('، ')+' (مثل الألوان والكواشف).':'أدخل كمية كل مادة واختر شروط التفاعل — الحساب يتحدّث تلقائيًا.';
   calcRun();
 }
 function calcRun(){
@@ -1745,7 +1779,7 @@ function openMine(arg){
 document.addEventListener('click',e=>{const b=e.target.closest('[data-my]');if(b)openMine(b.dataset.my)});
 {const w=$('#why'),m=$('#myWhy');if(w&&m)new MutationObserver(()=>{m.innerHTML=w.innerHTML}).observe(w,{childList:true,characterData:true,subtree:true})}
 
-{const sel=$('#exSel');sel.innerHTML='<optgroup label="✨ تجربة حرة"><option value="custom">🧪 تجربة حرة — اختر موادك بنفسك</option></optgroup>'+Object.entries(STG).map(([s,v])=>`<optgroup label="${v}">`+EXP.map((x,i)=>x.s===s?`<option value="${i}">${x.t}</option>`:'').join('')+'</optgroup>').join('');sel.value=EQ;sel.onchange=()=>sel.value==='custom'?cbOpen():gxLoad(+sel.value)}
+{const sel=$('#exSel');sel.innerHTML='<optgroup label="✨ اختر تجربتك بنفسك"><option value="custom">✨ اختر تجربتك بنفسك — مواد وشروط ومعادلة</option></optgroup>'+TOPICS.map(t=>`<optgroup label="${t.t}">`+t.ix.map(i=>`<option value="${i}">${EXP[i].t}</option>`).join('')+'</optgroup>').join('');sel.value=EQ;sel.onchange=()=>sel.value==='custom'?cbOpen():gxLoad(+sel.value)}
 resize();stepsUpdate();setButtons();
 let last=performance.now();
 (function frame(now){
