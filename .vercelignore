@@ -1,0 +1,7 @@
+.git
+.gitignore
+*.swp
+*.swo
+.env
+.env.*
+node_modules
