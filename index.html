@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>معمل الكيمياء الواقعي — الاتزان الكيميائي | الثانوية العامة (مصر)</title>
+<title>المعمل الذكي — مختبر الكيمياء التفاعلي الشامل لكل المراحل</title>
 <style>
 :root{--bg:#0a1120;--card:#121c33;--line:#233255;--tx:#e8eefc;--mut:#8fa1c7;--cy:#38e1ff;--gold:#ffd34d;--red:#ff4d5e;--ok:#3ddc97;--pu:#c78cff}
 *{box-sizing:border-box}
@@ -176,12 +176,139 @@ details.dn summary{color:var(--ok)}
 body.gx #p-lab .card:nth-child(2),body.gx .legend,body.gx .tab[data-p=data],body.gx #p-steps .card:first-child,body.gx #steps+.note{display:none}
 body.gx .tabs{grid-template-columns:repeat(4,1fr)}
 body.gx #gp{flex-wrap:wrap;justify-content:center;overflow:visible}
+
+/* ===== تحسينات شاشة الموبايل (Responsive Mobile UI) ===== */
+@media (max-width: 899px) {
+  body {
+    padding-bottom: 74px;
+  }
+  body.hide-stage-mobile .left {
+    display: none;
+  }
+  header {
+    padding: 10px 12px 4px;
+  }
+  h1 {
+    font-size: 1.05rem;
+    line-height: 1.35;
+  }
+  .sub {
+    font-size: 0.72rem;
+    line-height: 1.4;
+  }
+  .badges {
+    gap: 4px;
+    margin-bottom: 6px;
+  }
+  .badge {
+    font-size: 0.65rem;
+    padding: 2px 8px;
+  }
+  .exsel {
+    padding: 7px 10px;
+    font-size: 0.82rem;
+    margin-top: 6px;
+  }
+  .grid {
+    padding: 6px 8px 20px;
+    gap: 10px;
+  }
+  .stage {
+    border-radius: 16px;
+  }
+  #scene {
+    aspect-ratio: 1 / 1;
+    max-height: 44vh;
+  }
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px;
+    overflow-x: visible;
+  }
+  .pill {
+    flex: 1 1 calc(33.33% - 6px);
+    min-width: 92px;
+    padding: 7px 6px;
+    font-size: 0.76rem;
+    text-align: center;
+  }
+  .tabs {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    border-radius: 18px 18px 0 0;
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
+    background: rgba(10, 17, 32, 0.94);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(56, 225, 255, 0.25);
+    box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.6);
+  }
+  .tab {
+    font-size: 0.7rem;
+    padding: 7px 2px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  .card {
+    padding: 11px;
+    border-radius: 15px;
+  }
+  .card h3 {
+    font-size: 0.88rem;
+    margin-bottom: 6px;
+  }
+  .eq {
+    font-size: 1.02rem;
+    padding: 8px;
+  }
+  .status {
+    font-size: 0.82rem;
+    padding: 8px;
+  }
+  .bar {
+    grid-template-columns: 82px 1fr 50px;
+    font-size: 0.72rem;
+  }
+  .row input[type=range] {
+    height: 8px;
+  }
+  .row input[type=range]::-webkit-slider-thumb {
+    width: 22px;
+    height: 22px;
+  }
+  #toast {
+    bottom: 76px;
+    font-size: 0.8rem;
+    width: max-content;
+    max-width: 90vw;
+  }
+  .kit td {
+    display: block;
+    width: 100%;
+    padding: 3px 0;
+  }
+  .kit td:first-child {
+    color: var(--cy);
+    border-bottom: 0;
+    padding-top: 6px;
+  }
+}
 </style>
 </head>
 <body>
 <header>
-  <div class="badges"><span class="badge eg">🇪🇬 مصر</span><span class="badge">كل المراحل</span><span class="badge">الثانوية العامة</span><span class="badge">الصف الثالث الثانوي</span><span class="badge gold">كيمياء — الفصل الأول</span></div>
-  <h1>🧪 الفصل الأول: الاتزان الكيميائي — النشاط الأول</h1>
+  <div class="badges"><span class="badge eg">🇪🇬 مصر</span><span class="badge">كل المراحل</span><span class="badge">الثانوية العامة</span><span class="badge">الصف الثالث الثانوي</span><span class="badge gold">المعمل التفاعلي الشامل</span></div>
+  <h1>🧪 المعمل الذكي — مختبر الكيمياء التفاعلي الشامل</h1>
   <div class="sub">تأثير التركيز والتخفيف والحرارة على اتزان Fe³⁺ + SCN⁻ ⇌ [Fe(SCN)]²⁺ • اسحب الكأس لتدويره</div>
   <div class="prog"><span id="progT">0 / 7</span><i><span id="progB"></span></i></div>
   <select id="exSel" class="exsel" aria-label="اختر التجربة"></select>
@@ -1061,6 +1188,320 @@ cv.addEventListener('pointerdown',e=>{
     cv.setPointerCapture(e.pointerId);cv.style.cursor='grabbing';return}
   drag={x:e.clientX,y:e.clientY,yaw,pitch};auto=false;cv.setPointerCapture(e.pointerId)});
 cv.addEventListener('pointermove',e=>{if(hold&&hold.drag){const[x,y]=cvPos(e);hold.x=x;hold.y=y;if(Math.hypot(x-hold.x0,y-hold.y0)>6)hold.moved=true;return}if(!drag){cv.style.cursor=hitBottle(e)>=0?'pointer':'';return}yaw=drag.yaw+(e.clientX-drag.x)*.012;pitch=Math.max(.08,Math.min(.7,drag.pitch+(e.clientY-drag.y)*.004))});
+function endHold(){
+  cv.style.cursor='';const L=layout();
+  if(!hold.moved){const i=hold.i;hold=null;const b=btnFor(i);if(b&&!b.disabled)b.click();return}   // نقرة عادية = صب مباشر
+  if(zoneT(L)>0)commitHold();else releaseHold();
+}
+cv.addEventListener('pointerup',e=>{if(hold&&hold.drag){endHold();return}const d0=drag;drag=null;if(d0&&Math.hypot(e.clientX-d0.x,e.clientY-d0.y)<6)bottleClick(e)});cv.addEventListener('pointercancel',()=>{if(hold&&hold.drag)releaseHold();drag=null});
+$('#micro').addEventListener('input',e=>micro=+e.target.value);
+$('#stir').addEventListener('change',e=>stir=e.target.checked);
+$('#temp').addEventListener('input',e=>{
+  if(GX){T=+e.target.value;$('#tVal').textContent=T;if(T>=50)GX.heated=1;if(T<=12)GX.cooled=1;const x=gxEval(true);$('#why').innerHTML=x||('درجة الحرارة '+T+'°م');stepsUpdate();return}
+  T=+e.target.value;$('#tVal').textContent=T;tempChanged=true;solve();
+  $('#why').innerHTML=T>25?`رفع الحرارة إلى ${T}°م: التفاعل الطردي <b>طارد للحرارة</b> فيزيح التسخين الاتزان <b>يسارًا</b> (ينخفض Kc إلى ≈ ${K().toFixed(0)}) ويفتح اللون.`:T<25?`خفض الحرارة إلى ${T}°م يزيح الاتزان <b>يمينًا</b> (يرتفع Kc إلى ≈ ${K().toFixed(0)}) فيغمق اللون.`:'درجة الحرارة الأصلية 25°م.';
+  stepsUpdate();
+});
+$('#pm').addEventListener('change',e=>predictMode=e.target.checked);
+$('#reset').addEventListener('click',resetAll);
+document.querySelectorAll('[data-a]').forEach(b=>b.addEventListener('click',()=>{
+  const id=b.dataset.a;if(act)return;
+  if(predictMode&&cur.c>1e-5&&id!=='fe0'&&id!=='scn0'){pendingAct=id;$('#mq').textContent='ماذا سيحدث لموضع الاتزان عند '+ACT[id].q;$('#modal').hidden=false}
+  else startAction(id);
+}));
+document.querySelectorAll('#modal [data-d]').forEach(b=>b.addEventListener('click',()=>{
+  $('#modal').hidden=true;pendingPred=b.dataset.d;startAction(pendingAct);pendingAct=null;
+}));
+addEventListener('resize',resize);
+
+/* ---------- تبويبات + اختبار المنهج ---------- */
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));
+  document.querySelectorAll('.panel').forEach(p=>p.hidden=(p.id!=='p-'+t.dataset.p));
+  document.body.classList.toggle('hide-stage-mobile', ['study','all'].includes(t.dataset.p));
+  resize();
+}));
+const QZ=[
+ {q:'عند الوصول إلى حالة الاتزان الكيميائي في تفاعل انعكاسي مغلق:',o:['يتوقف التفاعلان الطردي والعكسي','تتساوى سرعة التفاعل الطردي مع سرعة التفاعل العكسي','تتساوى تركيزات المتفاعلات مع تركيزات النواتج','تصبح قيمة Kc مساوية للصفر'],a:1,e:'الاتزان ديناميكي: التفاعلان مستمران بسرعتين متساويتين فتثبت التركيزات (وليس بالضرورة أن تتساوى).'},
+ {q:'ثابت الاتزان Kc للتفاعل N₂ + 3H₂ ⇌ 2NH₃ يساوي:',o:['[NH₃]/([N₂][H₂])','[NH₃]²/([N₂][H₂]³)','[N₂][H₂]³/[NH₃]²','[NH₃]²/([N₂][H₂])'],a:1,e:'الأسس هي معاملات الموازنة: النواتج في البسط والمتفاعلات في المقام.'},
+ {q:'إذا كانت Q < Kc فإن التفاعل:',o:['يتجه نحو المتفاعلات (يسارًا)','في حالة اتزان','يتجه نحو النواتج (يمينًا)','يتوقف تمامًا'],a:2,e:'Q أصغر من Kc تعني أن النواتج أقل من المطلوب للاتزان، فيسير التفاعل الطردي.'},
+ {q:'برفع درجة حرارة تفاعل طارد للحرارة عند الاتزان:',o:['يزداد Kc ويتجه الاتزان يمينًا','يقل Kc ويتجه الاتزان يسارًا','لا يتغير Kc ويتجه الاتزان يمينًا','لا يتأثر الاتزان إطلاقًا'],a:1,e:'التسخين يُفضّل التفاعل الماص (العكسي هنا) فينخفض Kc ويتجه الاتزان يسارًا — كما رأيت في الحمّام المائي.'},
+ {q:'تأثير العامل المساعد على تفاعل في حالة اتزان:',o:['يزيد قيمة Kc','يُزيح الاتزان نحو النواتج','يُسرّع الوصول للاتزان دون تغيير موضعه أو Kc','يقلل طاقة النواتج فقط'],a:2,e:'العامل المساعد يخفض طاقة التنشيط للتفاعلين الطردي والعكسي بالقدر نفسه.'},
+ {q:'في التفاعل N₂ + 3H₂ ⇌ 2NH₃، زيادة الضغط على المخلوط الغازي تؤدي إلى:',o:['إزاحة الاتزان يمينًا','إزاحة الاتزان يسارًا','لا تأثير على موضع الاتزان','نقص قيمة Kc'],a:0,e:'الجهة اليمنى فيها 2 مول غاز مقابل 4 مول في اليسرى، فيتجه الاتزان للجهة الأقل عددًا من المولات.'},
+ {q:'في تجربة Fe³⁺ + SCN⁻ ⇌ [Fe(SCN)]²⁺، إضافة قطرات من FeCl₃ المركّز تجعل اللون:',o:['أفتح لأن الاتزان يتجه يسارًا','أغمق لأن الاتزان يتجه يمينًا','دون تغيير','عديم اللون'],a:1,e:'زيادة [Fe³⁺] تجعل Q < Kc فيتكوّن مزيد من المعقد الأحمر.'},
+ {q:'أي المواد التالية لا يظهر تركيزها في تعبير Kc؟',o:['الغاز','الأيون في المحلول','المادة الصلبة النقية','المادة المذابة'],a:2,e:'تركيز المادة الصلبة أو السائلة النقية ثابت فيدخل في قيمة Kc ولا يُكتب في التعبير.'}
+];
+QZ.push(
+ {q:'قيمة pH لمحلول HCl تركيزه 0.01 M تساوي:',o:['1','2','12','0.01'],a:1,e:'الحمض قوي فـ [H⁺] = 0.01 = 10⁻² ومنها pH = 2.'},
+ {q:'عند تخفيف محلول حمض ضعيف (قانون استفالد):',o:['يزداد α وتبقى Ka ثابتة','يقل α وتزداد Ka','تزداد α وKa معًا','لا يتغير شيء'],a:0,e:'التخفيف يزيد درجة التأين α، أما Ka فلا تتغير إلا بتغيّر درجة الحرارة.'},
+ {q:'المحلول المنظّم يتكوّن من:',o:['حمض قوي وقاعدة قوية','حمض ضعيف وملحه','ملح فقط','ماء ونشادر فقط'],a:1,e:'وجود الحمض الضعيف وملحه يعطي أيونًا مشتركًا يقاوم تغيّر pH عند إضافة كميات قليلة من حمض أو قاعدة.'},
+ {q:'إضافة NaCl إلى محلول مشبع من AgCl تجعل ذوبانية AgCl:',o:['تزداد','تقل بسبب الأيون المشترك Cl⁻','لا تتغير','تصبح صفرًا'],a:1,e:'زيادة [Cl⁻] تُزيح الاتزان نحو الراسب فتقل الذوبانية بينما Ksp ثابت.'},
+ {q:'في الخلية الجلفانية يحدث عند الأنود:',o:['اختزال','أكسدة','تعادل','ترسيب دائمًا'],a:1,e:'الأنود هو قطب الأكسدة وهو القطب السالب في الخلية الجلفانية.'},
+ {q:'كمية الكهرباء اللازمة لترسيب مول واحد من Ag من Ag⁺ تساوي:',o:['9650 C','96500 C','193000 C','965 C'],a:1,e:'Ag⁺ + e⁻ → Ag، فيلزم مول واحد من الإلكترونات = 1 فاراداي = 96500 C.'},
+ {q:'تفاعل قيمة ΔH له سالبة يكون:',o:['ماصًّا للحرارة','طاردًا للحرارة','غير مصحوب بتغير حراري','غير انعكاسي'],a:1,e:'ΔH سالبة تعني أن طاقة النواتج أقل من طاقة المتفاعلات فتنطلق حرارة.'}
+);
+function calc(){const Ka=+$('#kaS').value,C=Math.max(1e-9,+$('#cC').value||0),x=(-Ka+Math.sqrt(Ka*Ka+4*Ka*C))/2;
+ $('#calcOut').innerHTML=`α = ${(x/C*100).toFixed(2)}% &nbsp; [H⁺] = ${x.toExponential(2)} M &nbsp; <span class="y">pH = ${(-Math.log10(x)).toFixed(2)}</span>`}
+$('#kaS').onchange=$('#cC').oninput=calc;calc();
+let qi=0,qs=0;
+function qRender(){
+  const box=$('#qz');
+  if(qi>=QZ.length){box.innerHTML=`<div class="qq" style="text-align:center">🏁 نتيجتك: <span style="color:var(--gold)">${qs} / ${QZ.length}</span></div><button class="qnext" id="qrestart">↺ أعد الاختبار</button>`;$('#qrestart').onclick=()=>{qi=0;qs=0;qRender()};return}
+  const q=QZ[qi];
+  box.innerHTML=`<div class="qhead"><span>سؤال ${qi+1} من ${QZ.length}</span><span>الدرجة: ${qs}</span></div><div class="qq">${q.q}</div>`+q.o.map((t,i)=>`<button class="qopt" data-i="${i}">${t}</button>`).join('');
+  box.querySelectorAll('.qopt').forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.i;if(i===q.a)qs++;
+    box.querySelectorAll('.qopt').forEach(x=>{x.disabled=true;if(+x.dataset.i===q.a)x.classList.add('ok');else if(x===b)x.classList.add('bad')});
+    box.insertAdjacentHTML('beforeend',`<div class="qexp">${q.e}</div><button class="qnext" id="qn">${qi+1<QZ.length?'السؤال التالي ←':'عرض النتيجة'}</button>`);
+    $('#qn').onclick=()=>{qi++;qRender()};
+  });
+}
+qRender();
+
+
+/* ---------- مكتبة التجارب (كل المراحل) ---------- */
+const STG={p:'ابتدائي',e:'إعدادي','1':'الأول الثانوي','2':'الثاني الثانوي','3':'الثالث الثانوي'};
+const EXP=`p|فصل الخليط بالترشيح (رمل وماء)|يبقى الرمل على ورقة الترشيح ويمر الماء رائقًا.
+p|ذوبان السكر والملح في الماء|يختفي الصلب ويتكوّن محلول متجانس، ويذوب أسرع بالتسخين والتقليب.
+p|تغيّر حالات الماء: تجمد وانصهار وتبخر|تغيّر فيزيائي ولا تتكوّن مادة جديدة.
+p|اختبار الأحماض والقواعد بكاشف الكرنب الأحمر|يحمرّ مع الخل والليمون ويخضرّ مع الصودا والصابون.
+p|شروط صدأ الحديد|يصدأ المسمار بوجود الماء والهواء معًا، وينجو في الماء المغلي المغطى بزيت.
+e|الفرق بين الخليط والمركب (Fe + S)|المغناطيس يفصل الحديد من الخليط ولا يفصله من FeS الناتج بالتسخين.
+e|فصل الخليط بالتبخير والتقطير (ماء مالح)|التبخير يترك الملح، والتقطير يعطي ماءً نقيًا.
+e|التغير الفيزيائي والكيميائي (شمعة / شريط Mg)|Mg يحترق بضوء أبيض ساطع مكوّنًا MgO: 2Mg + O₂ → 2MgO.
+e|تحضير الأكسجين (H₂O₂ + MnO₂) وكشفه|يشتعل عود الثقاب المتوهج في الغاز، وMnO₂ عامل مساعد.
+e|تحضير ثاني أكسيد الكربون وكشفه بماء الجير|CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂، ويعكّر ماء الجير.
+e|تحضير الهيدروجين (Zn + HCl)|يحترق الغاز بفرقعة عند تقريب لهب: Zn + 2HCl → ZnCl₂ + H₂.
+e|الكشف عن الأحماض والقواعد بالكواشف وورق pH|تتلوّن الكواشف حسب الوسط (راجع جدول الألوان).
+e|التعادل: HCl مع NaOH بالفينولفثالين|يزول اللون الوردي عند نقطة التعادل ويتكوّن NaCl وماء.
+e|مقارنة نشاط الفلزات مع الماء والحمض|الترتيب: Na ثم Mg ثم Zn ثم Fe، والنحاس لا يتفاعل مع HCl المخفف.
+e|التحليل الكهربي للماء|يتصاعد H₂ عند الكاثود وO₂ عند الأنود بنسبة حجمية 2 : 1.
+1|اختبار اللهب للكاتيونات|يعطي كل أيون لونًا مميزًا للهب (Na أصفر، K بنفسجي، Cu أخضر مزرق).
+1|تفاعل الصوديوم والكالسيوم والماغنسيوم مع الماء|Na يتفاعل بعنف، Ca بهدوء، Mg ببطء جدًا ويُسرَّع بالتسخين.
+1|الإحلال البسيط: Zn في محلول CuSO₄|يزول اللون الأزرق ويترسب نحاس أحمر.
+1|الإحلال المزدوج: ترسيب AgCl وBaSO₄|AgNO₃ + NaCl → AgCl↓ أبيض، وBaCl₂ + Na₂SO₄ → BaSO₄↓ أبيض.
+1|الأكسدة والاختزال: Cu في محلول AgNO₃|تترسب فضة رمادية ويزرق المحلول لتكوّن Cu²⁺.
+1|الموصلية الكهربية: إلكتروليت وغير إلكتروليت|محلول NaCl يضيء المصباح والسكر لا يضيئه، والحمض الضعيف إضاءته خافتة.
+1|تعيين ماء التبلر في CuSO₄·5H₂O|يتحول الأزرق إلى أبيض بالتسخين وتنقص الكتلة بمقدار الماء.
+1|قانون بقاء الكتلة (AgNO₃ + NaCl في دورق مغلق)|كتلة المتفاعلات قبل التفاعل تساوي كتلة النواتج بعده.
+1|تحضير ملح CuSO₄ من CuO وH₂SO₄ والتبلور|يذوب الأكسيد بالتسخين ثم تتكوّن بلورات زرقاء عند التبريد.
+2|تأثير التركيز في سرعة التفاعل (Na₂S₂O₃ + HCl)|يظهر التعكّر (كبريت) أسرع كلما زاد التركيز.
+2|تأثير درجة الحرارة في سرعة التفاعل|ترتفع السرعة تقريبًا إلى الضعف لكل 10°م.
+2|تأثير العامل المساعد (MnO₂ مع H₂O₂)|يتصاعد O₂ أسرع بوجود العامل المساعد دون استهلاكه.
+2|تحضير الإيثين وكشفه (إيثانول + H₂SO₄ مركز)|يزول لون ماء البروم لأن الرابطة المزدوجة غير مشبعة.
+2|تحضير الأسيتيلين (CaC₂ + H₂O)|CaC₂ + 2H₂O → C₂H₂ + Ca(OH)₂ ويحترق بلهب مضيء مدخّن.
+2|تحضير الإستر (حمض أسيتيك + إيثانول)|تظهر رائحة فاكهية بوجود H₂SO₄ المركز عاملًا مساعدًا.
+2|تفاعل الصوديوم مع الإيثانول وكشف الحمض بكربونات الصوديوم|يتصاعد H₂ في الأول، ويحدث فوران CO₂ مع الحمض الكربوكسيلي.
+2|تحضير الصابون (التصبّن)|دهن + NaOH بالتسخين ثم ملح الطعام يفصل الصابون طافيًا.
+2|الكشف عن الكربوهيدرات (فهلنج واليود)|السكر المختزل يعطي Cu₂O أحمر طوبي، واليود مع النشا أزرق داكن.
+3|الاتزان: تأثير التركيز والتخفيف والحرارة على Fe³⁺ + SCN⁻ ⇌ [Fe(SCN)]²⁺|محاكاة كاملة في المعمل: ماء وقطرات NaF وAgNO₃ ورفع الحرارة.|L
+3|اتزان Co²⁺ + Cl⁻ ⇌ [CoCl₄]²⁻ بالتسخين والتبريد|الوردي يتحول إلى أزرق بالتسخين لأن التفاعل الطردي ماص.
+3|اتزان N₂O₄ ⇌ 2NO₂ مع الحرارة|اللون البني يغمق بالتسخين لأن الطردي ماص.
+3|اتزان الكرومات والدايكرومات|يتحول الأصفر إلى برتقالي بالحمض ويعود أصفر بالقلوي.
+3|الأيون المشترك في NH₄OH (فينولفثالين + NH₄Cl)|يزول اللون الوردي لأن NH₄⁺ يُرجع الاتزان نحو NH₃ ويقلل OH⁻.
+3|مقارنة قوة الأحماض (HCl مقابل CH₃COOH)|الحمض القوي أعلى توصيلًا وأسرع تفاعلًا مع Mg عند التركيز نفسه.
+3|تحضير محلول منظم واختبار ثبات pH|يتغير pH قليلًا فقط عند إضافة نقطتين من حمض أو قاعدة.
+3|التحلل المائي للأملاح (NH₄Cl وCH₃COONa وNaCl)|الأول حمضي والثاني قاعدي والثالث متعادل.
+3|الأيون المشترك: NaCl مشبع + HCl مركز|يترسب NaCl لزيادة [Cl⁻] (حاصل الإذابة).
+3|المعايرة حمض–قاعدة (HCl مع Na₂CO₃ بالميثيل البرتقالي)|يتحول اللون الأصفر إلى برتقالي عند النهاية ومنه يُحسب التركيز.
+3|الخلية الجلفانية Zn|Zn²⁺ ‖ Cu²⁺|Cu وقياس القوة الدافعة|يقرأ الفولتميتر ≈ 1.10 V وتهاجر الأيونات عبر القنطرة الملحية.
+3|ترتيب الفلزات في سلسلة الجهد بالإزاحة|الأعلى نشاطًا يزيح الأقل من محلول ملحه.
+3|التحليل الكهربي لمحلول CuSO₄ وتنقية النحاس|يذوب الأنود الشائب ويترسب نحاس نقي على الكاثود.
+3|الطلاء بالكهرباء وقانون فاراداي|تزداد كتلة المترسب طرديًا مع I·t (96500 C لكل مكافئ جرامي).
+3|الكيمياء الحرارية: حرارة الذوبان والتعادل بالكالوريميتر|NaOH يطلق حرارة وNH₄NO₃ يمتصها، وQ = m·c·ΔT.
+3|التحليل الكيفي للأنيونات (Cl⁻ وSO₄²⁻ وCO₃²⁻ وNO₃⁻)|AgNO₃ مع Cl⁻ راسب أبيض، BaCl₂ مع SO₄²⁻ راسب أبيض، الحمض مع CO₃²⁻ فوران، والحلقة البنية لـ NO₃⁻.
+3|التحليل الكيفي للكاتيونات (Fe³⁺ وFe²⁺ وCu²⁺ وNH₄⁺)|Fe(OH)₃ بني محمر، Fe(OH)₂ أخضر، Cu(OH)₂ أزرق، NH₄⁺ بالقلوي والتسخين تنطلق NH₃.`
+.trim().split('\n').map(l=>{const[s,t,n,l2]=l.split('|');return{s,t,n,l:!!l2}});
+let fs='all',fq='',done=new Set();
+try{done=new Set(JSON.parse(localStorage.getItem('chemDone')||'[]'))}catch(e){}
+const exSave=()=>{try{localStorage.setItem('chemDone',JSON.stringify([...done]))}catch(e){}};
+const exCount=()=>{$('#exP').textContent=done.size+' / '+EXP.length;$('#exB').style.width=done.size/EXP.length*100+'%'};
+function exRender(){
+  const list=EXP.map((x,i)=>({...x,i})).filter(x=>(fs==='all'||x.s===fs)&&(!fq||(x.t+x.n).includes(fq)));
+  $('#exList').innerHTML=list.map(x=>{const d=done.has(x.i);return `<details class="${d?'dn':''}"><summary><span>${d?'✓ ':''}${x.t}<span class="exs">${STG[x.s]}</span></span></summary><p>🔎 ${x.n}</p><div class="exb"><button data-k="${x.i}">${d?'↩ إلغاء':'✓ تم تنفيذها'}</button><button data-go="${x.i}">▶ افتح في المعمل</button></div></details>`}).join('')||'<div class="note">لا توجد نتائج.</div>';
+  exCount();
+}
+$('#exF').innerHTML=[['all','الكل ('+EXP.length+')'],...Object.entries(STG).map(([k,v])=>[k,v+' ('+EXP.filter(x=>x.s===k).length+')'])].map(([k,v])=>`<button class="chip${k==='all'?' on':''}" data-s="${k}">${v}</button>`).join('');
+$('#exF').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;fs=b.dataset.s;document.querySelectorAll('#exF .chip').forEach(c=>c.classList.toggle('on',c===b));exRender()});
+$('#exq').addEventListener('input',e=>{fq=e.target.value.trim();exRender()});
+$('#exList').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.go){gxSel(+b.dataset.go);document.querySelector('.tab[data-p=lab]').click();scrollTo({top:0,behavior:'smooth'});return}
+  const k=+b.dataset.k,d=b.closest('details'),on=!done.has(k);on?done.add(k):done.delete(k);exSave();
+  d.classList.toggle('dn',on);b.textContent=on?'↩ إلغاء':'✓ تم تنفيذها';
+  d.querySelector('summary>span').firstChild.nodeValue=(on?'✓ ':'')+EXP[k].t;exCount();
+});
+exRender();
+
+/* ---------- المحرك العام: كل التجارب تفاعليًا على الكأس ---------- */
+/* صيغة: مادة = اسم[*صلب][#لون]:حجم  |  قاعدة = مفاتيح>لون,شفافية,راسب,لون_الراسب,غاز,حرارة,نص  (h≥50°م, b≥75°م, c≤12°م) */
+const CLR='#dfeef8',HX=c=>[1,3,5].map(i=>parseInt(c.substr(i,2),16)),nu=(v,d)=>(v===undefined||v==='')?d:+v;
+const EQ=EXP.findIndex(x=>x.l),DS=[];
+DS[0]='رمل*#c9a96a:2|ماء:10|01>#e3d7b4,.4,5,#c9a96a,0,,يرسب الرمل ويبقى الماء رائقًا';
+DS[1]='سكر*#ffffff:1|ملح*#ffffff:1|ماء:10|02>#e6f1f8,.18,0,,0,,يذوب السكر: محلول متجانس|12>#e6f1f8,.18,0,,0,,يذوب الملح: محلول متجانس';
+DS[2]='ثلج*#e8f6ff:3|0>#e8f6ff,.2,6,#f4fbff,0,,ثلج صلب|0h>#dfeef8,.15,0,,0,,ينصهر إلى ماء سائل|0hb>#dfeef8,.15,0,,4,,يغلي ويتبخر';
+DS[3]='كرنب#8a3fa0:5|خل:3|صودا:3|01>#e0457a,.7,0,,0,,أحمر: وسط حمضي|02>#2e9e6b,.7,0,,0,,أخضر: وسط قاعدي';
+DS[4]='مسمار*#7f8c99:1|ماء:10|زيت#f2e6a0:2|01>#dfeef8,.18,3,#a0522d,0,,يتكوّن الصدأ|012>#f2e6a0,.25,2,#7f8c99,0,,الزيت يمنع الهواء فلا يصدأ';
+DS[5]='Fe*#6b6b6b:1|S*#f0e040:1|01>#dfeef8,.05,3,#9a9a6a,0,,خليط: يفصله المغناطيس|01h>#222222,.1,4,#222222,1,,FeS أسود لا ينجذب للمغناطيس';
+DS[6]='ماء مالح:12|0h>#dfeef8,.15,0,,3,,يتبخر الماء|0hb>#dfeef8,.15,5,#fafafa,4,,يبقى الملح ويتكثف ماء نقي';
+DS[7]='شمعة*#f5e9c8:1|Mg*#c8ccd0:1|0h>#f5e9c8,.3,2,#f5e9c8,0,,انصهار الشمعة فيزيائي ثم احتراقها كيميائي|1h>#ffffff,.8,5,#f4f4f4,2,,Mg يحترق بضوء أبيض: MgO';
+DS[8]='H₂O₂#d8efff:10|MnO₂*#222222:1|عود*#c46a1a:.5|01>#e8f4ff,.2,2,#222222,4,,يتصاعد O₂|012>#e8f4ff,.2,2,#222222,4,,يشتعل العود: الغاز O₂';
+DS[9]='CaCO₃*#f4f4f4:2|HCl:10|ماء جير#f0f4f8:6|01>#e9f2f7,.18,2,#f4f4f4,4,,يتصاعد CO₂|012>#f2f2f2,.55,5,#fafafa,3,,يتعكّر ماء الجير';
+DS[10]='Zn*#9aa5b1:1|HCl:10|لهب*#ff9a2e:.3|01>#e9f2f7,.18,2,#9aa5b1,4,,يتصاعد H₂|012>#ffd9a0,.35,2,#9aa5b1,4,,يحترق H₂ بفرقعة';
+DS[11]='عباد شمس#7a4bd1:3|حمض:5|قاعدة:5|01>#e0243a,.7,0,,0,,يحمرّ في الحمض|02>#2f6fe0,.7,0,,0,,يزرقّ في القاعدة';
+DS[12]='NaOH:10|فينول#f8d3e8:1|HCl:10|01>#f04fa0,.6,0,,0,,وردي: وسط قاعدي|012>#dfeef8,.15,0,,0,,زال اللون: تعادل';
+DS[13]='HCl:10|Mg*#c8ccd0:1|Zn*#9aa5b1:1|Cu*#b87333:1|01>#e9f2f7,.18,2,#c8ccd0,5,,Mg سريع|02>#e9f2f7,.18,2,#9aa5b1,2,,Zn أبطأ|03>#e9f2f7,.18,2,#b87333,0,,Cu لا يتفاعل';
+DS[14]='ماء:10|H₂SO₄:1|تيار#ffd34d:.1|012>#e9f2f7,.18,0,,4,,H₂ عند الكاثود وO₂ عند الأنود 2:1';
+DS[15]='Na⁺:2|K⁺:2|Ca²⁺:2|Cu²⁺:2|0h>#ffd23a,.65,0,,0,,لهب أصفر ذهبي|1h>#b07cff,.6,0,,0,,لهب بنفسجي|2h>#e0502a,.6,0,,0,,لهب أحمر طوبي|3h>#2fd6a0,.6,0,,0,,لهب أخضر مزرق';
+DS[16]='ماء:10|Na*#c0c5cc:.5|Ca*#d8d8d8:1|Mg*#c8ccd0:1|01>#e9f2f7,.18,0,,5,,Na عنيف: H₂ + NaOH|02>#f3f3f3,.4,2,#f3f3f3,2,,Ca هادئ: Ca(OH)₂|03>#e9f2f7,.18,2,#c8ccd0,.5,,Mg بطيء جدًا|03h>#e9f2f7,.18,2,#c8ccd0,3,,التسخين يسرّع Mg';
+DS[17]='CuSO₄#2a8fe0:10|Zn*#9aa5b1:1|01>#bfe3f2,.2,5,#b4532a,0,,يزول الأزرق ويترسب نحاس';
+DS[18]='AgNO₃:5|NaCl:5|BaCl₂:5|Na₂SO₄:5|01>#f5f5f5,.45,6,#fafafa,0,,راسب AgCl أبيض|23>#f5f5f5,.45,6,#fafafa,0,,راسب BaSO₄ أبيض';
+DS[19]='AgNO₃:10|Cu*#b87333:1|01>#6fb7e6,.4,5,#cfd3d8,0,,يزرقّ المحلول وتترسب فضة';
+DS[20]='ماء:10|NaCl*#f0f0f0:1|سكر*#ffffff:1|تيار#ffd34d:.1|013>#ffe9a8,.5,0,,3,,يضيء المصباح: إلكتروليت|023>#e6f1f8,.18,0,,0,,لا يضيء: غير إلكتروليت';
+DS[21]='CuSO₄#2a8fe0:3|ماء:10|0>#2a8fe0,.5,0,,0,,بلورات زرقاء مائية|0h>#f2f2f2,.45,3,#f2f2f2,3,,يبيضّ بفقد ماء التبلر|01>#2a8fe0,.5,0,,0,,يعود أزرق بالماء';
+DS[22]='AgNO₃:10|NaCl:10|01>#f5f5f5,.4,6,#fafafa,0,,راسب AgCl والكتلة ثابتة 100.0 g';
+DS[23]='CuO*#222222:1|H₂SO₄:10|01>#e9f2f7,.18,3,#222222,0,,لا يذوب دون تسخين|01h>#2a8fe0,.55,0,,2,,يذوب: CuSO₄ أزرق|01c>#2a8fe0,.3,5,#4aa3e8,0,,تتبلور بلورات زرقاء';
+DS[24]='ثيو 0.2M:10|ثيو 0.05M:10|HCl:5|02>#f1e6a8,.55,4,#f1e6a8,0,,يتعكّر بسرعة (≈ 15 s)|12>#f1e6a8,.25,2,#f1e6a8,0,,يتعكّر ببطء (≈ 45 s)';
+DS[25]='Na₂S₂O₃:10|HCl:5|01>#f1e6a8,.3,2,#f1e6a8,0,,عند 25°م ≈ 40 s|01h>#f1e6a8,.6,4,#f1e6a8,0,,بالتسخين ≈ 10 s';
+DS[26]='H₂O₂:10|MnO₂*#222222:1|0>#e8f4ff,.15,0,,.5,,تحلل بطيء جدًا|01>#e8f4ff,.2,2,#222222,5,,يتسارع ويبقى MnO₂ دون استهلاك';
+DS[27]='إيثانول:5|H₂SO₄:3|ماء بروم#f0a030:5|01>#efe3d0,.2,0,,0,,لا تفاعل دون تسخين|01h>#efe3d0,.2,0,,3,,يتصاعد الإيثين|012h>#f7f1e4,.15,0,,3,,يزول لون البروم';
+DS[28]='CaC₂*#555555:1|ماء:10|لهب*#ff9a2e:.3|01>#eeeeee,.3,2,#eeeeee,5,,يتصاعد C₂H₂|012>#ffd9a0,.35,2,#eeeeee,5,,لهب مضيء مدخّن';
+DS[29]='CH₃COOH:5|C₂H₅OH:5|H₂SO₄:1|01>#dfeef8,.15,0,,0,,لا تفاعل دون عامل مساعد|012h>#fff3b8,.35,0,,1,,رائحة فاكهية: إستر';
+DS[30]='إيثانول:5|Na*#c0c5cc:.5|CH₃COOH:5|Na₂CO₃*#ffffff:1|01>#e9f2f7,.18,0,,3,,يتصاعد H₂ ببطء|23>#e9f2f7,.18,0,,5,,فوران CO₂';
+DS[31]='زيت#f2e6a0:5|NaOH:10|ملح*#ffffff:2|01>#e8e0b8,.3,0,,0,,بطيء دون تسخين|01h>#f4e9c0,.4,0,,1,,يتكوّن الصابون|012h>#f4e9c0,.3,5,#f7f1dc,0,,الملح يفصل الصابون طافيًا';
+DS[32]='سكر*#ffffff:2|فهلنج#2a60e0:6|نشا*#f4f4f4:2|يود#c8742a:2|01>#2a60e0,.5,0,,0,,لا تغيّر دون تسخين|01h>#c0392b,.6,5,#b5332a,0,,Cu₂O أحمر طوبي|23>#1b1f6b,.8,0,,0,,أزرق داكن: نشا + يود';
+DS[EQ]='';
+DS[34]='CoCl₂#ff8fb0:10|HCl:10|ماء:10|0>#ff8fb0,.5,0,,0,,وردي|01>#5a6ad8,.6,0,,0,,Cl⁻ يزيح الاتزان يمينًا فيزرق|01h>#2d49d8,.75,0,,0,,التسخين يزيد الأزرق|01c>#d89ac0,.5,0,,0,,التبريد يعيد الوردي|012>#ff8fb0,.35,0,,0,,التخفيف يعيد الوردي';
+DS[35]='NO₂#b8631e:10|0>#c98b5a,.4,0,,0,,NO₂ بني ⇌ N₂O₄ عديم اللون|0h>#8a3f12,.75,0,,0,,يغمق اللون: الاتزان نحو NO₂|0c>#f0dcc5,.2,0,,0,,يفتح: الاتزان نحو N₂O₄';
+DS[36]='K₂CrO₄#f0d020:10|حمض:3|قلوي:3|01>#f08a1e,.7,0,,0,,برتقالي Cr₂O₇²⁻ بزيادة H⁺|012>#f0d020,.65,0,,0,,يعود أصفر بزيادة OH⁻';
+DS[37]='NH₄OH:10|فينول#f8d3e8:1|NH₄Cl*#ffffff:2|01>#f04fa0,.6,0,,0,,وردي: قاعدة ضعيفة|012>#dfeef8,.15,0,,0,,يزول: الأيون المشترك NH₄⁺';
+DS[38]='HCl:10|CH₃COOH:10|Mg*#c8ccd0:1|02>#e9f2f7,.18,2,#c8ccd0,5,,سريع غزير: حمض قوي|12>#e9f2f7,.18,2,#c8ccd0,1,,أبطأ كثيرًا: حمض ضعيف';
+DS[39]='منظم#fdd9a0:10|ماء:10|HCl:1|كاشف#7ac143:1|03>#f3a23a,.6,0,,0,,pH ≈ 4.7|032>#f3a23a,.6,0,,0,,المنظّم يقاوم التغيّر|13>#6bbf3a,.6,0,,0,,الماء pH = 7|132>#e0243a,.7,0,,0,,في الماء يهبط pH إلى ≈ 3';
+DS[40]='NH₄Cl:10|CH₃COONa:10|NaCl:10|كاشف#7ac143:1|03>#f3a23a,.6,0,,0,,حمضي|13>#2f6fe0,.6,0,,0,,قاعدي|23>#6bbf3a,.6,0,,0,,متعادل';
+DS[41]='NaCl مشبع:10|HCl مركز:3|01>#f4f4f4,.35,5,#fafafa,0,,يترسب NaCl: الأيون المشترك';
+DS[42]='Na₂CO₃:10|ميثيل#f0c020:1|HCl:5|01>#f2c230,.6,0,,0,,أصفر: قاعدي|012>#f08a1e,.65,0,,2,,النهاية: أصفر → برتقالي';
+DS[43]='ZnSO₄:10|CuSO₄#2a8fe0:10|قنطرة#f0e68c:.5|01>#7db8e8,.35,0,,0,,لا تيار دون قنطرة|012>#9ad0ef,.35,0,,2,,E° ≈ 1.10 V';
+DS[44]='Zn*#9aa5b1:1|Cu*#b87333:1|CuSO₄#2a8fe0:10|ZnSO₄:10|02>#bfe3f2,.2,5,#b4532a,0,,Zn يزيح Cu²⁺|13>#e9f2f7,.18,2,#b87333,0,,Cu لا يزيح Zn²⁺';
+DS[45]='CuSO₄#2a8fe0:10|أنود Cu*#b87333:1|كاثود*#9aa5b1:1|تيار#ffd34d:.1|0123>#6fb0e8,.45,6,#b4532a,2,,يذوب الأنود ويترسب Cu نقي';
+DS[46]='CuSO₄#2a8fe0:10|مفتاح*#b8c0c8:1|تيار#ffd34d:.1|012>#2a8fe0,.5,3,#b4532a,2,,يتغطى المفتاح بنحاس';
+DS[47]='ماء:10|NaOH*#ffffff:1|NH₄NO₃*#ffffff:1|01>#e9f2f7,.18,0,,0,36,تسخن المحلول (طارد)|02>#e9f2f7,.18,0,,0,14,يبرد المحلول (ماص)';
+DS[48]='Cl⁻:3|SO₄²⁻:3|Ag⁺:3|Ba²⁺:3|02>#f5f5f5,.4,6,#fafafa,0,,راسب AgCl: Cl⁻|13>#f5f5f5,.4,6,#fafafa,0,,راسب BaSO₄: SO₄²⁻';
+DS[49]='Fe³⁺#e8c040:5|Fe²⁺#b8d8a0:5|Cu²⁺#2a8fe0:5|NaOH:5|03>#e8c040,.35,6,#8b3a1f,0,,Fe(OH)₃ بني محمر|13>#b8d8a0,.3,6,#6d9a60,0,,Fe(OH)₂ أخضر|23>#bfd8f2,.3,6,#3a7bd5,0,,Cu(OH)₂ أزرق';
+let GX=null;const STEPS0=STEPS.slice(),H0=[$('h1').innerHTML,$('header .sub').innerHTML];
+function gxParse(s){const r=[],x=[];s.split('|').forEach(p=>{const i=p.indexOf('>');
+  if(i>0){const a=p.slice(i+1).split(',');x.push({k:p.slice(0,i),col:a[0],a:a[1],ppt:a[2],pc:a[3],g:a[4],T:a[5],txt:a.slice(6).join(',')})}
+  else{const m=p.match(/^(.*?)(#[0-9a-f]{6})?:([\d.]+)$/i);let l=m[1];const sol=l.endsWith('*');if(sol)l=l.slice(0,-1);r.push({l,col:m[2]||CLR,v:+m[3],sol})}});return{r,x}}
+function gxEval(sl){
+  const s=[...GX.set].map(String);if(T>=50)s.push('h');if(T>=75)s.push('b');if(T<=12)s.push('c');
+  let b=null;GX.c.x.forEach(r=>{if([...r.k].every(ch=>s.includes(ch))&&(!b||r.k.length>=b.k.length))b=r});
+  const ord=GX.order.map(i=>GX.c.r[i]),cr=[...ord].reverse().find(q=>!q.sol&&q.v>=1&&q.col!==CLR),so=ord.filter(q=>q.sol),ls=so[so.length-1],t=b||{};
+  GX.tr=HX(t.col||(cr?cr.col:CLR));GX.ta=nu(t.a,cr?0.42:0.15);
+  ppt=Math.round(nu(t.ppt,Math.min(8,so.length*2)));GX.pc=t.pc||(ls?ls.col:'#fafafa');GX.g=nu(t.g,0);
+  if(!sl&&t.T!==undefined&&t.T!==''){T=+t.T;$('#temp').value=T;$('#tVal').textContent=T}
+  const tx=t.txt||'';
+  GX.fb=T>=50?1:0;
+  const fm=/يحترق|لهب|يشتعل|احتراق|فرقعة|مضيء/.test(tx)&&!/لا (يحترق|يشتعل)/.test(tx);
+  GX.ft=fm?1:0;
+  if(fm)GX.fc=/ضوء أبيض/.test(tx)?'#ffffff':/لهب أصفر/.test(tx)?'#ffd23a':/لهب بنفسجي/.test(tx)?'#b07cff':/لهب أحمر/.test(tx)?'#e0502a':/لهب أخضر/.test(tx)?'#2fd6a0':'#ff9a2e';
+  GX.hl=(GX.c.r.some(q=>/^(تيار|قنطرة)/.test(q.l))||GX.c.x.some(r=>/يضيء|E°/.test(r.txt||'')))?1:0;
+  const cin=GX.c.r.some((q,k)=>/^(تيار|قنطرة)/.test(q.l)&&GX.set.has(k));
+  GX.lo=(tx&&!/لا /.test(tx)&&(/يضيء/.test(tx)||cin))?1:0;
+  return t.txt;
+}
+function gxApply(d){
+  const k=d.gx;if(!GX.set.has(k))GX.order.push(k);GX.set.add(k);
+  const tx=gxEval(false),all=GX.set.size>=GX.c.r.length;
+  $('#why').innerHTML=(tx||'أُضيف <b>'+d.chip+'</b>')+(all?'<br><span class="note">الخلاصة: '+EXP[GX.i].n+'</span>':'');
+  $('#gxEq').textContent=GX.order.map(i=>GX.c.r[i].l).join(' + ');stepsUpdate();
+}
+function gxStep(dt){if(!GX)return;const f=1-Math.exp(-dt*2.2);for(let i=0;i<3;i++)GX.rgb[i]+=(GX.tr[i]-GX.rgb[i])*f;GX.a+=(GX.ta-GX.a)*f;const f2=1-Math.exp(-dt*6);GX.fbA+=(GX.fb-GX.fbA)*f2;GX.ftA+=(GX.ft-GX.ftA)*f2;GX.lA+=(GX.lo-GX.lA)*f2}
+function flame(x,y,h,w,col,a){
+  const fl=1+Math.sin(time*18+x*.7)*.08+Math.sin(time*27+x)*.06,hh=h*fl,sw=Math.sin(time*11+x)*w*.25;
+  ctx.save();ctx.globalAlpha=a;
+  const g=ctx.createRadialGradient(x,y-hh*.4,0,x,y-hh*.4,hh*.9);g.addColorStop(0,col+'66');g.addColorStop(1,col+'00');
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y-hh*.4,hh*.9,0,7);ctx.fill();
+  const body=(sc,c)=>{ctx.fillStyle=c;ctx.beginPath();ctx.moveTo(x-w*sc,y);ctx.bezierCurveTo(x-w*1.1*sc,y-hh*sc*.5,x-w*.3*sc+sw,y-hh*sc*.65,x+sw*1.4,y-hh*sc);ctx.bezierCurveTo(x+w*.3*sc+sw,y-hh*sc*.65,x+w*1.1*sc,y-hh*sc*.5,x+w*sc,y);ctx.closePath();ctx.fill()};
+  body(1,col);body(.62,'#fff1a8');body(.32,'#ffffff');
+  ctx.restore();
+}
+function gxFX(L){
+  if(!GX)return;const k=L.k;
+  if(GX.fbA>.02){const pw=L.R*1.3,y=L.baseY+pw*L.sP*.55;
+    for(let i=-2;i<=2;i++)flame(L.cx+i*pw*.28,y,20*k,5*k,'#4aa8ff',GX.fbA*.9);
+    for(let i=-2;i<=2;i++)flame(L.cx+i*pw*.28,y,12*k,3*k,'#ff9a2e',GX.fbA*.7);}
+  if(GX.ftA>.02)flame(L.cx,L.topY-2*k,70*k,17*k,GX.fc,GX.ftA);
+  const py=L.baseY+L.R*L.sP*1.3,R=L.R;
+  GX.c.r.forEach((q,i)=>{
+    if(!GX.set.has(i))return;const kd=objKind(q.l);if(!kd)return;
+    if(kd==='candle'){const x=L.cx-R*.9;
+      ctx.save();ctx.fillStyle='rgba(20,30,50,.25)';ctx.beginPath();ctx.ellipse(x,py+2,10*k,3*k,0,0,7);ctx.fill();
+      ctx.fillStyle='#f5e9c8';ctx.strokeStyle='rgba(90,100,110,.8)';rr(x-7*k,py-46*k,14*k,46*k,3);ctx.fill();ctx.stroke();
+      ctx.strokeStyle='#333';ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(x,py-46*k);ctx.lineTo(x,py-52*k);ctx.stroke();ctx.restore();
+      flame(x,py-52*k,26*k,6*k,'#ff9a2e',1);}
+    else if(kd==='fire'){const x=L.cx+R*.9;
+      ctx.save();ctx.fillStyle='#c0c8d2';ctx.strokeStyle='rgba(70,90,110,.8)';rr(x-8*k,py-30*k,16*k,30*k,3);ctx.fill();ctx.stroke();
+      ctx.fillStyle='#555';rr(x-5*k,py-35*k,10*k,6*k,2);ctx.fill();ctx.restore();
+      flame(x,py-35*k,32*k,7*k,'#ff9a2e',1);}
+    else if(kd==='splint'){const x=L.cx+R*.5,tx=x-R*.35,ty=py-90*k;
+      ctx.save();ctx.lineCap='round';ctx.strokeStyle='#c98a4b';ctx.lineWidth=4*k;ctx.beginPath();ctx.moveTo(x,py);ctx.lineTo(tx,ty);ctx.stroke();ctx.restore();
+      if(GX.ft)flame(tx,ty,24*k,6*k,GX.fc,1);
+      else{ctx.fillStyle='#ff5a1a';ctx.beginPath();ctx.arc(tx,ty,3.5*k,0,7);ctx.fill()}}
+    else if(kd==='bridge'){
+      ctx.save();ctx.strokeStyle='#e6d86a';ctx.lineWidth=6*k;ctx.lineCap='round';ctx.globalAlpha=.9;
+      ctx.beginPath();ctx.moveTo(L.cx-R*.4,L.topY+30*k);ctx.quadraticCurveTo(L.cx,L.topY-70*k,L.cx+R*.4,L.topY+30*k);ctx.stroke();ctx.restore();}
+  });
+  if(GX.hl){
+    const r=Math.max(16,22*k),bx=Math.max(r*1.6,W*.14),by=Math.max(r*2,H*.13),on=GX.lA;
+    ctx.save();ctx.strokeStyle='#4a5568';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(bx,by+r*1.7);ctx.quadraticCurveTo(bx,L.topY-10*k,L.cx-L.R*.55,L.topY);ctx.stroke();
+    if(on>.02){const g=ctx.createRadialGradient(bx,by,0,bx,by,r*3.2);g.addColorStop(0,`rgba(255,235,120,${.75*on})`);g.addColorStop(1,'rgba(255,235,120,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(bx,by,r*3.2,0,7);ctx.fill()}
+    ctx.fillStyle=on>.5?'#fff3a0':'#d5dde8';ctx.strokeStyle='#6b7a90';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(bx,by,r,0,7);ctx.fill();ctx.stroke();
+    ctx.fillStyle='#6b7a90';rr(bx-r*.45,by+r*.85,r*.9,r*.75,3);ctx.fill();
+    ctx.strokeStyle=on>.5?'#ff9a00':'#8a96a8';ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(bx-r*.3,by+r*.85);ctx.lineTo(bx-r*.2,by);ctx.lineTo(bx+r*.2,by);ctx.lineTo(bx+r*.3,by+r*.85);ctx.stroke();
+    ctx.restore();
+    if(GX.c.r.some((q,i)=>/^تيار/.test(q.l)&&GX.set.has(i))){
+      const qx=bx+r*2.6,qy=by+r*.9;ctx.save();ctx.fillStyle='#2b6cb0';ctx.strokeStyle='#14213d';ctx.lineWidth=1.2;rr(qx-r*.7,qy-r*.55,r*1.4,r*1.1,4);ctx.fill();ctx.stroke();
+      ctx.fillStyle='#d8dde4';rr(qx+r*.7,qy-r*.2,r*.14,r*.4,2);ctx.fill();ctx.fillStyle='#fff';ctx.font='bold '+(r*.6)+'px sans-serif';ctx.textAlign='center';ctx.fillText('+ −',qx,qy+r*.2);
+      ctx.strokeStyle=on>.5?'#ffb300':'#4a5568';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(qx-r*.7,qy);ctx.lineTo(bx+r*.5,by+r*1.3);ctx.stroke();ctx.restore();}
+  }
+}
+function gxBubbles(L){
+  if(!GX||GX.g<=0||V<1||L.hL<2)return;
+  const n=Math.round(GX.g*7);ctx.save();ctx.lineWidth=1.2;ctx.strokeStyle='rgba(255,255,255,.85)';ctx.fillStyle='rgba(255,255,255,.25)';
+  for(let i=0;i<n;i++){const ph=(time*(.35+(i%5)*.08)+i*.137)%1,x=L.cx+Math.sin(i*12.9898)*L.Rl*.8,y=L.baseL-3*L.k-ph*(L.baseL-L.surfY-6);ctx.beginPath();ctx.arc(x,y,(1.5+i%3)*L.k,0,7);ctx.fill();ctx.stroke()}
+  ctx.restore();
+}
+function gxClear(){
+  GX.set.clear();GX.order=[];GX.heated=GX.cooled=0;GX.fb=0;GX.ft=0;GX.lo=0;GX.tr=HX(CLR);GX.ta=.15;GX.g=0;$('#gxEq').textContent='—';
+  $('#why').textContent='اضغط على أحد الأزرار أسفل الكأس لإضافة المادة، وراقب اللون والرواسب والغازات.';stepsUpdate();setButtons();
+}
+function gxLoad(i){
+  if(act)return;resetAll();
+  const eq=i===EQ||!DS[i];document.body.classList.toggle('gx',!eq);STEPS.length=0;
+  if(eq){GX=null;STEPS.push(...STEPS0);$('h1').innerHTML=H0[0];$('header .sub').innerHTML=H0[1];stepsUpdate();setButtons();return}
+  const c=gxParse(DS[i]);GX={c,i,set:new Set(),order:[],rgb:HX(CLR),tr:HX(CLR),a:.15,ta:.15,g:0,pc:'#fafafa',heated:0,cooled:0,fb:0,ft:0,fc:'#ff9a2e',fbA:0,ftA:0,hl:0,lo:0,lA:0};
+  Object.keys(ACT).filter(k=>k[0]==='g').forEach(k=>delete ACT[k]);
+  c.r.forEach((q,k)=>{const ob=!!objKind(q.l);ACT['g'+k]={gx:k,dv:ob?0:q.v,m:{},obj:ob,drops:ob?1:q.sol?5:10,gap:q.sol?.2:.09,col:ob?'#0000':q.col,chip:q.l}});
+  $('#gp').innerHTML=c.r.map((q,k)=>`<button class="pill b" data-a="g${k}">${q.sol?'＋ ':''}${q.l}${q.sol||objKind(q.l)?'':' '+q.v+' mL'}</button>`).join('')+'<button class="pill g" id="gr">↺ كأس جديد</button>';
+  c.r.forEach((q,k)=>STEPS.push(['أضف '+q.l+(q.sol||objKind(q.l)?'':' ('+q.v+' mL)'),()=>GX&&GX.set.has(k)]));
+  const hs=c.x.some(r=>/[hb]/.test(r.k)),cs=c.x.some(r=>/c/.test(r.k));
+  if(hs)STEPS.push(['سخّن الحمّام المائي إلى 50°م أو أكثر ولاحظ',()=>GX&&GX.heated]);
+  if(cs)STEPS.push(['برّد إلى 12°م أو أقل ولاحظ',()=>GX&&GX.cooled]);
+  $('#gxH').textContent=hs||cs?'🌡️ استخدم شريط الحرارة في لوحة التحكم للتسخين (≥ 50°م)'+(cs?' أو التبريد (≤ 12°م)':'')+'.':'';
+  $('h1').textContent='🧪 '+EXP[i].t;$('header .sub').textContent=STG[EXP[i].s]+' — أضف المواد بالترتيب • اسحب الكأس لتدويره';
+  gxClear();
+}
+$('#gp').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.id==='gr'){resetAll();gxClear();return}if(b.dataset.a&&!act)startAction(b.dataset.a)};
+function gxSel(i){$('#exSel').value=i;gxLoad(i)}
+{const sel=$('#exSel');sel.innerHTML=Object.entries(STG).map(([s,v])=>`<optgroup label="${v}">`+EXP.map((x,i)=>x.s===s?`<option value="${i}">${x.t}</option>`:'').join('')+'</optgroup>').join('');sel.value=EQ;sel.onchange=()=>gxLoad(+sel.value)}
+resize();stepsUpdate();setButtons();
+let last=performance.now();
+(function frame(now){
+  const dt=Math.min(.05,(now-last)/1000);last=now;time+=dt;
+  update(dt);draw();uiUpdate(dt);requestAnimationFrame(frame);
+})(last);
+</script>
+</body>
+</html>ener('pointermove',e=>{if(hold&&hold.drag){const[x,y]=cvPos(e);hold.x=x;hold.y=y;if(Math.hypot(x-hold.x0,y-hold.y0)>6)hold.moved=true;return}if(!drag){cv.style.cursor=hitBottle(e)>=0?'pointer':'';return}yaw=drag.yaw+(e.clientX-drag.x)*.012;pitch=Math.max(.08,Math.min(.7,drag.pitch+(e.clientY-drag.y)*.004))});
 function endHold(){
   cv.style.cursor='';const L=layout();
   if(!hold.moved){const i=hold.i;hold=null;const b=btnFor(i);if(b&&!b.disabled)b.click();return}   // نقرة عادية = صب مباشر
