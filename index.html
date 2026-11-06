@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070d1b">
 <title>معمل الكيمياء الواقعي — الاتزان الكيميائي | الثانوية العامة (مصر)</title>
 <style>
 :root{--bg:#0a1120;--card:#121c33;--line:#233255;--tx:#e8eefc;--mut:#8fa1c7;--cy:#38e1ff;--gold:#ffd34d;--red:#ff4d5e;--ok:#3ddc97;--pu:#c78cff}
@@ -176,6 +177,61 @@ details.dn summary{color:var(--ok)}
 body.gx #p-lab .card:nth-child(2),body.gx .legend,body.gx .tab[data-p=data],body.gx #p-steps .card:first-child,body.gx #steps+.note{display:none}
 body.gx .tabs{grid-template-columns:repeat(4,1fr)}
 body.gx #gp{flex-wrap:wrap;justify-content:center;overflow:visible}
+
+/* ===== Mobile view layer ===== */
+body{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.pill,.tab,button{touch-action:manipulation}
+
+@media(max-width:640px){
+  header{padding:10px 10px 0}
+  h1{font-size:1.05rem;line-height:1.35}
+  .sub{font-size:.73rem;margin-top:2px}
+  .badges{gap:5px;margin-bottom:6px}
+  .badge{font-size:.63rem;padding:2px 8px}
+  .badge:nth-child(2),.badge:nth-child(4){display:none}
+  .prog{margin-top:6px;font-size:.72rem}
+  .grid{padding:6px 8px calc(24px + env(safe-area-inset-bottom));gap:10px}
+  .card{padding:11px;border-radius:16px}
+  .card h3{font-size:.9rem}
+  .stage{border-radius:16px}
+  #scene{aspect-ratio:1/1;max-height:58vh;max-height:58dvh}
+  .pills{padding:8px;gap:7px}
+  .pill{padding:8px 13px;font-size:.82rem}
+  .tabs{display:flex;overflow-x:auto;scrollbar-width:none;gap:4px;padding:4px;top:0}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 auto;padding:8px 12px;font-size:.78rem;white-space:nowrap}
+  .eq{font-size:1.05rem;padding:9px}
+  .status{font-size:.84rem;padding:9px}
+  .coach{font-size:.78rem}
+  .bar{grid-template-columns:78px 1fr 56px;gap:6px;font-size:.72rem}
+  .bar b{font-size:.72rem}
+  .stats b{font-size:1rem}
+  .stats small{font-size:.66rem}
+  #chart{height:120px}
+  ol li{font-size:.8rem;padding:8px 10px;padding-inline-start:40px}
+  #why{font-size:.82rem}
+  .note{font-size:.72rem}
+  .qopt{font-size:.84rem;padding:9px 11px}
+  .mbox{padding:14px}
+  .exsel{padding:8px;font-size:.82rem;margin-top:6px}
+  .kit{font-size:.74rem}
+  details>*:not(summary){font-size:.82rem}
+  #toast{font-size:.82rem;bottom:calc(12px + env(safe-area-inset-bottom))}
+  .spec .big{font-size:1.1rem}
+  .colo{gap:8px}
+  #cuv{width:38px;height:58px}
+  .gauge{font-size:.66rem}
+  .chips .chip{font-size:.72rem;padding:5px 10px}
+  .row input[type=range]::-webkit-slider-thumb{width:22px;height:22px}
+}
+@media(max-width:380px){
+  h1{font-size:.95rem}
+  .badge{font-size:.57rem;padding:2px 6px}
+  .tab{font-size:.72rem;padding:7px 9px}
+  .pill{font-size:.76rem;padding:7px 11px}
+  .bar{grid-template-columns:68px 1fr 50px}
+  #scene{max-height:52vh;max-height:52dvh}
+}
 </style>
 </head>
 <body>
@@ -556,8 +612,10 @@ function resize(){
   const q=hc.getBoundingClientRect();hc.width=q.width*DPR;hc.height=q.height*DPR;hx.setTransform(DPR,0,0,DPR,0,0);
 }
 function layout(){
-  const R=Math.min(W*.29,H*.2),Hh=R*2.2,sP=Math.sin(pitch),cP=Math.cos(pitch),baseY=H*.8,cx=W/2,k=R/80;
-  const Rl=R*.955,baseL=baseY-5*k,hL=Math.max(0,V/100)*Hh*.9*cP/cP;
+  const mob=W<560;
+  const R=Math.min(W*(mob?.30:.29),H*(mob?.27:.2));
+  const Hh=R*2.2,sP=Math.sin(pitch),cP=Math.cos(pitch),baseY=H*(mob?.78:.8),cx=W/2,k=R/80;
+  const Rl=R*.955,baseL=baseY-5*k,hL=Math.max(0,V/100)*Hh*.9;
   return{R,Hh,sP,cP,baseY,cx,k,Rl,baseL,hL,topY:baseY-Hh*cP,surfY:baseL-hL*cP};
 }
 const lerp=(a,b,t)=>a+(b-a)*t;
@@ -732,19 +790,20 @@ function hiddenBottle(){return act?bottleIdx(act.id):hold?hold.i:-1}
 function isSolidAct(){return !!(GX&&act&&act.def.gx!==undefined&&GX.c.r[act.def.gx]&&GX.c.r[act.def.gx].sol)}
 function bottleLayout(L){
   const items=GX?GX.c.r.map(q=>[q.l,0]):[['FeCl₃',0],['KSCN',0],['NaF',0],['AgNO₃',1],['ماء مقطّر',0]],n=items.length,pL=Math.ceil(n/2),pR=n-pL,per=Math.max(pL,pR,1);
-  const sideW=Math.max(60,L.cx-L.R*1.05),bw=Math.min(L.R*.3,sideW/(per*1.55)),bh=bw*(.82/.3),sp=Math.min(bw*1.7,sideW*.9/per),c=sideW*.46;
+  const sideW=Math.max(56,L.cx-L.R*1.05),bw=Math.min(L.R*.3,sideW/(per*1.35)),bh=bw*(.82/.3),sp=Math.min(bw*1.7,sideW*.92/per),c=sideW*.46;
   const list=items.map((it,i)=>{const left=i<pL,j=left?i:i-pL,cnt=left?pL:pR,off=(j-(cnt-1)/2)*sp;return[left?c+off:W-c+off,it[0],it[1]]});
   return{list,bw,bh};
 }
 function drawBottleNames(by){
   if(!BP)return;const{list,bw}=BP;
   ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
+  const tight=bw<26;
   list.forEach(([x,n])=>{
-    let fs=Math.max(11,Math.min(15,bw*.36));ctx.font='bold '+fs+'px sans-serif';
-    const maxW=Math.max(bw*1.5,64);let tw=ctx.measureText(n).width;if(tw>maxW){fs=Math.max(8,fs*maxW/tw);ctx.font='bold '+fs+'px sans-serif';tw=ctx.measureText(n).width}
-    const y=by+bw*.38+fs*.9;
-    ctx.fillStyle='rgba(255,255,255,.9)';rr(x-tw/2-6,y-fs*.75,tw+12,fs*1.5,fs*.75);ctx.fill();
-    ctx.fillStyle='#14213d';ctx.fillText(n,x,y);
+    let fs=Math.max(tight?8:11,Math.min(15,bw*(tight?.48:.36)));ctx.font='bold '+fs+'px sans-serif';
+    const maxW=bw*1.6;let tw=ctx.measureText(n).width;if(tw>maxW){fs=Math.max(7,fs*maxW/tw);ctx.font='bold '+fs+'px sans-serif';tw=ctx.measureText(n).width}
+    const y=by+bw*.38+fs*.95;
+    if(tight){ctx.lineWidth=Math.max(2.5,fs*.45);ctx.strokeStyle='rgba(255,255,255,.92)';ctx.lineJoin='round';ctx.strokeText(n,x,y);ctx.fillStyle='#14213d';ctx.fillText(n,x,y)}
+    else{ctx.fillStyle='rgba(255,255,255,.9)';rr(x-tw/2-6,y-fs*.75,tw+12,fs*1.5,fs*.75);ctx.fill();ctx.fillStyle='#14213d';ctx.fillText(n,x,y)}
   });
   ctx.restore();
 }
@@ -1144,7 +1203,7 @@ e|التغير الفيزيائي والكيميائي (شمعة / شريط Mg)|
 e|تحضير الأكسجين (H₂O₂ + MnO₂) وكشفه|يشتعل عود الثقاب المتوهج في الغاز، وMnO₂ عامل مساعد.
 e|تحضير ثاني أكسيد الكربون وكشفه بماء الجير|CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂، ويعكّر ماء الجير.
 e|تحضير الهيدروجين (Zn + HCl)|يحترق الغاز بفرقعة عند تقريب لهب: Zn + 2HCl → ZnCl₂ + H₂.
-e|الكشف عن الأحماض والقواعد بالكواشف وورق pH|تتلوّن الكواشف حسب الوسط (راجع جدول الألوان).
+e|الكشف عن الأحماض والقواعد بالكواشف وورق pH|تتلوّن الكواشف حسب الوسط (راجع جدول ألوان الكواشف).
 e|التعادل: HCl مع NaOH بالفينولفثالين|يزول اللون الوردي عند نقطة التعادل ويتكوّن NaCl وماء.
 e|مقارنة نشاط الفلزات مع الماء والحمض|الترتيب: Na ثم Mg ثم Zn ثم Fe، والنحاس لا يتفاعل مع HCl المخفف.
 e|التحليل الكهربي للماء|يتصاعد H₂ عند الكاثود وO₂ عند الأنود بنسبة حجمية 2 : 1.
