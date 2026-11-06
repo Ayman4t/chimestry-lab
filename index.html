@@ -4,27 +4,35 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#070d1b">
-<title>معمل الكيمياء الواقعي — الاتزان الكيميائي | الثانوية العامة (مصر)</title>
+<title>🧪 المختبر الكيميائي الشامل — تجارب تفاعلية</title>
 <style>
 :root{--bg:#0a1120;--card:#121c33;--line:#233255;--tx:#e8eefc;--mut:#8fa1c7;--cy:#38e1ff;--gold:#ffd34d;--red:#ff4d5e;--ok:#3ddc97;--pu:#c78cff}
-*{box-sizing:border-box}
-body{margin:0;background:radial-gradient(1200px 600px at 70% -10%,#16264a,#0a1120);color:var(--tx);font-family:"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.6}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+body{background:radial-gradient(1200px 600px at 70% -10%,#16264a,#0a1120);color:var(--tx);font-family:"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.6}
 header{padding:14px 16px 4px}
 h1{margin:0;font-size:1.12rem}
 .sub{color:var(--mut);font-size:.8rem}
-.grid{display:grid;gap:12px;padding:10px 12px 28px;max-width:1200px;margin:auto}
-@media(min-width:900px){.grid{grid-template-columns:1.1fr 1fr}.stage{position:sticky;top:10px;align-self:start}}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px}
+.grid{display:grid;gap:12px;padding:10px 12px 28px;width:100%;margin:auto;max-width:1200px;grid-template-columns:1fr}
+.left, .right {min-width: 0; width: 100%;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;min-width: 0;}
 .card h3{margin:0 0 8px;font-size:.95rem;color:var(--cy)}
-.stage{border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#1b2030}
-#scene{width:100%;aspect-ratio:3/4;max-height:80vh;display:block;touch-action:pan-y;cursor:grab;background:#dbe7f1}
-@media(min-width:900px){#scene{aspect-ratio:4/5}}
-.pills{display:flex;gap:8px;overflow-x:auto;padding:10px;background:#1b2030;scrollbar-width:none}
+.stage{border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#1b2030;width:100%;min-width:0}
+#scene{width:100%;height:auto;aspect-ratio:1/1;max-height:55vh;display:block;touch-action:pan-y;cursor:grab;background:#dbe7f1}
+
+/* Pills Scroll */
+.pills{display:flex;gap:8px;overflow-x:auto;padding:10px;background:#1b2030;scrollbar-width:none;-webkit-overflow-scrolling:touch;width:100%}
 .pills::-webkit-scrollbar{display:none}
 .pill{flex:0 0 auto;font:inherit;font-weight:800;letter-spacing:.2px;background:#efefef;border:0;border-radius:999px;padding:9px 16px;cursor:pointer;white-space:nowrap;font-size:.92rem;transition:.12s}
 .pill:hover:not(:disabled){transform:translateY(-1px);background:#fff}
 .pill:disabled{opacity:.4;cursor:not-allowed}
 .pill.b{color:#0a8cff}.pill.o{color:#ff5a00}.pill.p{color:#a0149f}.pill.g{color:#333}
+
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px;font-size:.82rem;color:var(--mut)}
 .row input[type=range]{flex:1;min-width:120px;accent-color:var(--cy)}
 .legend{display:flex;gap:12px;flex-wrap:wrap;font-size:.78rem;color:var(--mut);margin-top:6px}
@@ -34,7 +42,7 @@ h1{margin:0;font-size:1.12rem}
 .status{margin-top:8px;padding:10px;border-radius:10px;background:#0c1530;border:1px solid var(--line);font-size:.9rem;text-align:center}
 button{font:inherit;color:var(--tx);background:#1a2850;border:1px solid #2d4180;border-radius:12px;padding:9px 8px;cursor:pointer}
 button:disabled{opacity:.4;cursor:not-allowed}
-.bar{display:grid;grid-template-columns:96px 1fr 62px;gap:8px;align-items:center;font-size:.78rem;margin:5px 0}
+.bar{display:grid;grid-template-columns:86px 1fr 62px;gap:8px;align-items:center;font-size:.78rem;margin:5px 0}
 .bar i{display:block;height:10px;border-radius:6px;background:#0c1530;overflow:hidden}
 .bar i span{display:block;height:100%;width:0;border-radius:6px;transition:width .12s}
 .bar b{direction:ltr;text-align:left;font-size:.78rem}
@@ -44,26 +52,27 @@ ol li.done{color:var(--ok);text-decoration:line-through;text-decoration-color:#3
 ol li.next{color:var(--gold);font-weight:700}
 #why{font-size:.88rem;min-height:3.2em}
 #chart{width:100%;height:150px;display:block;background:#0c1530;border-radius:10px}
-.colo{display:flex;gap:12px;align-items:center}
+.colo{display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
 #cuv{width:46px;height:70px;border-radius:4px 4px 10px 10px;border:2px solid #9fb6e0;background:#ddd;box-shadow:inset 0 0 8px #0006}
 .big{font-size:1.5rem;font-weight:700;direction:ltr;color:var(--gold)}
 .note{font-size:.76rem;color:var(--mut)}
 .toggle{display:flex;align-items:center;gap:6px}
-#modal{position:fixed;inset:0;background:#000a;display:flex;align-items:center;justify-content:center;z-index:9;padding:16px}
+#modal{position:fixed;inset:0;background:#000a;display:flex;align-items:center;justify-content:center;z-index:99;padding:16px}
 #modal[hidden]{display:none}
 .mbox{background:var(--card);border:1px solid var(--cy);border-radius:16px;padding:16px;max-width:420px;width:100%}
 .mbox h3{margin:0 0 6px;color:var(--gold)}
 .opts{display:grid;gap:8px;margin-top:10px}
-#toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#0c1530;border:1px solid var(--cy);padding:10px 14px;border-radius:12px;max-width:92vw;font-size:.88rem;z-index:10;display:none}
-/* ===== Visual upgrade layer (UI only — beaker rendering untouched) ===== */
+#toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#0c1530;border:1px solid var(--cy);padding:10px 14px;border-radius:12px;max-width:92vw;font-size:.88rem;z-index:10;display:none;text-align:center;box-shadow:0 10px 30px #000}
+
+/* Visual Upgrade */
 :root{--glass:rgba(18,28,54,.62);--glow:0 0 0 1px rgba(56,225,255,.14),0 10px 30px -12px rgba(0,0,0,.7)}
-body{background:#070d1b;position:relative;min-height:100vh;overflow-x:hidden}
+body{background:#070d1b;position:relative;min-height:100vh}
 body::before,body::after{content:"";position:fixed;z-index:-1;width:60vmax;height:60vmax;border-radius:50%;filter:blur(90px);opacity:.35;pointer-events:none;animation:drift 22s ease-in-out infinite alternate}
 body::before{background:radial-gradient(circle,#1b6bff,transparent 65%);top:-25vmax;right:-15vmax}
 body::after{background:radial-gradient(circle,#ff4d5e,transparent 65%);bottom:-30vmax;left:-20vmax;animation-delay:-8s;opacity:.22}
 @keyframes drift{to{transform:translate(6vmax,4vmax) scale(1.12)}}
 header{max-width:1200px;margin:auto;padding:18px 14px 6px}
-h1{font-size:1.35rem;font-weight:800;background:linear-gradient(90deg,#fff,var(--cy) 55%,#8aa8ff);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.2px}
+h1{font-size:1.25rem;font-weight:800;background:linear-gradient(90deg,#fff,var(--cy) 55%,#8aa8ff);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.2px}
 .sub{opacity:.9}
 .prog{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:.78rem;color:var(--mut)}
 .prog i{flex:1;height:7px;border-radius:99px;background:#ffffff14;overflow:hidden;display:block}
@@ -81,9 +90,8 @@ h1{font-size:1.35rem;font-weight:800;background:linear-gradient(90deg,#fff,var(-
 button{background:linear-gradient(180deg,#22377a,#182958)}
 .row input[type=range]{height:6px;-webkit-appearance:none;appearance:none;border-radius:99px;background:linear-gradient(90deg,#38e1ff55,#ffd34d55,#ff4d5e88);outline:none}
 .row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid var(--cy);box-shadow:0 0 12px var(--cy);cursor:pointer}
-.row input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--cy);cursor:pointer}
 .row input[type=checkbox]{accent-color:var(--cy);width:16px;height:16px}
-.eq{background:linear-gradient(135deg,#0c1735,#14214a);border:1px solid rgba(56,225,255,.25);font-size:1.3rem;font-weight:700;padding:12px}
+.eq{background:linear-gradient(135deg,#0c1735,#14214a);border:1px solid rgba(56,225,255,.25);font-size:1.2rem;font-weight:700;padding:12px}
 .status{background:linear-gradient(135deg,#0c1735,#101c40);transition:box-shadow .3s,border-color .3s}
 .gauge{direction:ltr;display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;margin-top:10px;font-size:.72rem;color:var(--mut)}
 .gtrack{position:relative;height:12px;border-radius:99px;background:linear-gradient(90deg,#c78cff,#2a3560 42%,#2a3560 58%,#ffd34d);box-shadow:inset 0 1px 4px #0008}
@@ -93,12 +101,11 @@ button{background:linear-gradient(180deg,#22377a,#182958)}
 .coach b{color:var(--gold)}
 .bar i{height:11px;background:#08102a;box-shadow:inset 0 1px 3px #000a}
 .bar i span{box-shadow:0 0 10px currentColor;position:relative}
-.bar i span::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.35),transparent 60%)}
 #chart{background:linear-gradient(180deg,#0a1230,#0c1530);border:1px solid rgba(255,255,255,.06)}
 #cuv{border-radius:5px 5px 14px 14px;border:2px solid #b7c9ee;transition:background .4s;box-shadow:inset 0 0 10px #0007,0 0 18px rgba(255,120,80,.25)}
 .big{text-shadow:0 0 18px rgba(255,211,77,.45)}
 ol{list-style:none;padding:0;counter-reset:s}
-ol li{counter-increment:s;position:relative;padding:8px 12px 8px 12px;padding-inline-start:44px;margin:6px 0;border-radius:12px;background:#ffffff08;border:1px solid transparent;transition:.3s}
+ol li{counter-increment:s;position:relative;padding:8px 12px;padding-inline-start:44px;margin:6px 0;border-radius:12px;background:#ffffff08;border:1px solid transparent;transition:.3s}
 ol li::before{content:counter(s);position:absolute;inset-inline-start:10px;top:50%;transform:translateY(-50%);width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:.75rem;font-weight:800;background:#1a2850;color:var(--mut)}
 ol li.done::before{content:"✓";background:var(--ok);color:#06240f}
 ol li.next{background:rgba(255,211,77,.09);border-color:rgba(255,211,77,.4);animation:pulse 2s infinite}
@@ -110,18 +117,15 @@ ol li.next::before{background:var(--gold);color:#241a00}
 #modal{backdrop-filter:blur(6px)}
 @keyframes pop{from{transform:scale(.9);opacity:0}}
 .opts button:hover{border-color:var(--cy);box-shadow:0 0 14px -4px var(--cy)}
-#toast{background:linear-gradient(135deg,#0e1a3d,#14224d);box-shadow:0 10px 40px -8px #000,0 0 24px -8px var(--cy)}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
-/* ===== Layout v3: tabs, curriculum, badges ===== */
+/* Tabs & Layout */
 .badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
 .badge{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:99px;background:#ffffff10;border:1px solid #ffffff22;color:#cfe0ff}
 .badge.eg{background:linear-gradient(90deg,#ce1126aa,#fff3,#000a);border-color:#ffffff44;color:#fff}
 .badge.gold{background:linear-gradient(135deg,#ffd34d,#ff9f1a);color:#2a1a00;border:0}
-.right{display:flex;flex-direction:column;gap:12px;align-content:start;min-width:0}
-.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:5px;border-radius:16px;background:var(--glass);border:1px solid rgba(120,160,255,.16);position:sticky;top:6px;z-index:5;backdrop-filter:blur(12px)}
-.tab{padding:9px 4px;font-size:.84rem;font-weight:700;border:0;border-radius:12px;background:transparent;color:var(--mut);transition:.2s}
-.tab:hover{color:var(--tx);background:#ffffff0c}
+.tabs{display:flex;overflow-x:auto;gap:6px;padding:5px;border-radius:16px;background:var(--glass);border:1px solid rgba(120,160,255,.16);position:sticky;top:6px;z-index:5;backdrop-filter:blur(12px);scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;padding:9px 14px;font-size:.85rem;font-weight:700;border:0;border-radius:12px;background:transparent;color:var(--mut);transition:.2s;white-space:nowrap}
 .tab.on{background:linear-gradient(135deg,#1f5bff,#14b8ff);color:#fff;box-shadow:0 6px 18px -6px #1f8bff}
 .panel{display:grid;gap:12px;align-content:start;animation:fade .35s}
 .panel[hidden]{display:none}
@@ -129,7 +133,6 @@ ol li.next::before{background:var(--gold);color:#241a00}
 .stats div{background:#0c1530;border:1px solid var(--line);border-radius:12px;padding:6px 10px;text-align:center}
 .stats small{display:block;color:var(--mut);font-size:.7rem}
 .stats b{font-size:1.15rem}
-.ltr{direction:ltr;unicode-bidi:embed;display:inline-block}
 details{border:1px solid #ffffff12;border-radius:12px;margin:8px 0;background:#ffffff06;overflow:hidden}
 summary{cursor:pointer;padding:10px 12px;font-weight:700;font-size:.9rem;list-style:none;display:flex;justify-content:space-between;gap:8px}
 summary::after{content:"＋";color:var(--cy)}
@@ -137,7 +140,6 @@ details[open] summary::after{content:"－"}
 details[open] summary{color:var(--gold);border-bottom:1px solid #ffffff10}
 summary::-webkit-details-marker{display:none}
 details>*:not(summary){margin:8px 12px;font-size:.86rem}
-details ul{padding-inline-start:20px}details li{margin:4px 0}
 .formula{direction:ltr;text-align:center;padding:10px;border-radius:10px;background:#0c1530;border:1px dashed var(--cy);font-size:1.05rem;color:var(--gold)}
 .qopt{display:block;width:100%;text-align:start;margin-top:8px;padding:10px 12px;font-size:.88rem}
 .qopt.ok{background:linear-gradient(180deg,#1f9d63,#157a4a);border-color:var(--ok)}
@@ -146,24 +148,6 @@ details ul{padding-inline-start:20px}details li{margin:4px 0}
 .qq{font-weight:700;font-size:.95rem;line-height:1.7}
 .qexp{margin-top:10px;padding:9px 12px;border-radius:10px;background:#ffffff08;border-inline-start:3px solid var(--ok);font-size:.84rem}
 .qnext{margin-top:10px;width:100%;background:linear-gradient(135deg,#1f5bff,#14b8ff);border:0;font-weight:700}
-@media(min-width:900px){
-  .grid{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);align-items:start}
-  .left{position:sticky;top:10px}
-  .stage{position:static}
-}
-@media(max-width:899px){.tabs{top:0}}
-
-.spec{background:#0c1530;border:1px solid var(--line);border-radius:12px;padding:10px;gap:4px}
-.spec .lamp{display:flex;flex-direction:column;align-items:center;font-size:1.4rem}.spec .lamp small{font-size:.62rem;color:var(--mut)}
-.spec .bm{flex:1;height:3px;min-width:14px;background:linear-gradient(90deg,#ffe28a,#ff9d3d);box-shadow:0 0 8px #ffb347}
-.spec .big{background:#0b2a1b;color:#5dff9b;border:1px solid #1f6b43;border-radius:6px;padding:2px 8px;font-family:monospace;text-shadow:0 0 6px #5dff9b88}
-.kit{width:100%;border-collapse:collapse;font-size:.8rem}.kit td{border-bottom:1px solid #ffffff12;padding:6px 4px;color:var(--mut);vertical-align:top}.kit td:first-child{color:var(--tx);font-weight:700;white-space:nowrap}
-.warn{border-inline-start:3px solid var(--red);background:#ff4d5e12;padding:8px 10px;border-radius:8px;font-size:.8rem;margin-top:8px}
-.calc{display:grid;gap:8px;font-size:.84rem}.calc select,.calc input{font:inherit;color:var(--tx);background:#0c1530;border:1px solid var(--line);border-radius:10px;padding:8px;width:100%}
-.unit{font-size:.74rem;color:var(--pu);margin:10px 0 2px;font-weight:800}
-
-/* ===== Library v4: all-stage experiments ===== */
-.tabs{grid-template-columns:repeat(5,1fr)}.tab{font-size:.76rem;padding:9px 2px}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
 .chip{padding:6px 12px;font-size:.78rem;border-radius:99px;font-weight:700;background:#ffffff0a;border-color:#ffffff22;color:var(--mut)}
 .chip.on{background:linear-gradient(135deg,#1f5bff,#14b8ff);color:#fff;border:0}
@@ -172,73 +156,31 @@ details ul{padding-inline-start:20px}details li{margin:4px 0}
 .exb{display:flex;gap:8px;flex-wrap:wrap}.exb button{padding:7px 12px;font-size:.8rem}
 details.dn summary{color:var(--ok)}
 .tg{display:flex;flex-wrap:wrap;gap:6px}.tg span{background:#ffffff0c;border:1px solid #ffffff18;border-radius:8px;padding:3px 9px;font-size:.78rem}
-.exsel{font:inherit;color:var(--tx);background:#0c1530;border:1px solid var(--cy);border-radius:12px;padding:9px;width:100%;margin-top:10px}
+.exsel{font:inherit;color:var(--tx);background:#0c1530;border:1px solid var(--cy);border-radius:12px;padding:9px;width:100%;margin-top:10px;font-size:.85rem}
 #gp,#gxCard{display:none}body.gx #gp{display:flex}body.gx .pills:not(#gp){display:none}body.gx #gxCard{display:block}
 body.gx #p-lab .card:nth-child(2),body.gx .legend,body.gx .tab[data-p=data],body.gx #p-steps .card:first-child,body.gx #steps+.note{display:none}
-body.gx .tabs{grid-template-columns:repeat(4,1fr)}
 body.gx #gp{flex-wrap:wrap;justify-content:center;overflow:visible}
+.kit{width:100%;border-collapse:collapse;font-size:.8rem}.kit td{border-bottom:1px solid #ffffff12;padding:6px 4px;color:var(--mut);vertical-align:top}.kit td:first-child{color:var(--tx);font-weight:700;white-space:nowrap}
+.warn{border-inline-start:3px solid var(--red);background:#ff4d5e12;padding:8px 10px;border-radius:8px;font-size:.8rem;margin-top:8px}
+.calc{display:grid;gap:8px;font-size:.84rem}.calc select,.calc input{font:inherit;color:var(--tx);background:#0c1530;border:1px solid var(--line);border-radius:10px;padding:8px;width:100%}
+.unit{font-size:.74rem;color:var(--pu);margin:10px 0 2px;font-weight:800}
 
-/* ===== Mobile view layer ===== */
-body{-webkit-text-size-adjust:100%;text-size-adjust:100%}
-.pill,.tab,button{touch-action:manipulation}
-
-@media(max-width:640px){
-  header{padding:10px 10px 0}
-  h1{font-size:1.05rem;line-height:1.35}
-  .sub{font-size:.73rem;margin-top:2px}
-  .badges{gap:5px;margin-bottom:6px}
-  .badge{font-size:.63rem;padding:2px 8px}
-  .badge:nth-child(2),.badge:nth-child(4){display:none}
-  .prog{margin-top:6px;font-size:.72rem}
-  .grid{padding:6px 8px calc(24px + env(safe-area-inset-bottom));gap:10px}
-  .card{padding:11px;border-radius:16px}
-  .card h3{font-size:.9rem}
-  .stage{border-radius:16px}
-  #scene{aspect-ratio:1/1;max-height:58vh;max-height:58dvh}
-  .pills{padding:8px;gap:7px}
-  .pill{padding:8px 13px;font-size:.82rem}
-  .tabs{display:flex;overflow-x:auto;scrollbar-width:none;gap:4px;padding:4px;top:0}
-  .tabs::-webkit-scrollbar{display:none}
-  .tab{flex:0 0 auto;padding:8px 12px;font-size:.78rem;white-space:nowrap}
-  .eq{font-size:1.05rem;padding:9px}
-  .status{font-size:.84rem;padding:9px}
-  .coach{font-size:.78rem}
-  .bar{grid-template-columns:78px 1fr 56px;gap:6px;font-size:.72rem}
-  .bar b{font-size:.72rem}
-  .stats b{font-size:1rem}
-  .stats small{font-size:.66rem}
-  #chart{height:120px}
-  ol li{font-size:.8rem;padding:8px 10px;padding-inline-start:40px}
-  #why{font-size:.82rem}
-  .note{font-size:.72rem}
-  .qopt{font-size:.84rem;padding:9px 11px}
-  .mbox{padding:14px}
-  .exsel{padding:8px;font-size:.82rem;margin-top:6px}
-  .kit{font-size:.74rem}
-  details>*:not(summary){font-size:.82rem}
-  #toast{font-size:.82rem;bottom:calc(12px + env(safe-area-inset-bottom))}
-  .spec .big{font-size:1.1rem}
-  .colo{gap:8px}
-  #cuv{width:38px;height:58px}
-  .gauge{font-size:.66rem}
-  .chips .chip{font-size:.72rem;padding:5px 10px}
-  .row input[type=range]::-webkit-slider-thumb{width:22px;height:22px}
+@media(min-width:900px){
+  .grid{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);align-items:start}
+  .left{position:sticky;top:10px}
+  #scene{aspect-ratio:4/5;max-height:80vh}
+  .tabs{display:grid;grid-template-columns:repeat(5,1fr)}
+  .tab{padding:9px 4px;text-align:center}
+  body.gx .tabs{grid-template-columns:repeat(4,1fr)}
 }
-@media(max-width:380px){
-  h1{font-size:.95rem}
-  .badge{font-size:.57rem;padding:2px 6px}
-  .tab{font-size:.72rem;padding:7px 9px}
-  .pill{font-size:.76rem;padding:7px 11px}
-  .bar{grid-template-columns:68px 1fr 50px}
-  #scene{max-height:52vh;max-height:52dvh}
-}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <header>
-  <div class="badges"><span class="badge eg">🇪🇬 مصر</span><span class="badge">كل المراحل</span><span class="badge">الثانوية العامة</span><span class="badge">الصف الثالث الثانوي</span><span class="badge gold">كيمياء — الفصل الأول</span></div>
-  <h1>🧪 الفصل الأول: الاتزان الكيميائي — النشاط الأول</h1>
-  <div class="sub">تأثير التركيز والتخفيف والحرارة على اتزان Fe³⁺ + SCN⁻ ⇌ [Fe(SCN)]²⁺ • اسحب الكأس لتدويره</div>
+  <div class="badges"><span class="badge eg">🇪🇬 مصر</span><span class="badge">كل المراحل</span><span class="badge">تفاعلي</span><span class="badge gold">معمل افتراضي</span></div>
+  <h1>🧪 المختبر الكيميائي الشامل — تجارب تفاعلية</h1>
+  <div class="sub">استكشف تفاعلات الاتزان الكيميائي وتأثير التركيز والحرارة • اسحب الكأس لتدويره</div>
   <div class="prog"><span id="progT">0 / 7</span><i><span id="progB"></span></i></div>
   <select id="exSel" class="exsel" aria-label="اختر التجربة"></select>
 </header>
@@ -266,7 +208,8 @@ body{-webkit-text-size-adjust:100%;text-size-adjust:100%}
       <button class="tab on" data-p="lab" role="tab">🧪 التجربة</button>
       <button class="tab" data-p="data" role="tab">📊 القياسات</button>
       <button class="tab" data-p="steps" role="tab">📋 الخطوات</button>
-      <button class="tab" data-p="study" role="tab">📚 المنهج</button><button class="tab" data-p="all" role="tab">🗂️ كل التجارب</button>
+      <button class="tab" data-p="study" role="tab">📚 المنهج</button>
+      <button class="tab" data-p="all" role="tab">🗂️ كل التجارب</button>
     </nav>
 
     <div class="panel" id="p-lab">
@@ -292,13 +235,13 @@ body{-webkit-text-size-adjust:100%;text-size-adjust:100%}
           <span><i class="dot" style="background:#2aa6e0"></i>SCN⁻</span>
           <span><i class="dot" style="background:#c4182a"></i>[Fe(SCN)]²⁺</span>
         </div>
-        <div class="note" style="margin-top:6px">كل جسيم في العرض المجهري يمثّل عددًا هائلًا من الأيونات (للتوضيح). أيونات Cl⁻ وK⁺ غير مرسومة لأنها متفرّجة.</div>
+        <div class="note" style="margin-top:6px">كل جسيم في العرض المجهري يمثّل عددًا هائلًا من الأيونات (للتوضيح).</div>
       </div>
 
       <div class="card">
         <h3>⚗️ المعادلة والاتزان</h3>
         <div class="eq"><span class="y">Fe³⁺</span> + SCN⁻ <span id="arr">⇌</span> <span class="r">[Fe(SCN)]²⁺</span></div>
-        <div class="sub" style="text-align:center;margin-top:4px">شبه عديم اللون + عديم اللون ⇌ برتقالي-أحمر &nbsp;|&nbsp; طارد للحرارة (ΔH ≈ −20 kJ/mol)</div>
+        <div class="sub" style="text-align:center;margin-top:4px;font-size:.75rem">شبه عديم اللون + عديم اللون ⇌ برتقالي-أحمر &nbsp;|&nbsp; طارد للحرارة (ΔH ≈ −20 kJ/mol)</div>
         <div class="status" id="status">ابدأ بصبّ FeCl₃ في الكأس</div>
         <div class="gauge"><span>◀ يسارًا</span><div class="gtrack"><em></em><i id="needle"></i></div><span>يمينًا ▶</span></div>
         <div class="coach" id="coach"></div>
@@ -324,7 +267,7 @@ body{-webkit-text-size-adjust:100%;text-size-adjust:100%}
           <div>
             <div class="note">الامتصاصية عند 447 nm (خلية 1 cm)</div>
             <div class="big" id="absA">A = 0.000</div>
-            <div class="note">A = ε·ℓ·[Fe(SCN)²⁺] , ε ≈ 4700 L/(mol·cm)</div>
+            <div class="note">A = ε·ℓ·[Fe(SCN)²⁺] , ε ≈ 4700</div>
           </div>
         </div>
       </div>
@@ -336,7 +279,7 @@ body{-webkit-text-size-adjust:100%;text-size-adjust:100%}
         <div class="bar"><span>سرعة طردي →</span><i><span id="bF" style="background:var(--ok)"></span></i><b id="vF">0</b></div>
         <div class="bar"><span>سرعة عكسي ←</span><i><span id="bR" style="background:var(--pu)"></span></i><b id="vR">0</b></div>
         <canvas id="chart"></canvas>
-        <div class="note">الرسم (mM): أصفر Fe³⁺ ، أزرق SCN⁻ ، أحمر المعقد ×10 • الخطوط المنقّطة = لحظة تغيير الظروف.<br>الزمن في المحاكاة مُبطّأ؛ الاتزان الحقيقي لهذا التفاعل يتم في أقل من ثانية.</div>
+        <div class="note">الرسم (mM): أصفر Fe³⁺ ، أزرق SCN⁻ ، أحمر المعقد ×10 • الخطوط المنقّطة = لحظة تغيير الظروف.</div>
       </div>
     </div>
 
@@ -364,7 +307,7 @@ body{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 
     <div class="panel" id="p-study" hidden>
       <div class="card">
-        <h3>📚 الاتزان الكيميائي — الثانوية العامة (مصر)</h3>
+        <h3>📚 الاتزان الكيميائي — مراجعة شاملة</h3>
         <details open><summary>١) التفاعل الانعكاسي والاتزان الديناميكي</summary>
           <p>التفاعل الانعكاسي يسير في الاتجاهين (⇌). عند <b>الاتزان</b> تتساوى سرعة التفاعل الطردي مع سرعة العكسي، فتثبت التركيزات (وليست متساوية بالضرورة) بينما يستمر التفاعلان — لذلك يسمّى <b>اتزانًا ديناميكيًا</b>.</p></details>
         <details><summary>٢) قانون فعل الكتلة وثابت الاتزان Kc</summary>
@@ -388,7 +331,7 @@ body{-webkit-text-size-adjust:100%;text-size-adjust:100%}
           <span class="ltr">N₂O₄ ⇌ 2NO₂ (ماص)</span> — رفع الحرارة يُغمّق اللون البني.</p></details>
       </div>
       <div class="card">
-        <h3>📖 دروس إضافية — كيمياء الثانوية العامة (مصر)</h3>
+        <h3>📖 دروس إضافية — كيمياء</h3>
         <div class="note">ملخّصات للمراجعة، وقد يختلف الترتيب قليلًا عن كتاب مدرستك.</div>
         <div class="unit">🔹 الاتزان الأيوني</div>
         <details><summary>٦) الأحماض والقواعد</summary><ul>
@@ -421,18 +364,16 @@ body{-webkit-text-size-adjust:100%;text-size-adjust:100%}
           <div class="eq" id="calcOut"></div>
           <div class="note">قلّل C وشاهد زيادة α مع ثبات Ka (قانون استفالد).</div>
         </div>
-        <div class="unit">🔹 الكيمياء الحرارية</div>
+        <div class="unit">🔹 الكيمياء الحرارية والكهربية</div>
         <details><summary>١١) حرارة التفاعل وقانون هس</summary><ul>
           <li>ΔH سالبة ← تفاعل <b>طارد</b> للحرارة، وΔH موجبة ← تفاعل <b>ماص</b>.</li>
           <li><b>قانون هس:</b> ΔH الكلية لا تتوقف على الطريق بل على الحالة الابتدائية والنهائية.</li></ul>
           <div class="formula">ΔH° = ΣΔHf°(النواتج) − ΣΔHf°(المتفاعلات)</div>
           <p>تفاعل Fe³⁺ مع SCN⁻ طارد (ΔH ≈ −20 kJ/mol)، ولذلك يقل Kc بالتسخين.</p></details>
-        <div class="unit">🔹 الكيمياء الكهربية</div>
         <details><summary>١٢) الخلية الجلفانية (الفولتية)</summary><ul>
           <li><b>الأنود:</b> تحدث عنده الأكسدة (القطب السالب)، و<b>الكاثود:</b> يحدث عنده الاختزال (القطب الموجب).</li>
           <li>القنطرة الملحية تحفظ تعادل الشحنات وتغلق الدائرة.</li></ul>
-          <div class="formula">E°cell = E°(الكاثود) − E°(الأنود)</div>
-          <p>مثال: خلية Zn|Zn²⁺ ‖ Cu²⁺|Cu جهدها القياسي ≈ 1.10 V.</p></details>
+          <div class="formula">E°cell = E°(الكاثود) − E°(الأنود)</div></details>
         <details><summary>١٣) التحليل الكهربي وقانونا فاراداي</summary>
           <div class="formula">m = (M / n) × (I·t / 96500)</div>
           <ul><li>كتلة المادة المترسبة تتناسب طرديًا مع كمية الكهرباء Q = I·t.</li>
@@ -450,7 +391,7 @@ body{-webkit-text-size-adjust:100%;text-size-adjust:100%}
         <div class="prog"><span id="exP">0 / 0</span><i><span id="exB"></span></i></div>
         <div class="chips" id="exF"></div>
         <input id="exq" type="search" placeholder="🔍 ابحث عن تجربة…">
-        <div class="note" style="margin-top:6px">كل تجربة لها زر «افتح في المعمل» لتجربتها تفاعليًا على الكأس (أو اخترها من القائمة أعلى الصفحة). توزيع التجارب على الصفوف تقريبي وقد يختلف حسب طبعة الكتاب، فراجع كتاب مدرستك.</div>
+        <div class="note" style="margin-top:6px">كل تجربة لها زر «افتح في المعمل» لتجربتها تفاعليًا على الكأس (أو اخترها من القائمة أعلى الصفحة).</div>
         <div id="exList"></div>
       </div>
       <div class="card">
@@ -612,9 +553,13 @@ function resize(){
   const q=hc.getBoundingClientRect();hc.width=q.width*DPR;hc.height=q.height*DPR;hx.setTransform(DPR,0,0,DPR,0,0);
 }
 function layout(){
-  const mob=W<560;
-  const R=Math.min(W*(mob?.30:.29),H*(mob?.27:.2));
-  const Hh=R*2.2,sP=Math.sin(pitch),cP=Math.cos(pitch),baseY=H*(mob?.78:.8),cx=W/2,k=R/80;
+  const mob=W<600;
+  // تعديل أبعاد الرسم بناء على عرض الشاشة لضمان عدم القص
+  const R=Math.min(W*(mob?0.34:0.29), H*(mob?0.35:0.2));
+  const Hh=R*(mob?1.8:2.2);
+  const sP=Math.sin(pitch),cP=Math.cos(pitch);
+  const baseY=H*(mob?0.82:0.8);
+  const cx=W/2,k=R/80;
   const Rl=R*.955,baseL=baseY-5*k,hL=Math.max(0,V/100)*Hh*.9;
   return{R,Hh,sP,cP,baseY,cx,k,Rl,baseL,hL,topY:baseY-Hh*cP,surfY:baseL-hL*cP};
 }
@@ -629,7 +574,7 @@ function proj(p,L,c,s){
   return{sx:L.cx+xr*sc,sy:L.baseL+zr*L.sP*sc-Y*L.cP,s:sc,z:zr/L.R};
 }
 
-/* ---------- الغرفة (استديو فاتح + أرضية لامعة) ---------- */
+/* ---------- الغرفة والكأس ---------- */
 function softEllipse(cx,cy,rx,ry,col0,col1){
   ctx.save();ctx.translate(cx,cy);ctx.scale(1,ry/rx);
   const g=ctx.createRadialGradient(0,0,0,0,0,rx);g.addColorStop(0,col0);g.addColorStop(1,col1);
@@ -644,10 +589,8 @@ function drawRoom(L){
   g=ctx.createLinearGradient(0,hy-30,0,hy+40);g.addColorStop(0,'rgba(255,255,255,0)');g.addColorStop(.5,'rgba(255,255,255,.45)');g.addColorStop(1,'rgba(255,255,255,0)');
   ctx.fillStyle=g;ctx.fillRect(0,hy-30,W,70);
   const ry=L.R*L.sP;
-  // ظل التلامس
   softEllipse(L.cx+L.R*.08,L.baseY+ry*.3,L.R*1.5,L.R*1.5*(L.sP*1.2+.06),'rgba(25,45,65,.5)','rgba(25,45,65,0)');
   softEllipse(L.cx,L.baseY+ry*.1,L.R*1.02,L.R*1.02*(L.sP*1.05+.03),'rgba(15,30,50,.38)','rgba(15,30,50,0)');
-  // ضوء ملوّن ينفذ من المحلول
   if(V>1){
     const t=transm(1.6),dark=1-Math.min(...t),c=rgbAt(1.6),a=Math.min(.55,.6*dark*Math.min(1,V/30));
     if(a>.01)softEllipse(L.cx+L.R*1.15,L.baseY+ry*.9,L.R*1.15,L.R*1.15*(L.sP+.12),`rgba(${c[0]|0},${c[1]|0},${c[2]|0},${a})`,`rgba(${c[0]|0},${c[1]|0},${c[2]|0},0)`);
@@ -655,8 +598,6 @@ function drawRoom(L){
   if(T>28)softEllipse(L.cx,L.baseY+ry*.6,L.R*1.8,L.R*.6,`rgba(255,140,60,${(T-25)/55*.35})`,'rgba(255,140,60,0)');
   else if(T<22)softEllipse(L.cx,L.baseY+ry*.6,L.R*1.8,L.R*.6,`rgba(80,170,255,${(25-T)/20*.3})`,'rgba(80,170,255,0)');
 }
-
-/* ---------- الكأس ---------- */
 function liquidPath(L){
   const ry=L.Rl*L.sP;
   ctx.beginPath();ctx.moveTo(L.cx-L.Rl,L.surfY);ctx.lineTo(L.cx-L.Rl,L.baseL);
@@ -686,11 +627,9 @@ function drawStirBar(L){
 }
 function drawBeaker(L){
   const {R,Hh,cx,baseY,sP,cP,topY,k}=L,ry=R*sP;
-  // ----- الجدار الخلفي
   ctx.strokeStyle='rgba(120,140,160,.55)';ctx.lineWidth=1.2;
   ctx.beginPath();ctx.ellipse(cx,topY,R,ry,0,Math.PI,Math.PI*2);ctx.stroke();
   ctx.fillStyle='rgba(225,238,248,.22)';glassBody(L);ctx.ellipse(cx,topY,R,ry,0,0,Math.PI*2);ctx.fill();
-  // ----- السائل
   if(L.hL>1){
     const t=transm(3.2),col=[0,1,2].map(i=>[236,244,250][i]*t[i]);
     const mn=Math.min(...t);let al=Math.min(.9,.12+.85*(1-mn))*lerp(1,.5,micro);if(GX){col[0]=GX.rgb[0];col[1]=GX.rgb[1];col[2]=GX.rgb[2];al=GX.a}
@@ -703,7 +642,6 @@ function drawBeaker(L){
     const bg=ctx.createLinearGradient(0,L.baseL-26*k,0,L.baseL+ry);bg.addColorStop(0,'rgba(255,255,255,0)');bg.addColorStop(1,'rgba(255,255,255,.35)');
     ctx.fillStyle=bg;ctx.fillRect(cx-L.Rl,L.baseL-26*k,L.Rl*2,26*k+ry+2);
     ctx.restore();
-    // سطح السائل
     ctx.beginPath();ctx.ellipse(cx,L.surfY,L.Rl,L.Rl*sP,0,0,7);ctx.fillStyle='rgba(255,255,255,.28)';ctx.fill();
     ctx.strokeStyle='rgba(60,85,110,.35)';ctx.lineWidth=1;ctx.beginPath();ctx.ellipse(cx,L.surfY,L.Rl,L.Rl*sP,0,Math.PI,Math.PI*2);ctx.stroke();
     ctx.strokeStyle='rgba(255,255,255,.85)';ctx.lineWidth=1.6;ctx.beginPath();ctx.ellipse(cx,L.surfY,L.Rl,L.Rl*sP,0,0,Math.PI);ctx.stroke();
@@ -725,35 +663,27 @@ function drawBeaker(L){
       ctx.globalAlpha=1;
     }
   }
-  // ----- الزجاج الأمامي
   ctx.save();glassBody(L);ctx.ellipse(cx,topY,R,ry,0,0,Math.PI*2);ctx.clip();
   let g=ctx.createLinearGradient(cx-R,0,cx+R,0);
   g.addColorStop(0,'rgba(90,110,130,.38)');g.addColorStop(.035,'rgba(255,255,255,.55)');g.addColorStop(.2,'rgba(255,255,255,.34)');g.addColorStop(.34,'rgba(255,255,255,.03)');
   g.addColorStop(.7,'rgba(255,255,255,0)');g.addColorStop(.88,'rgba(255,255,255,.28)');g.addColorStop(.965,'rgba(255,255,255,.5)');g.addColorStop(1,'rgba(90,110,130,.42)');
   ctx.fillStyle=g;ctx.fillRect(cx-R,topY-ry,R*2,Hh*cP+ry*2+4);
-  // خط لمعان رأسي
   g=ctx.createLinearGradient(0,topY,0,baseY);g.addColorStop(0,'rgba(255,255,255,0)');g.addColorStop(.12,'rgba(255,255,255,.7)');g.addColorStop(.85,'rgba(255,255,255,.55)');g.addColorStop(1,'rgba(255,255,255,0)');
   ctx.fillStyle=g;rr(cx-R*.6,topY+8*k,R*.07,Hh*cP-26*k,R*.035);ctx.fill();
   ctx.fillStyle='rgba(255,255,255,.22)';rr(cx+R*.5,topY+14*k,R*.035,Hh*cP*.5,R*.018);ctx.fill();
   ctx.restore();
-  // سُمك الجدار الداخلي
   ctx.strokeStyle='rgba(120,140,160,.35)';ctx.lineWidth=1;glassBody(L,R*.045);ctx.stroke();
-  // القاعدة السميكة
   ctx.beginPath();ctx.ellipse(cx,baseY,R,ry,0,Math.PI,0,true);ctx.ellipse(cx,baseY-6*k,R*.95,ry*.95,0,0,Math.PI,false);ctx.closePath();
   ctx.fillStyle='rgba(255,255,255,.32)';ctx.fill();
   ctx.strokeStyle='rgba(110,130,150,.6)';ctx.lineWidth=1.2;ctx.beginPath();ctx.ellipse(cx,baseY,R,ry,0,0,Math.PI);ctx.stroke();
   ctx.strokeStyle='rgba(255,255,255,.8)';ctx.lineWidth=1;ctx.beginPath();ctx.ellipse(cx,baseY-6*k,R*.95,ry*.95,0,.15,Math.PI-.15);ctx.stroke();
-  // الأضلاع الخارجية
   ctx.strokeStyle='rgba(100,120,140,.65)';ctx.lineWidth=1.3;glassBody(L);ctx.stroke();
-  // الحافة العلوية
   ctx.strokeStyle='rgba(110,130,150,.55)';ctx.lineWidth=1.2;ctx.beginPath();ctx.ellipse(cx,topY,R,ry,0,0,Math.PI);ctx.stroke();
   ctx.strokeStyle='rgba(255,255,255,.95)';ctx.lineWidth=3.2*k;ctx.beginPath();ctx.ellipse(cx,topY+1,R*.985,ry*.985,0,.04,Math.PI-.04);ctx.stroke();
   ctx.strokeStyle='rgba(110,130,150,.45)';ctx.lineWidth=1;ctx.beginPath();ctx.ellipse(cx,topY,R*.93,ry*.93,0,0,Math.PI*2);ctx.stroke();
-  // الفوّهة
   const ts=1.35,A=pp(ts-.3,R,Hh,L),B=pp(ts+.3,R,Hh,L),Tp=pp(ts,R*1.16,Hh*.985,L),Mi=pp(ts,R,Hh,L);
   ctx.beginPath();ctx.moveTo(A.x,A.y);ctx.quadraticCurveTo(Mi.x,Mi.y-1,Tp.x,Tp.y);ctx.quadraticCurveTo(Mi.x,Mi.y+2*k,B.x,B.y);ctx.closePath();
   ctx.fillStyle=`rgba(255,255,255,${Tp.z<0?.35:.7})`;ctx.fill();ctx.strokeStyle='rgba(100,120,140,.7)';ctx.lineWidth=1.2;ctx.stroke();
-  // التدريج
   const th=.82-yaw,v=Math.cos(th);
   if(v>.1){
     const x=cx+R*Math.sin(th),yy=m=>L.baseL-(m/100*Hh*.9)*cP;
@@ -766,7 +696,6 @@ function drawBeaker(L){
 }
 function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
 
-/* ---------- القطّارة والقطرات ---------- */
 function drawDropper(L,x,tipY,def,fill){
   const k=L.k,len=100*k,w=6*k,tubeTop=tipY-len*.62;
   ctx.save();
@@ -781,7 +710,7 @@ function drawDropper(L,x,tipY,def,fill){
   ctx.fillStyle='#1b2540';ctx.textAlign='left';ctx.fillText(def.chip,x+22*k+8,tubeTop+4*k);
   ctx.restore();
 }
-/* ---------- القنينة التي تُصَبّ / تُمسَك ---------- */
+
 let BP=null,hold=null,nextFrom=null;
 const BOT_IDS=['fe0','scn0','remfe','remscn','water'],POUR_TH=1.75,sm3=u=>u*u*(3-2*u),clamp01=u=>Math.max(0,Math.min(1,u));
 function bottleIdx(id){if(GX){const m=/^g(\d+)$/.exec(id);return m&&+m[1]<GX.c.r.length?+m[1]:-1}const i=BOT_IDS.indexOf(id);return i<0?(id==='fe'?0:id==='scn'?1:-1):i}
@@ -793,19 +722,6 @@ function bottleLayout(L){
   const sideW=Math.max(56,L.cx-L.R*1.05),bw=Math.min(L.R*.3,sideW/(per*1.35)),bh=bw*(.82/.3),sp=Math.min(bw*1.7,sideW*.92/per),c=sideW*.46;
   const list=items.map((it,i)=>{const left=i<pL,j=left?i:i-pL,cnt=left?pL:pR,off=(j-(cnt-1)/2)*sp;return[left?c+off:W-c+off,it[0],it[1]]});
   return{list,bw,bh};
-}
-function drawBottleNames(by){
-  if(!BP)return;const{list,bw}=BP;
-  ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
-  const tight=bw<26;
-  list.forEach(([x,n])=>{
-    let fs=Math.max(tight?8:11,Math.min(15,bw*(tight?.48:.36)));ctx.font='bold '+fs+'px sans-serif';
-    const maxW=bw*1.6;let tw=ctx.measureText(n).width;if(tw>maxW){fs=Math.max(7,fs*maxW/tw);ctx.font='bold '+fs+'px sans-serif';tw=ctx.measureText(n).width}
-    const y=by+bw*.38+fs*.95;
-    if(tight){ctx.lineWidth=Math.max(2.5,fs*.45);ctx.strokeStyle='rgba(255,255,255,.92)';ctx.lineJoin='round';ctx.strokeText(n,x,y);ctx.fillStyle='#14213d';ctx.fillText(n,x,y)}
-    else{ctx.fillStyle='rgba(255,255,255,.9)';rr(x-tw/2-6,y-fs*.75,tw+12,fs*1.5,fs*.75);ctx.fill();ctx.fillStyle='#14213d';ctx.fillText(n,x,y)}
-  });
-  ctx.restore();
 }
 function bottlePose(L){
   const i=activeBottle();if(i<0||!BP||!BP.list[i])return null;
@@ -829,10 +745,9 @@ function drawPouring(L,bp){
   }
   ctx.save();ctx.translate(bp.x,bp.y);ctx.rotate(bp.a);bottle(0,0,BP.bw,BP.bh,bp.n,bp.am,true,true);ctx.restore();
 }
-/* --- الإمساك والسحب --- */
 function zoneT(L){
   if(!hold||!BP)return 0;
-  if(!(hold.py<BP.by-BP.bh*.35))return 0;           // لازم ترفع القنينة أولاً
+  if(!(hold.py<BP.by-BP.bh*.35))return 0;
   return clamp01((L.R*1.1-Math.abs(hold.x-L.cx))/(L.R*.6));
 }
 function updateHold(dt,L){
@@ -855,7 +770,7 @@ function commitHold(){
   const btn=btnFor(hold.i);
   if(btn&&!btn.disabled){
     nextFrom={i:hold.i,x:hold.px,y:hold.py,a:hold.a,dir:hold.dir};hold.drag=false;hold.wait=true;
-    btn.click();                                      // startAction يمسح hold ويكمل الصب
+    btn.click();
   }else releaseHold();
 }
 function releaseHold(){hold.drag=false;hold.ret=true;hold.rt=0;hold.sx=hold.px;hold.sy=hold.py;hold.sa=hold.a}
@@ -1122,7 +1037,7 @@ cv.addEventListener('pointerdown',e=>{
 cv.addEventListener('pointermove',e=>{if(hold&&hold.drag){const[x,y]=cvPos(e);hold.x=x;hold.y=y;if(Math.hypot(x-hold.x0,y-hold.y0)>6)hold.moved=true;return}if(!drag){cv.style.cursor=hitBottle(e)>=0?'pointer':'';return}yaw=drag.yaw+(e.clientX-drag.x)*.012;pitch=Math.max(.08,Math.min(.7,drag.pitch+(e.clientY-drag.y)*.004))});
 function endHold(){
   cv.style.cursor='';const L=layout();
-  if(!hold.moved){const i=hold.i;hold=null;const b=btnFor(i);if(b&&!b.disabled)b.click();return}   // نقرة عادية = صب مباشر
+  if(!hold.moved){const i=hold.i;hold=null;const b=btnFor(i);if(b&&!b.disabled)b.click();return}
   if(zoneT(L)>0)commitHold();else releaseHold();
 }
 cv.addEventListener('pointerup',e=>{if(hold&&hold.drag){endHold();return}const d0=drag;drag=null;if(d0&&Math.hypot(e.clientX-d0.x,e.clientY-d0.y)<6)bottleClick(e)});cv.addEventListener('pointercancel',()=>{if(hold&&hold.drag)releaseHold();drag=null});
@@ -1153,14 +1068,14 @@ document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
   if(t.dataset.p==='data')resize();
 }));
 const QZ=[
- {q:'عند الوصول إلى حالة الاتزان الكيميائي في تفاعل انعكاسي مغلق:',o:['يتوقف التفاعلان الطردي والعكسي','تتساوى سرعة التفاعل الطردي مع سرعة التفاعل العكسي','تتساوى تركيزات المتفاعلات مع تركيزات النواتج','تصبح قيمة Kc مساوية للصفر'],a:1,e:'الاتزان ديناميكي: التفاعلان مستمران بسرعتين متساويتين فتثبت التركيزات (وليس بالضرورة أن تتساوى).'},
- {q:'ثابت الاتزان Kc للتفاعل N₂ + 3H₂ ⇌ 2NH₃ يساوي:',o:['[NH₃]/([N₂][H₂])','[NH₃]²/([N₂][H₂]³)','[N₂][H₂]³/[NH₃]²','[NH₃]²/([N₂][H₂])'],a:1,e:'الأسس هي معاملات الموازنة: النواتج في البسط والمتفاعلات في المقام.'},
- {q:'إذا كانت Q < Kc فإن التفاعل:',o:['يتجه نحو المتفاعلات (يسارًا)','في حالة اتزان','يتجه نحو النواتج (يمينًا)','يتوقف تمامًا'],a:2,e:'Q أصغر من Kc تعني أن النواتج أقل من المطلوب للاتزان، فيسير التفاعل الطردي.'},
- {q:'برفع درجة حرارة تفاعل طارد للحرارة عند الاتزان:',o:['يزداد Kc ويتجه الاتزان يمينًا','يقل Kc ويتجه الاتزان يسارًا','لا يتغير Kc ويتجه الاتزان يمينًا','لا يتأثر الاتزان إطلاقًا'],a:1,e:'التسخين يُفضّل التفاعل الماص (العكسي هنا) فينخفض Kc ويتجه الاتزان يسارًا — كما رأيت في الحمّام المائي.'},
- {q:'تأثير العامل المساعد على تفاعل في حالة اتزان:',o:['يزيد قيمة Kc','يُزيح الاتزان نحو النواتج','يُسرّع الوصول للاتزان دون تغيير موضعه أو Kc','يقلل طاقة النواتج فقط'],a:2,e:'العامل المساعد يخفض طاقة التنشيط للتفاعلين الطردي والعكسي بالقدر نفسه.'},
- {q:'في التفاعل N₂ + 3H₂ ⇌ 2NH₃، زيادة الضغط على المخلوط الغازي تؤدي إلى:',o:['إزاحة الاتزان يمينًا','إزاحة الاتزان يسارًا','لا تأثير على موضع الاتزان','نقص قيمة Kc'],a:0,e:'الجهة اليمنى فيها 2 مول غاز مقابل 4 مول في اليسرى، فيتجه الاتزان للجهة الأقل عددًا من المولات.'},
- {q:'في تجربة Fe³⁺ + SCN⁻ ⇌ [Fe(SCN)]²⁺، إضافة قطرات من FeCl₃ المركّز تجعل اللون:',o:['أفتح لأن الاتزان يتجه يسارًا','أغمق لأن الاتزان يتجه يمينًا','دون تغيير','عديم اللون'],a:1,e:'زيادة [Fe³⁺] تجعل Q < Kc فيتكوّن مزيد من المعقد الأحمر.'},
- {q:'أي المواد التالية لا يظهر تركيزها في تعبير Kc؟',o:['الغاز','الأيون في المحلول','المادة الصلبة النقية','المادة المذابة'],a:2,e:'تركيز المادة الصلبة أو السائلة النقية ثابت فيدخل في قيمة Kc ولا يُكتب في التعبير.'}
+  {q:'عند الوصول إلى حالة الاتزان الكيميائي في تفاعل انعكاسي مغلق:',o:['يتوقف التفاعلان الطردي والعكسي','تتساوى سرعة التفاعل الطردي مع سرعة التفاعل العكسي','تتساوى تركيزات المتفاعلات مع تركيزات النواتج','تصبح قيمة Kc مساوية للصفر'],a:1,e:'الاتزان ديناميكي: التفاعلان مستمران بسرعتين متساويتين فتثبت التركيزات (وليس بالضرورة أن تتساوى).'},
+  {q:'ثابت الاتزان Kc للتفاعل N₂ + 3H₂ ⇌ 2NH₃ يساوي:',o:['[NH₃]/([N₂][H₂])','[NH₃]²/([N₂][H₂]³)','[N₂][H₂]³/[NH₃]²','[NH₃]²/([N₂][H₂])'],a:1,e:'الأسس هي معاملات الموازنة: النواتج في البسط والمتفاعلات في المقام.'},
+  {q:'إذا كانت Q < Kc فإن التفاعل:',o:['يتجه نحو المتفاعلات (يسارًا)','في حالة اتزان','يتجه نحو النواتج (يمينًا)','يتوقف تمامًا'],a:2,e:'Q أصغر من Kc تعني أن النواتج أقل من المطلوب للاتزان، فيسير التفاعل الطردي.'},
+  {q:'برفع درجة حرارة تفاعل طارد للحرارة عند الاتزان:',o:['يزداد Kc ويتجه الاتزان يمينًا','يقل Kc ويتجه الاتزان يسارًا','لا يتغير Kc ويتجه الاتزان يمينًا','لا يتأثر الاتزان إطلاقًا'],a:1,e:'التسخين يُفضّل التفاعل الماص (العكسي هنا) فينخفض Kc ويتجه الاتزان يسارًا — كما رأيت في الحمّام المائي.'},
+  {q:'تأثير العامل المساعد على تفاعل في حالة اتزان:',o:['يزيد قيمة Kc','يُزيح الاتزان نحو النواتج','يُسرّع الوصول للاتزان دون تغيير موضعه أو Kc','يقلل طاقة النواتج فقط'],a:2,e:'العامل المساعد يخفض طاقة التنشيط للتفاعلين الطردي والعكسي بالقدر نفسه.'},
+  {q:'في التفاعل N₂ + 3H₂ ⇌ 2NH₃، زيادة الضغط على المخلوط الغازي تؤدي إلى:',o:['إزاحة الاتزان يمينًا','إزاحة الاتزان يسارًا','لا تأثير على موضع الاتزان','نقص قيمة Kc'],a:0,e:'الجهة اليمنى فيها 2 مول غاز مقابل 4 مول في اليسرى، فيتجه الاتزان للجهة الأقل عددًا من المولات.'},
+  {q:'في تجربة Fe³⁺ + SCN⁻ ⇌ [Fe(SCN)]²⁺، إضافة قطرات من FeCl₃ المركّز تجعل اللون:',o:['أفتح لأن الاتزان يتجه يسارًا','أغمق لأن الاتزان يتجه يمينًا','دون تغيير','عديم اللون'],a:1,e:'زيادة [Fe³⁺] تجعل Q < Kc فيتكوّن مزيد من المعقد الأحمر.'},
+  {q:'أي المواد التالية لا يظهر تركيزها في تعبير Kc؟',o:['الغاز','الأيون في المحلول','المادة الصلبة النقية','المادة المذابة'],a:2,e:'تركيز المادة الصلبة أو السائلة النقية ثابت فيدخل في قيمة Kc ولا يُكتب في التعبير.'}
 ];
 QZ.push(
  {q:'قيمة pH لمحلول HCl تركيزه 0.01 M تساوي:',o:['1','2','12','0.01'],a:1,e:'الحمض قوي فـ [H⁺] = 0.01 = 10⁻² ومنها pH = 2.'},
@@ -1265,7 +1180,6 @@ $('#exList').addEventListener('click',e=>{
 exRender();
 
 /* ---------- المحرك العام: كل التجارب تفاعليًا على الكأس ---------- */
-/* صيغة: مادة = اسم[*صلب][#لون]:حجم  |  قاعدة = مفاتيح>لون,شفافية,راسب,لون_الراسب,غاز,حرارة,نص  (h≥50°م, b≥75°م, c≤12°م) */
 const CLR='#dfeef8',HX=c=>[1,3,5].map(i=>parseInt(c.substr(i,2),16)),nu=(v,d)=>(v===undefined||v==='')?d:+v;
 const EQ=EXP.findIndex(x=>x.l),DS=[];
 DS[0]='رمل*#c9a96a:2|ماء:10|01>#e3d7b4,.4,5,#c9a96a,0,,يرسب الرمل ويبقى الماء رائقًا';
