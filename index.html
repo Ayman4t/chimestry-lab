@@ -152,7 +152,7 @@ details>*:not(summary){margin:8px 12px;font-size:.86rem}
 details.dn summary{color:var(--ok)}
 .tg{display:flex;flex-wrap:wrap;gap:6px}.tg span{background:#ffffff0c;border:1px solid #ffffff18;border-radius:8px;padding:3px 9px;font-size:.78rem}
 .exsel{font:inherit;color:var(--tx);background:#0c1530;border:1px solid var(--cy);border-radius:12px;padding:9px;width:100%;margin-top:10px;font-size:.85rem}
-#gp,#gxCard,#cbCard{display:none}body.cb #cbCard{display:block}body.gx #gp{display:flex}body.gx .pills:not(#gp){display:none}body.gx #gxCard{display:block}
+#gp,#gxCard,#cbCard,#calcCard{display:none}body.cb #cbCard,body.cb #calcCard,body.cb #myWhyC{display:block}body.cb #myIntro{display:none}#myWhyC{display:none}body.gx #gp{display:flex}body.gx .pills:not(#gp){display:none}body.gx #gxCard{display:block}
 body.gx #eqCard,body.gx .legend,body.gx .tab[data-p=data],body.gx #p-steps .card:first-child,body.gx #steps+.note{display:none}
 body.gx #gp{flex-wrap:wrap;justify-content:center;overflow:visible}
 .kit{width:100%;border-collapse:collapse;font-size:.8rem}.kit td{border-bottom:1px solid #ffffff12;padding:6px 4px;color:var(--mut);vertical-align:top}.kit td:first-child{color:var(--tx);font-weight:700;white-space:nowrap}
@@ -165,9 +165,9 @@ body.gx #gp{flex-wrap:wrap;justify-content:center;overflow:visible}
   .left{position:sticky;top:20px;display:flex;justify-content:center}
   .stage{width:100%;max-width:560px}
   #scene{aspect-ratio:4/5;max-height:70vh}
-  .tabs{display:grid;grid-template-columns:repeat(5,1fr);width:100%}
+  .tabs{display:grid;grid-template-columns:repeat(6,1fr);width:100%}
   .tab{padding:10px 4px;text-align:center}
-  body.gx .tabs{grid-template-columns:repeat(4,1fr)}
+  body.gx .tabs{grid-template-columns:repeat(5,1fr)}
   .exsel{max-width:500px;margin:10px auto 0;display:block}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -180,6 +180,19 @@ body.gx #gp{flex-wrap:wrap;justify-content:center;overflow:visible}
 .cbc button:disabled{opacity:.35;cursor:not-allowed}
 .cbc .sw{display:inline-block;width:10px;height:10px;border-radius:50%;margin-inline-end:5px;vertical-align:middle;border:1px solid #fff5}
 .cbq,.cbpre{font:inherit;font-size:.82rem;color:var(--tx);background:#0c1530;border:1px solid var(--line);border-radius:10px;padding:7px 9px;flex:1 1 140px;min-width:0}
+#calcRows{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.crow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:#0c1530;border:1px solid var(--line);border-radius:12px;padding:6px 8px;font-size:.82rem}
+.crow b{min-width:90px}.crow .cf{color:var(--mut);font-size:.72rem;flex:1 1 100px;direction:ltr;text-align:start}
+.crow select,.crow input,.cdin{font:inherit;font-size:.8rem;color:var(--tx);background:#070d1b;border:1px solid var(--line);border-radius:8px;padding:4px 6px}
+.crow input[type=number]{width:74px}.cc{display:none;align-items:center;gap:4px}.crow[data-u=mLM] .cc{display:inline-flex}
+.cdin{max-width:100%}
+.ceq{direction:ltr;text-align:center;font-size:1.02rem;font-weight:700;padding:10px 6px;background:#0c1530;border:1px solid var(--cy);border-radius:12px;margin-top:8px;line-height:2.1;overflow-x:auto}
+.ar{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 6px;line-height:1}.ar small{font-size:.62rem;color:var(--gold);font-weight:600}.ar i{font-style:normal;font-size:1.3rem}
+.cwrap{overflow-x:auto;margin-top:8px}
+.ct{width:100%;border-collapse:collapse;font-size:.76rem;min-width:520px}.ct th{color:var(--cy);font-weight:700}.ct td,.ct th{border-bottom:1px solid var(--line);padding:4px 6px;text-align:center}
+.ct tr.lim td{background:#3a2d0a}.cs{direction:ltr;text-align:start;font-size:.74rem;color:var(--mut)}
+.cwarn{color:#ffb4a8;background:#3a1418;border:1px solid #6a2530;border-radius:10px;padding:6px 10px;margin-top:8px;font-size:.82rem}
+.cok{color:var(--ok);margin-top:6px;font-size:.8rem}
 </style>
 </head>
 <body>
@@ -212,6 +225,7 @@ body.gx #gp{flex-wrap:wrap;justify-content:center;overflow:visible}
   <section class="right">
     <nav class="tabs" role="tablist">
       <button class="tab on" data-p="lab" role="tab">🧪 التجربة</button>
+      <button class="tab" data-p="my" role="tab">🧮 تجربتي</button>
       <button class="tab" data-p="data" role="tab">📊 القياسات</button>
       <button class="tab" data-p="steps" role="tab">📋 الخطوات</button>
       <button class="tab" data-p="study" role="tab">📚 المنهج</button>
@@ -219,6 +233,33 @@ body.gx #gp{flex-wrap:wrap;justify-content:center;overflow:visible}
     </nav>
 
     <div class="panel" id="p-lab">
+      <div class="card" id="eqCard">
+        <h3>⚗️ المعادلة والاتزان</h3>
+        <div class="eq"><span class="y">Fe³⁺</span> + SCN⁻ <span id="arr">⇌</span> <span class="r">[Fe(SCN)]²⁺</span></div>
+        <div class="sub" style="text-align:center;margin-top:4px;font-size:.75rem">شبه عديم اللون + عديم اللون ⇌ برتقالي-أحمر &nbsp;|&nbsp; طارد للحرارة (ΔH ≈ −20 kJ/mol)</div>
+        <div class="status" id="status" aria-live="polite">ابدأ بصبّ FeCl₃ في الكأس</div>
+        <div class="gauge"><span>◀ يسارًا</span><div class="gtrack"><em></em><i id="needle"></i></div><span>يمينًا ▶</span></div>
+        <div class="coach" id="coach"></div>
+        <div style="margin-top:8px">
+          <div class="bar"><span>Q = [C]/([A][B])</span><i><span id="bQ" style="background:var(--cy)"></span></i><b id="vQ">—</b></div>
+          <div class="bar"><span>Kc (L/mol)</span><i><span id="bK" style="background:var(--gold)"></span></i><b id="vK">—</b></div>
+        </div>
+      </div>
+
+      <div class="card" id="gxCard"><h3>⚗️ المواد المضافة</h3><div class="eq" id="gxEq">—</div><div class="note" id="gxH" style="margin-top:6px"></div></div>
+
+      <div class="card">
+        <h3>💬 ماذا حدث؟</h3>
+        <div id="why" aria-live="polite">اضغط «FeCl₃ 10 mL» وشاهد المحلول (شبه عديم اللون عند هذا التركيز).</div>
+      </div>
+    </div>
+
+    <div class="panel" id="p-my" hidden>
+      <div class="card" id="myIntro">
+        <h3>🧮 تجربتي — صمّم تجربتك واحسب الكميات</h3>
+        <div class="note">اختر أي مواد من المعمل وأضفها بنفسك وحدّد الشروط؛ يحوّلها التطبيق إلى معادلة موزونة ويحسب عدد المولات والكتل والمادة المحدِّدة.</div>
+        <div class="row"><button class="pill b" data-my="">🧪 ابدأ تجربة حرة</button><button class="pill o" id="myCur" data-my="" hidden></button></div>
+      </div>
       <div class="card" id="cbCard"><details id="cbD" open>
         <summary>🧪 تجربة حرة — اختر موادك <span id="cbN">— 0 من 8</span></summary>
         <div class="row"><input id="cbQ" class="cbq" type="search" placeholder="🔎 ابحث عن مادة…" aria-label="بحث"><select id="cbPre" class="cbpre" aria-label="املأ من تجربة جاهزة"></select></div>
@@ -253,25 +294,25 @@ body.gx #gp{flex-wrap:wrap;justify-content:center;overflow:visible}
         <div class="note" style="margin-top:6px">كل جسيم في العرض المجهري يمثّل عددًا هائلًا من الأيونات (للتوضيح).</div>
       </div>
 
-      <div class="card" id="eqCard">
-        <h3>⚗️ المعادلة والاتزان</h3>
-        <div class="eq"><span class="y">Fe³⁺</span> + SCN⁻ <span id="arr">⇌</span> <span class="r">[Fe(SCN)]²⁺</span></div>
-        <div class="sub" style="text-align:center;margin-top:4px;font-size:.75rem">شبه عديم اللون + عديم اللون ⇌ برتقالي-أحمر &nbsp;|&nbsp; طارد للحرارة (ΔH ≈ −20 kJ/mol)</div>
-        <div class="status" id="status" aria-live="polite">ابدأ بصبّ FeCl₃ في الكأس</div>
-        <div class="gauge"><span>◀ يسارًا</span><div class="gtrack"><em></em><i id="needle"></i></div><span>يمينًا ▶</span></div>
-        <div class="coach" id="coach"></div>
-        <div style="margin-top:8px">
-          <div class="bar"><span>Q = [C]/([A][B])</span><i><span id="bQ" style="background:var(--cy)"></span></i><b id="vQ">—</b></div>
-          <div class="bar"><span>Kc (L/mol)</span><i><span id="bK" style="background:var(--gold)"></span></i><b id="vK">—</b></div>
+      <div class="card" id="calcCard">
+        <h3>🧮 حاسبة المعادلة والكميات</h3>
+        <div class="note" id="calcInfo">اختر مواد من بطاقة «تجربة حرة» (مثلًا AgNO₃ و NaCl) ثم أدخل الكمية.</div>
+        <div id="calcRows"></div>
+        <div class="row">
+          <label>🌡️ <select id="cdT" class="cdin"><option value="n">حرارة عادية</option><option value="h">تسخين (Δ)</option></select></label>
+          <label>⚗️ عامل مساعد <select id="cdC" class="cdin"><option value="">بدون</option><option value="MnO2">MnO₂</option><option value="H2SO4">H₂SO₄ مركز</option></select></label>
+          <label class="toggle"><input type="checkbox" id="cdK"> حمض مركّز</label>
+          <label class="toggle"><input type="checkbox" id="cdE"> تيار كهربي</label>
         </div>
+        <div class="row">
+          <label>كفاءة التفاعل % <input id="cdY" class="cdin" type="number" value="100" min="0" max="100" style="width:70px"></label>
+          <label>الكتل الذرية <select id="cdA" class="cdin"><option value="e">مقرّبة (المنهج)</option><option value="x">دقيقة</option></select></label>
+          <label id="cdRL" hidden>التفاعل <select id="cdR" class="cdin"></select></label>
+        </div>
+        <div id="calcOut"></div>
       </div>
 
-      <div class="card" id="gxCard"><h3>⚗️ المواد المضافة</h3><div class="eq" id="gxEq">—</div><div class="note" id="gxH" style="margin-top:6px"></div></div>
-
-      <div class="card">
-        <h3>💬 ماذا حدث؟</h3>
-        <div id="why" aria-live="polite">اضغط «FeCl₃ 10 mL» وشاهد المحلول (شبه عديم اللون عند هذا التركيز).</div>
-      </div>
+      <div class="card" id="myWhyC"><h3>💬 ماذا حدث؟</h3><div id="myWhy"></div></div>
     </div>
 
     <div class="panel" id="p-data" hidden>
@@ -317,6 +358,11 @@ body.gx #gp{flex-wrap:wrap;justify-content:center;overflow:visible}
         <h3>📋 خطوات النشاط</h3>
         <ol id="steps"></ol>
         <div class="note" style="margin-top:8px">Kc ≈ 138 L/mol عند 25°م (قيمة تقريبية — المرجع: Vogel's Quantitative Chemical Analysis). تتغير مع القوة الأيونية.</div>
+      </div>
+      <div class="card" id="myFoot">
+        <h3>🧪 جرّب تجربتك بنفسك</h3>
+        <div class="note">بعد الانتهاء من الخطوات: أعد بناء التجربة بمواد من اختيارك، وغيّر الشروط، واحسب المولات والكتل.</div>
+        <div class="row"><button class="pill b" id="myFootBtn" data-my="">🧪 جرّب تجربتك بنفس المواد</button></div>
       </div>
     </div>
 
@@ -998,7 +1044,9 @@ function stepsUpdate(){
   let nd=0,nextT='';
   STEPS.forEach(([t,fn])=>{const li=document.createElement('li');li.textContent=t;if(fn()){li.className='done';nd++}else if(!nx){li.className='next';nx=true;nextT=t}ol.appendChild(li)});
   $('#progT').textContent=nd+' / '+STEPS.length;$('#progB').style.width=(nd/STEPS.length*100)+'%';
-  $('#coach').innerHTML=nextT?'💡 <b>الخطوة التالية:</b> '+nextT:'🏆 <b>أحسنت!</b> أنجزت كل خطوات النشاط — جرّب تجربة أخرى من القائمة أعلى الصفحة.';
+  const g=window.GX,cur=g&&typeof g.i==='number'?g.i:g?'edit':'';
+  $('#myFootBtn').dataset.my=cur;$('#myFootBtn').textContent=cur===''?'🧪 ابدأ تجربتك الحرة':cur==='edit'?'✏️ عدّل موادك':'🧪 جرّب تجربتك بنفس المواد';
+  $('#coach').innerHTML=nextT?'💡 <b>الخطوة التالية:</b> '+nextT:'🏆 <b>أحسنت!</b> أنجزت كل خطوات النشاط — جرّب تجربة أخرى من القائمة أعلى الصفحة.<br><button class="pill b" data-my="'+cur+'" style="margin-top:8px">'+(cur==='edit'?'✏️ عدّل موادك':'🧪 جرّب تجربتك بنفس المواد')+'</button>';
 }
 function toast(m){const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(()=>t.style.display='none',4200)}
 const setB=(id,v,mx)=>{$('#'+id).style.width=Math.max(0,Math.min(100,v/mx*100))+'%'};
@@ -1206,7 +1254,7 @@ function exRender(){
   $('#exList').innerHTML=list.map(x=>{
     const d=done.has(x.i);
     const enBadge = x.en ? '<span class="badge en" style="margin-inline-start:6px;font-size:.6rem;padding:0 6px">إثرائي</span>' : '';
-    return `<details class="${d?'dn':''}" data-idx="${x.i}"><summary><span>${d?'✓ ':''}${x.t}${enBadge}<span class="exs">${STG[x.s]}</span></span></summary><p>🔎 ${x.n}</p><div class="exb"><button data-k="${x.i}">${d?'↩ إلغاء':'✓ اختبر فهمي'}</button><button data-go="${x.i}">▶ افتح في المعمل</button></div></details>`
+    return `<details class="${d?'dn':''}" data-idx="${x.i}"><summary><span>${d?'✓ ':''}${x.t}${enBadge}<span class="exs">${STG[x.s]}</span></span></summary><p>🔎 ${x.n}</p><div class="exb"><button data-k="${x.i}">${d?'↩ إلغاء':'✓ اختبر فهمي'}</button><button data-go="${x.i}">▶ افتح في المعمل</button>${x.l?'':`<button data-my="${x.i}">🧪 تجربتي بنفس المواد</button>`}</div></details>`
   }).join('')||'<div class="note">لا توجد نتائج.</div>';
   exCount();
 }
@@ -1227,6 +1275,7 @@ $('#exq').addEventListener('input',e=>{fq=e.target.value.trim();exRender()});
 
 $('#exList').addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.my!==undefined)return;
   if(b.dataset.go){gxSel(+b.dataset.go);document.querySelector('.tab[data-p=lab]').click();scrollTo({top:0,behavior:'smooth'});return}
   
   const k=+b.dataset.k;
@@ -1367,7 +1416,7 @@ function gxApply(d){
   const k=d.gx;if(!window.GX.set.has(k))window.GX.order.push(k);window.GX.set.add(k);
   const tx=gxEval(false),all=window.GX.set.size>=window.GX.c.r.length;
   const none=window.GX.custom&&!tx&&window.GX.set.size>=2?'<br><span class="note">لا يوجد تفاعل مسجّل بين هذه المواد في المعمل — لا تغيّر ملحوظ.</span>':'';
-  $('#why').innerHTML=(tx||'أُضيف <b>'+d.chip+'</b>')+none+(all&&window.GX.n?'<br><span class="note">الخلاصة: '+window.GX.n+'</span>':'');
+  $('#why').innerHTML=(tx||'أُضيف <b>'+d.chip+'</b>')+none+(all&&window.GX.n?'<br><span class="note">الخلاصة: '+window.GX.n+'</span>':'')+(all&&!window.GX.custom?'<br><button class="pill b" data-my="'+window.GX.i+'" style="margin-top:6px">🧪 جرّب تجربتك بنفس المواد</button>':'');
   $('#gxEq').textContent=window.GX.order.map(i=>window.GX.c.r[i].l).join(' + ');stepsUpdate();
 }
 function gxStep(dt){if(!window.GX)return;const f=1-Math.exp(-dt*2.2);for(let i=0;i<3;i++)window.GX.rgb[i]+=(window.GX.tr[i]-window.GX.rgb[i])*f;window.GX.a+=(window.GX.ta-window.GX.a)*f;const f2=1-Math.exp(-dt*6);window.GX.fbA+=(window.GX.fb-window.GX.fbA)*f2;window.GX.ftA+=(window.GX.ft-window.GX.ftA)*f2;window.GX.lA+=(window.GX.lo-window.GX.lA)*f2}
@@ -1433,7 +1482,7 @@ function gxClear(){
 function gxLoad(i){
   if(act)return;resetAll();document.body.classList.remove('cb');
   const eq=i===EQ||!DS[i];document.body.classList.toggle('gx',!eq);STEPS.length=0;
-  if(eq){window.GX=null;STEPS.push(...STEPS0);$('h1').innerHTML=H0[0];$('header .sub').innerHTML=H0[1];stepsUpdate();setButtons();return}
+  if(eq){window.GX=null;STEPS.push(...STEPS0);$('h1').innerHTML=H0[0];$('header .sub').innerHTML=H0[1];stepsUpdate();setButtons();myIntro();return}
   gxStart(gxParse(DS[i]),i,'🧪 '+EXP[i].t,STG[EXP[i].s]+' — أضف المواد بالترتيب • اسحب الكأس لتدويره',EXP[i].n,false);
 }
 function gxStart(c,i,title,sub,note,custom){
@@ -1447,7 +1496,8 @@ function gxStart(c,i,title,sub,note,custom){
   if(cs)STEPS.push(['برّد إلى 12°م أو أقل ولاحظ',()=>window.GX&&window.GX.cooled]);
   $('#gxH').textContent=hs||cs?'🌡️ استخدم شريط الحرارة في لوحة التحكم للتسخين (≥ 50°م)'+(cs?' أو التبريد (≤ 12°م)':'')+'.':'';
   $('h1').textContent=title;$('header .sub').textContent=sub;
-  gxClear();
+  if(!$('#p-data').hidden)goTab('lab');
+  gxClear();myIntro();
 }
 $('#gp').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.id==='gr'){resetAll();gxClear();return}if(b.dataset.a&&!act)startAction(b.dataset.a)};
 function gxSel(i){$('#exSel').value=i;gxLoad(i)}
@@ -1478,6 +1528,7 @@ function cbRender(){
   const n=CB.sel.length?cbBuild(CB.sel).x.length:0;
   $('#cbInfo').textContent=!CB.sel.length?'اضغط على المواد التي تريدها (حتى '+CB.max+').':CB.sel.length<2?'اختر مادتين على الأقل.':n?'✅ نتائج مسجّلة بين المواد المختارة: '+n:'⚠️ لا يوجد تفاعل مسجّل بين هذه المواد — جرّب مادة أخرى أو ابدأ من تجربة جاهزة.';
   $('#cbGo').disabled=CB.sel.length<2;
+  calcRows();
 }
 function cbOpen(){
   if(act)return;resetAll();
@@ -1500,6 +1551,200 @@ $('#cbClr').onclick=()=>{CB.sel=[];cbRender()};
 $('#cbGo').onclick=cbStart;
 $('#cbPre').innerHTML='<option value="">⚡ ابدأ من تجربة جاهزة…</option>'+CB.src.map(({i})=>`<option value="${i}">${EXP[i].t}</option>`).join('');
 $('#cbPre').onchange=e=>{const v=e.target.value;if(v==='')return;const o=CB.src.find(x=>x.i===+v);CB.sel=o.c.r.map(ckey).slice(0,CB.max);e.target.value='';cbRender()};
+
+/* ---------- حاسبة المعادلات: معادلة موزونة + مولات + كتل ---------- */
+const AM_E={H:1,C:12,N:14,O:16,Na:23,Mg:24,S:32,Cl:35.5,K:39,Ca:40,Mn:55,Fe:56,Cu:63.5,Zn:65,Ag:108,Ba:137};
+const AM_X={H:1.008,C:12.011,N:14.007,O:15.999,Na:22.990,Mg:24.305,S:32.06,Cl:35.45,K:39.098,Ca:40.078,Mn:54.938,Fe:55.845,Cu:63.546,Zn:65.38,Ag:107.87,Ba:137.33};
+function fparse(f){const st=[{}];let i=0;const dg=()=>{let m='';while(i<f.length&&/\d/.test(f[i]))m+=f[i++];return +m||1};
+  while(i<f.length){const ch=f[i];
+    if(ch==='('||ch==='['){st.push({});i++}
+    else if(ch===')'||ch===']'){i++;const k=dg(),t=st.pop(),top=st[st.length-1];for(const e in t)top[e]=(top[e]||0)+t[e]*k}
+    else{let e=ch;i++;while(i<f.length&&/[a-z]/.test(f[i]))e+=f[i++];const n=dg(),top=st[st.length-1];top[e]=(top[e]||0)+n}}
+  return st[0]}
+const molM=(f,ex)=>{const a=ex?AM_X:AM_E;return Object.entries(fparse(f)).reduce((s,[e,n])=>s+a[e]*n,0)};
+const fd=f=>f.replace(/\d+/g,m=>[...m].map(d=>'₀₁₂₃₄₅₆₇₈₉'[d]).join(''));
+const SP={};`AgNO3|نترات الفضة|aq
+NaCl|كلوريد الصوديوم|aq
+AgCl|كلوريد الفضة|p
+NaNO3|نترات الصوديوم|aq
+BaCl2|كلوريد الباريوم|aq
+Na2SO4|كبريتات الصوديوم|aq
+BaSO4|كبريتات الباريوم|p
+Ba(NO3)2|نترات الباريوم|aq
+H2SO4|حمض الكبريتيك|aq
+HCl|حمض الهيدروكلوريك|aq
+Zn|الزنك|s
+CuSO4|كبريتات النحاس II|aq
+ZnSO4|كبريتات الزنك|aq
+Cu|النحاس|s
+Cu(NO3)2|نترات النحاس II|aq
+Ag|الفضة|s
+ZnCl2|كلوريد الزنك|aq
+Mg|المغنيسيوم|s
+MgCl2|كلوريد المغنيسيوم|aq
+MgSO4|كبريتات المغنيسيوم|aq
+H2|الهيدروجين|g
+CH3COOH|حمض الأسيتيك|l|1.05
+Mg(CH3COO)2|أسيتات المغنيسيوم|aq
+CaCO3|كربونات الكالسيوم|s
+CaCl2|كلوريد الكالسيوم|aq
+H2O|الماء|l|1
+CO2|ثاني أكسيد الكربون|g
+Na2CO3|كربونات الصوديوم|aq
+CH3COONa|أسيتات الصوديوم|aq
+NaOH|هيدروكسيد الصوديوم|aq
+NH4OH|هيدروكسيد الأمونيوم|aq
+NH4Cl|كلوريد الأمونيوم|aq
+Cu(OH)2|هيدروكسيد النحاس II|p
+NH3|الأمونيا|g
+Cu(NH3)4SO4|كبريتات رباعي أمين النحاس II|aq
+CuO|أكسيد النحاس II|s
+H2O2|فوق أكسيد الهيدروجين|aq
+O2|الأكسجين|g
+Na|الصوديوم|s
+Ca|الكالسيوم|s
+Ca(OH)2|هيدروكسيد الكالسيوم|p
+Mg(OH)2|هيدروكسيد المغنيسيوم|p
+CaC2|كربيد الكالسيوم|s
+C2H2|الإيثاين (الأسيتيلين)|g
+Fe|الحديد|s
+S|الكبريت|s
+FeS|كبريتيد الحديد II|s
+MnO2|ثاني أكسيد المنجنيز|s
+MnCl2|كلوريد المنجنيز II|aq
+Cl2|الكلور|g
+Na2S2O3|ثيوكبريتات الصوديوم|aq
+SO2|ثاني أكسيد الكبريت|g
+C2H5OH|الإيثانول|l|0.789
+CH3COOC2H5|أسيتات الإيثيل (إستر)|l|0.902
+C2H4|الإيثين|g
+C2H5ONa|إيثوكسيد الصوديوم|s`.split('\n').forEach(l=>{const[f,n,st,d]=l.split('|');SP[f]={f,n,st,d:+d||0,M:molM(f,0),Mx:molM(f,1)}});
+const ALIAS={'إيثانول':'C2H5OH','ماء':'H2O'};
+const REAC=`AgNO3+NaCl=AgCl+NaNO3
+2AgNO3+BaCl2=2AgCl+Ba(NO3)2
+BaCl2+Na2SO4=BaSO4+2NaCl
+BaCl2+H2SO4=BaSO4+2HCl
+Zn+CuSO4=ZnSO4+Cu
+Cu+2AgNO3=Cu(NO3)2+2Ag
+Zn+2HCl=ZnCl2+H2
+Mg+2HCl=MgCl2+H2
+Zn+H2SO4=ZnSO4+H2
+Mg+H2SO4=MgSO4+H2
+Mg+2CH3COOH=Mg(CH3COO)2+H2
+CaCO3+2HCl=CaCl2+H2O+CO2
+Na2CO3+2HCl=2NaCl+H2O+CO2
+2CH3COOH+Na2CO3=2CH3COONa+H2O+CO2
+NaOH+HCl=NaCl+H2O
+2NaOH+H2SO4=Na2SO4+2H2O
+NaOH+CH3COOH=CH3COONa+H2O
+NH4OH+HCl=NH4Cl+H2O
+CuSO4+2NaOH=Cu(OH)2+Na2SO4
+CuSO4+4NH3=Cu(NH3)4SO4
+CuO+H2SO4=CuSO4+H2O|h
+2H2O2=2H2O+O2|cat:MnO2
+2Na+2H2O=2NaOH+H2
+Ca+2H2O=Ca(OH)2+H2
+Mg+2H2O=Mg(OH)2+H2|h
+CaC2+2H2O=Ca(OH)2+C2H2
+Fe+S=FeS|h
+MnO2+4HCl=MnCl2+Cl2+2H2O|h,conc
+Na2S2O3+2HCl=2NaCl+S+SO2+H2O
+CH3COOH+C2H5OH=CH3COOC2H5+H2O|h,cat:H2SO4,eq
+C2H5OH=C2H4+H2O|h,cat:H2SO4
+2C2H5OH+2Na=2C2H5ONa+H2
+2H2O=2H2+O2|cur
+Cu+2H2SO4=CuSO4+SO2+2H2O|h,conc
+NH4Cl+NaOH=NaCl+NH3+H2O|h`.split('\n').map((line,id)=>{
+  const[eq,cd='']=line.split('|'),[l,r]=eq.split('='),side=t=>t.split('+').map(x=>{const m=x.match(/^(\d*)(.+)$/);return[m[2],+m[1]||1]}),c={};
+  cd.split(',').filter(Boolean).forEach(x=>{if(x.startsWith('cat:'))c.cat=x.slice(4);else c[x]=1});
+  return{id,re:side(l),pr:side(r),c}});
+REAC.forEach(r=>{const cnt=(a)=>{const t={};a.forEach(([f,k])=>{if(!SP[f])console.warn('species?',f);for(const[e,n]of Object.entries(fparse(f)))t[e]=(t[e]||0)+n*k});return JSON.stringify(Object.entries(t).sort())};
+  if(cnt(r.re)!==cnt(r.pr))console.warn('غير موزونة',r.id)});
+const CALC={vals:{}};
+const spOf=it=>{let l=it.l.replace(' (صلب)','').replace(/[₀-₉]/g,c=>'₀₁₂₃₄₅₆₇₈₉'.indexOf(c));l=ALIAS[l]||l;return SP[l]||null};
+const fh=x=>'<bdi dir="ltr">'+fm(x)+'</bdi>';
+const fm=x=>{if(!isFinite(x))return '—';if(x===0)return '0';const a=Math.abs(x);if(a>=1e5||a<1e-3)return x.toExponential(2).replace('e+','×10').replace('e','×10').replace(/10(-?\d+)$/,(m,d)=>'10'+[...d].map(c=>c==='-'?'⁻':'⁰¹²³⁴⁵⁶⁷⁸⁹'[c]).join(''));return +x.toPrecision(4)+''};
+function calcRowDef(k){const it=CB.items.get(k),sp=spOf(it);if(!sp)return null;
+  let v=CALC.vals[k];if(!v){const u=it.sol?'g':sp.d&&sp.st==='l'?'mL':sp.st==='s'?'g':'mLM';v=CALC.vals[k]={u,a:u==='g'?1:10,c:.1}}
+  return{k,it,sp,v}}
+function calcRows(){
+  const rows=CB.sel.map(calcRowDef),ok=rows.filter(Boolean),no=CB.sel.filter((k,i)=>!rows[i]).map(k=>CB.items.get(k).l);
+  $('#calcRows').innerHTML=ok.map(({k,it,sp,v})=>`<div class="crow" data-k="${k.replace(/"/g,'&quot;')}" data-u="${v.u}"><b>${sp.n}</b><span class="cf">${fd(sp.f)} · M = <span class="mm"></span></span>
+    <select data-f="u"><option value="g"${v.u==='g'?' selected':''}>جرام g</option><option value="mol"${v.u==='mol'?' selected':''}>مول</option>${sp.d?`<option value="mL"${v.u==='mL'?' selected':''}>mL نقي</option>`:''}<option value="mLM"${v.u==='mLM'?' selected':''}>mL × تركيز</option></select>
+    <input type="number" data-f="a" min="0" step="any" value="${v.a}" aria-label="الكمية"><span class="cc">× <input type="number" data-f="c" min="0" step="any" value="${v.c}" aria-label="التركيز"> M</span></div>`).join('');
+  $('#calcInfo').textContent=!CB.sel.length?'اختر مواد من بطاقة «تجربة حرة» (مثلًا AgNO₃ و NaCl) ثم أدخل الكمية.':no.length?'لا توجد بيانات حسابية للمواد: '+no.join('، ')+' (مثل الألوان والكواشف).':'أدخل كمية كل مادة واختر شروط التفاعل — الحساب يتحدّث تلقائيًا.';
+  calcRun();
+}
+function calcRun(){
+  const ex=$('#cdA').value==='x',out=$('#calcOut'),M=sp=>ex?sp.Mx:sp.M;
+  document.querySelectorAll('#calcRows .mm').forEach((e,i)=>{const r=CB.sel.map(calcRowDef).filter(Boolean)[i];if(r)e.textContent=fm(M(r.sp))+' g/mol'});
+  const rows=CB.sel.map(calcRowDef).filter(Boolean),spc={};let Vtot=0;
+  rows.forEach(({it,sp,v})=>{const a=+v.a||0;if(a<=0)return;
+    let n=v.u==='g'?a/M(sp):v.u==='mol'?a:v.u==='mL'?a*sp.d/M(sp):a/1000*(+v.c||0);
+    if(v.u==='mL'||v.u==='mLM')Vtot+=a;
+    const st=v.u==='mLM'?'aq':v.u==='mL'?'l':sp.st==='l'?'l':sp.st==='g'?'g':'s';
+    const o=spc[sp.f]||(spc[sp.f]={sp,n:0,rows:[],st});o.n+=n;o.rows.push({v,a,n,st})});
+  const have=Object.keys(spc).filter(f=>spc[f].n>0);
+  if(rows.length<1){out.innerHTML='';$('#cdRL').hidden=true;return}
+  const app=REAC.filter(r=>r.re.every(([f])=>have.includes(f)));
+  if(!app.length){$('#cdRL').hidden=true;out.innerHTML='<div class="cwarn">'+(have.length<2&&!REAC.some(r=>r.re.length===1&&have.includes(r.re[0][0]))?'اختر مادتين أو أكثر وأدخل كميتيهما.':'لا يوجد تفاعل مسجّل بين هذه المواد. جرّب مثلًا: AgNO₃ + NaCl أو Zn + HCl أو Fe + S.')+'</div>';return}
+  const heat=$('#cdT').value==='h'||T>=50,cat=$('#cdC').value;
+  const miss=r=>{const m=[];if(r.c.h&&!heat)m.push('تسخين');if(r.c.conc&&!$('#cdK').checked)m.push('حمض مركّز');if(r.c.cur&&!$('#cdE').checked)m.push('تيار كهربي');
+    if(r.c.cat&&!(cat===r.c.cat||(have.includes(r.c.cat)&&!r.re.some(([f])=>f===r.c.cat))))m.push('عامل مساعد '+fd(r.c.cat));return m};
+  const sel=$('#cdR');let rid=+sel.value;if(!app.some(r=>r.id===rid))rid=(app.find(r=>!miss(r).length)||app[0]).id;
+  sel.innerHTML=app.map(r=>`<option value="${r.id}"${r.id===rid?' selected':''}>${miss(r).length?'⚠️ ':'✅ '}${r.re.map(([f])=>fd(f)).join(' + ')}</option>`).join('');
+  $('#cdRL').hidden=app.length<2;
+  const R=app.find(r=>r.id===rid),ms=miss(R),eff=Math.max(0,Math.min(100,+$('#cdY').value||0))/100;
+  const stR=f=>spc[f].st,stP=f=>({p:'s',s:'s',l:'l',g:'g',aq:'aq'})[SP[f].st];
+  const cond=[R.c.h?'Δ':'',R.c.cat?fd(R.c.cat):'',R.c.conc?'مركّز':'',R.c.cur?'تيار كهربي':''].filter(Boolean).join(' , ');
+  const term=(f,k,st,mk)=>`${k>1?k:''}${fd(f)}<small style="font-size:.7em;color:var(--mut)">(${st})</small>${mk||''}`;
+  const eqH=R.re.map(([f,k])=>term(f,k,stR(f))).join(' + ')+`<span class="ar"><small>${cond||'&nbsp;'}</small><i>${R.c.eq?'⇌':'→'}</i></span>`+R.pr.map(([f,k])=>term(f,k,stP(f),SP[f].st==='p'?'↓':SP[f].st==='g'?'↑':'')).join(' + ');
+  let h=`<div class="ceq" aria-label="المعادلة الموزونة">${eqH}</div>`;
+  if(ms.length){out.innerHTML=h+`<div class="cwarn">⚠️ لن يحدث التفاعل بدون: ${ms.join(' • ')} — فعّل هذه الشروط من الأعلى.</div>`;return}
+  const xi=Math.min(...R.re.map(([f,k])=>spc[f].n/k)),xa=xi*eff;
+  const lim=R.re.filter(([f,k])=>Math.abs(spc[f].n/k-xi)<=1e-9*Math.max(1,xi)).map(([f])=>f);
+  let mc=0,mp=0;
+  const tr=R.re.map(([f,k])=>{const o=spc[f],cons=k*xa;let left=o.n-cons;if(Math.abs(left)<1e-9*o.n)left=0;const m=M(o.sp);mc+=cons*m;
+    return `<tr class="${lim.includes(f)?'lim':''}"><td>${o.sp.n}<div class="cs">${fd(f)}</div></td><td>${fh(m)}</td><td>${fh(o.n)}</td><td>${fh(o.n/k)}</td><td>${lim.includes(f)?'محدِّد ⛔':'زائد'}</td><td>${fh(left)} mol<div class="cs">${fh(left*m)} g</div></td></tr>`}).join('');
+  const aqP=Vtot>0;
+  const tp=R.pr.map(([f,k])=>{const sp=SP[f],n=k*xa,m=n*M(sp);mp+=m;const st=stP(f);
+    return `<tr><td>${sp.n}<div class="cs">${fd(f)}${sp.st==='p'?' ↓ راسب':sp.st==='g'?' ↑ غاز':''}</div></td><td>${fh(n)}</td><td><b>${fh(m)}</b></td><td>${st==='g'?fm(n*22.4):'—'}</td><td>${fh(n*6.02e23)}</td><td>${st==='aq'&&aqP?fm(n/(Vtot/1000)):'—'}</td></tr>`}).join('');
+  const steps=Object.values(spc).filter(o=>R.re.some(([f])=>f===o.sp.f)).map(o=>o.rows.map(r=>{const m=M(o.sp);
+    return '<div class="cs">n('+fd(o.sp.f)+') = '+(r.v.u==='g'?`m ÷ M = ${fh(r.a)} ÷ ${fh(m)}`:r.v.u==='mol'?'مباشرة':r.v.u==='mL'?`(V × ρ) ÷ M = (${fh(r.a)} × ${o.sp.d}) ÷ ${fh(m)}`:`V(L) × C = ${fh(r.a/1000)} × ${fh(+r.v.c)}`)+` = ${fh(r.n)} mol</div>`}).join('')).join('');
+  const un=have.filter(f=>!R.re.some(([x])=>x===f)&&f!==R.c.cat).map(f=>SP[f].n);
+  h+=`<div class="cwrap"><table class="ct"><tr><th>المتفاعل</th><th>M (g/mol)</th><th>n (mol)</th><th>n ÷ المعامل</th><th>الدور</th><th>المتبقي</th></tr>${tr}</table></div>`;
+  h+=`<div class="cwrap"><table class="ct"><tr><th>الناتج</th><th>n (mol)</th><th>الكتلة (g)</th><th>حجم الغاز STP (L)</th><th>عدد الجسيمات</th><th>التركيز M</th></tr>${tp}</table></div>`;
+  h+=`<div class="cok">⚖️ كتلة المتفاعلات المستهلكة = ${fh(mc)} g ، وكتلة النواتج = ${fh(mp)} g ${Math.abs(mc-mp)<=1e-6*Math.max(1,mc)?'✔ (قانون بقاء الكتلة)':''}</div>`;
+  h+=`<div class="note" style="margin-top:6px">المادة المحدِّدة: <b>${lim.map(f=>SP[f].n).join(' ، ')}</b>${eff<1?' • الكفاءة '+fm(eff*100)+'%':''}${R.c.eq?' • تفاعل اتزاني: الناتج الفعلي أقل من النظري':''}${un.length?' • لم يشارك: '+un.join('، '):''}${aqP?' • الحجم الكلي ≈ '+fm(Vtot)+' mL':''}</div>`;
+  if(steps)h+=`<details style="margin-top:6px"><summary class="note" style="cursor:pointer">📝 خطوات حساب عدد المولات</summary>${steps}<div class="cs">الجسيمات = n × 6.02×10²³ ، حجم الغاز عند STP = n × 22.4 L</div></details>`;
+  out.innerHTML=h;
+}
+$('#calcCard').addEventListener('input',e=>{const t=e.target,row=t.closest('.crow');
+  if(row){const v=CALC.vals[row.dataset.k];if(t.dataset.f==='u'){v.u=t.value;row.dataset.u=t.value}else if(t.dataset.f==='a')v.a=t.value;else if(t.dataset.f==='c')v.c=t.value}
+  if(t.id==='cdR'){}calcRun()});
+$('#calcCard').addEventListener('change',e=>{if(e.target.id==='cdR'||e.target.id==='cdA'||e.target.closest('.crow'))calcRun()});
+$('#temp').addEventListener('input',()=>{if(document.body.classList.contains('cb'))calcRun()});
+
+
+/* ---------- تجربتي: الأزرار والتنقل بين التبويبات ---------- */
+function goTab(n){const t=document.querySelector('.tab[data-p='+n+']');if(t)t.click()}
+function myIntro(){const g=window.GX,b=$('#myCur');if(!b)return;
+  if(g&&typeof g.i==='number'){b.hidden=false;b.dataset.my=g.i;b.textContent='⚡ بنفس مواد: '+EXP[g.i].t}else b.hidden=true}
+function openMine(arg){
+  if(act){toast('انتظر حتى تنتهي الإضافة الحالية ثم أعد المحاولة');return}
+  if(arg==='edit'){goTab('my');$('#cbD').open=true;scrollTo({top:0,behavior:'smooth'});return}
+  const i=arg===''||arg===undefined?-1:+arg;CB.sel=[];
+  if(i>=0&&DS[i]){const c=gxParse(DS[i]);
+    CB.sel=c.r.map(ckey).filter(k=>CB.items.has(k)).slice(0,CB.max);
+    c.r.forEach(q=>{const k=ckey(q),it=CB.items.get(k),sp=it&&spOf(it);if(!sp)return;
+      const u=q.sol?'g':(sp.d&&sp.st==='l')?'mL':sp.st==='s'?'g':'mLM';CALC.vals[k]={u,a:u==='g'?1:q.v,c:.1}})}
+  $('#exSel').value='custom';cbOpen();
+  if(CB.sel.length>=2)cbStart();
+  goTab('my');scrollTo({top:0,behavior:'smooth'});
+}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-my]');if(b)openMine(b.dataset.my)});
+{const w=$('#why'),m=$('#myWhy');if(w&&m)new MutationObserver(()=>{m.innerHTML=w.innerHTML}).observe(w,{childList:true,characterData:true,subtree:true})}
+
 {const sel=$('#exSel');sel.innerHTML='<optgroup label="✨ تجربة حرة"><option value="custom">🧪 تجربة حرة — اختر موادك بنفسك</option></optgroup>'+Object.entries(STG).map(([s,v])=>`<optgroup label="${v}">`+EXP.map((x,i)=>x.s===s?`<option value="${i}">${x.t}</option>`:'').join('')+'</optgroup>').join('');sel.value=EQ;sel.onchange=()=>sel.value==='custom'?cbOpen():gxLoad(+sel.value)}
 resize();stepsUpdate();setButtons();
 let last=performance.now();
