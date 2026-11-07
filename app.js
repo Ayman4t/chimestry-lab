@@ -1370,13 +1370,23 @@ function setPage(){document.body.classList.add('home-on');$('header').inert=true
 function leave(){document.body.classList.remove('home-on');$('header').inert=false;$('.grid').inert=false;scrollTo({top:0})}
 function render(){
   const [si,y,t]=path,st=si!==undefined?STS[si]:null;let h='';
-  nav.hidden=!path.length;
+  nav.hidden=!path.length;home.dataset.view=path.length?'sub':'root';
   if(!path.length){
-    h=`<h1>🧪 المختبر الكيميائي الشامل</h1><p class="hlead">جرّب تفاعلات الكيمياء بنفسك على الشاشة، من الابتدائي حتى الثانوية العامة.</p>
-    <h2>كيف تبدأ؟</h2>
-    <div class="hsteps"><div class="hstep"><b>1</b><span>اختر مرحلتك، ثم السنة، ثم الترم.</span></div><div class="hstep"><b>2</b><span>اختر تجربة، ثم اضغط أزرار المواد بالترتيب لإضافتها إلى الكأس.</span></div><div class="hstep"><b>3</b><span>اقرأ «ماذا حدث؟» لتفهم التفاعل، ثم غيّر الحرارة لترى الفرق.</span></div></div>
-    <h2>اختر مرحلتك</h2><div class="hopts">${STS.map((s,i)=>opt('data-st',i,s.e+' '+s.t,inStage(s.k)+' تجربة')).join('')}</div>
-    <h2>أو ابدأ مباشرة</h2><div class="hopts g2">${opt('data-go','3','⚡ تجربة سريعة','كاشف الكرنب الأحمر','pri')}${opt('data-go','custom','✨ اختر تجربتك بنفسك','اختر المواد والشروط ← معادلة وكتل ومولات')}</div>`;
+    const first=!window.__introDone;window.__introDone=1;home.classList.toggle('intro',first);
+    const words='المختبر الكيميائي الشامل'.split(' ').map((w,k)=>`<span class="w"><span style="--i:${k}">${w}</span></span>`).join(' ');
+    const T0=window.HERO?window.HERO.t:25,pc=((T0-5)/75*100).toFixed(2);
+    const stg=STS.map((s,k)=>`<button class="stg" type="button" data-st="${k}" style="--c:${['var(--fe)','var(--scn)','var(--cx)'][k]}"><span class="n">${inStage(s.k)}</span><span><b>${s.t}</b><small>${['من الصف الأول حتى السادس','ثلاث سنوات: الأول والثاني والثالث الإعدادي','ثلاث سنوات: الأول والثاني والثالث الثانوي'][k]}</small></span><span class="go" aria-hidden="true">‹</span></button>`).join('');
+    h=`<section class="hero"><div class="hero-copy"><h1>${words}</h1><p class="hlead">جرّب تفاعلات الكيمياء بنفسك على الشاشة، من الابتدائي حتى الثانوية العامة.</p>
+    <div class="cta">${opt('data-go','3','ابدأ تجربة سريعة','كاشف الكرنب الأحمر','pri')}${opt('data-go','custom','اختر تجربتك بنفسك','مواد وشروط، ثم معادلة وكتل ومولات')}</div></div>
+    <aside class="lab" aria-label="محاكاة الاتزان الكيميائي">
+      <div class="lab-eq" dir="ltr"><span class="t fe"><b id="nFe">0</b>Fe³⁺</span><i>+</i><span class="t scn"><b id="nScn">0</b>SCN⁻</span><i class="rev">⇌</i><span class="t cx"><b id="nCx">0</b>[Fe(SCN)]²⁺</span></div>
+      <div class="lab-bar"><span id="barCx"></span></div>
+      <label class="lab-t" for="heatR"><span>الحرارة</span><output id="heatO">${T0}°م</output></label>
+      <input id="heatR" type="range" min="5" max="80" step="1" value="${T0}" style="--p:${pc}%" aria-describedby="labHint">
+      <p id="labHint">هذا اتزان حقيقي: التفاعل طارد للحرارة، فكلما سخّنت قلّ المعقد الأحمر. حرّك المؤشر فوق الشاشة لتقليب المحلول.</p>
+    </aside></section>
+    <section class="stages" aria-labelledby="stH"><h2 id="stH">اختر مرحلتك</h2>${stg}</section>
+    <section class="how" aria-labelledby="hwH"><h2 id="hwH">كيف تبدأ؟</h2><div class="steps3"><p>اختر مرحلتك، ثم السنة، ثم الترم.</p><p>اختر تجربة، ثم اضغط أزرار المواد بالترتيب لإضافتها إلى الكأس.</p><p>اقرأ «ماذا حدث؟» لتفهم التفاعل، ثم غيّر الحرارة لترى الفرق.</p></div></section>`;
   }else if(y===undefined){
     crumb.textContent=st.t;
     h=`<h1>${st.e} ${st.t}</h1><h2>اختر السنة</h2><div class="hopts g2">${Array.from({length:st.n},(_,i)=>{const c=inYear(st.k,i+1);return opt('data-yr',i+1,yname(st.k,i+1),c?c+' تجربة':'قريبًا','',!c)}).join('')}</div>`;

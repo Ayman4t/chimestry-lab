@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#070d1b">
-<title>🧪 المختبر الكيميائي الشامل — تجارب تفاعلية</title>
+<title>المختبر الكيميائي الشامل — تجارب تفاعلية</title>
 <style>
 :root{--bg:#0a1120;--card:#121c33;--line:#233255;--tx:#e8eefc;--mut:#8fa1c7;--cy:#38e1ff;--gold:#ffd34d;--red:#ff4d5e;--ok:#3ddc97;--pu:#c78cff}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -196,33 +196,18 @@ body.gx #gp{flex-wrap:wrap;justify-content:center;overflow:visible}
 </style>
 <style>
 body.home-on{overflow:hidden}
-#home{display:none;position:fixed;inset:0;z-index:100;overflow:auto;background:radial-gradient(1200px 600px at 70% -10%,#16264a,#0a1120);padding:20px 16px 40px}
+#home{display:none;position:fixed;inset:0;z-index:100;overflow:auto}
 body.home-on #home{display:block}
-.hm{max-width:720px;margin:0 auto}
-.hm h1{font-size:1.5rem;margin:0 0 6px}
-.hm h2{font-size:1.15rem;margin:22px 0 10px;color:var(--cy)}
-.hm .hlead{color:var(--mut);font-size:1rem;margin:0 0 16px}
-.hm .hsteps{display:grid;gap:8px}
-.hm .hstep{color:var(--tx);display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:.98rem}
-.hm .hsteps b{flex:0 0 28px;height:28px;border-radius:50%;background:var(--cy);color:#06202b;display:grid;place-items:center;font-size:.9rem}
-.hm .hopts{display:grid;gap:10px}
-.hm .hopts.g2{grid-template-columns:repeat(2,1fr)}
-.hm .hopt{font:inherit;color:var(--tx);text-align:start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;min-height:60px;cursor:pointer;display:flex;flex-direction:column;gap:2px}
-.hm .hopt:hover:not(:disabled),.hm .hopt:focus-visible{border-color:var(--cy);outline:0}
-.hm .hopt:disabled{opacity:.45;cursor:not-allowed}
-.hm .hopt b{font-size:1.05rem}
-.hm .hopt small{color:var(--mut);font-size:.82rem}
-.hm .hopt.pri{background:linear-gradient(135deg,#1f5bff,#14b8ff);border:0}
-.hm .hopt.pri small{color:#e6f4ff}
 .hm .hnav[hidden]{display:none}
-.hm .hnav{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
-.hm .hback{font:inherit;font-weight:700;background:#ffffff12;color:var(--tx);border:1px solid #ffffff30;border-radius:99px;padding:6px 14px;cursor:pointer}
+.hm .hnav{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.hm .hback{font:inherit;font-weight:700;border-radius:99px;padding:6px 14px;cursor:pointer}
 .hm .hcrumb{color:var(--mut);font-size:.88rem}
-.hm .hgrp{margin:16px 0 6px;color:var(--gold);font-size:.9rem;font-weight:800}
+.hm .hopts{display:grid}
+.hm .hopt{font:inherit;color:var(--tx);text-align:start;cursor:pointer;display:flex;flex-direction:column;gap:2px}
+.hm .hopt:disabled{opacity:.45;cursor:not-allowed}
+.hm .hopt small{color:var(--mut);font-size:.82rem}
 .hm .htag{display:inline-block;margin-inline-start:6px;font-size:.68rem;font-weight:700;padding:1px 8px;border-radius:99px;background:#ffffff14;color:var(--gold)}
 .homebtn{font:inherit;font-weight:800;font-size:.8rem;background:#ffffff12;color:var(--tx);border:1px solid #ffffff30;border-radius:99px;padding:5px 12px;cursor:pointer;margin-bottom:8px}
-@media(max-width:480px){.hm .hopts.g2{grid-template-columns:1fr 1fr}.hm h1{font-size:1.3rem}}
-.hm h1:focus{outline:0}
 </style>
 <style>
 #rxCard{display:none}body.gx #rxCard:not([hidden]){display:block}body.cb #rxCard{display:none!important}
@@ -231,9 +216,10 @@ body.home-on #home{display:block}
 .rxe{display:block;direction:ltr;text-align:left;font-size:1.05rem;line-height:1.8;overflow-wrap:anywhere}
 .rxt{display:block;color:var(--mut);font-size:.8rem}
 </style>
+<link rel="stylesheet" href="home.css">
 </head>
 <body class="home-on">
-<main id="home" aria-label="الصفحة الرئيسية">
+<main id="home" aria-label="الصفحة الرئيسية" data-view="root">
 <div class="hm">
   <div class="hnav" id="hmNav" hidden><button class="hback" id="hmBack" type="button">› رجوع</button><span class="hcrumb" id="hmCrumb"></span></div>
   <div id="hmBody"></div>
@@ -241,9 +227,9 @@ body.home-on #home{display:block}
 </main>
 
 <header>
-  <button class="homebtn" id="homeBtn" type="button">🏠 الرئيسية</button>
+  <button class="homebtn" id="homeBtn" type="button">› الرئيسية</button>
   <div class="badges"><span class="badge eg">🇪🇬 مصر</span><span class="badge">كل مراحل التعليم: ابتدائي • إعدادي • ثانوي</span><span class="badge">تفاعلي</span><span class="badge gold">معمل افتراضي</span></div>
-  <h1>🧪 المختبر الكيميائي الشامل — تجارب تفاعلية</h1>
+  <h1>المختبر الكيميائي الشامل — تجارب تفاعلية</h1>
   <div class="sub">استكشف تفاعلات الاتزان الكيميائي وتأثير التركيز والحرارة • اسحب الكأس لتدويره</div>
   <div class="prog"><span id="progT">0 / 7</span><i><span id="progB"></span></i></div>
   <select id="exSel" class="exsel" aria-label="اختر التجربة"></select>
@@ -533,5 +519,6 @@ body.home-on #home{display:block}
 <div id="toast"></div>
 
 <script src="app.js"></script>
+<script src="hero.js"></script>
 </body>
 </html>
