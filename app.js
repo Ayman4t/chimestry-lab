@@ -1283,6 +1283,57 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-my]');if(b
 {const w=$('#why'),m=$('#myWhy');if(w&&m)new MutationObserver(()=>{m.innerHTML=w.innerHTML}).observe(w,{childList:true,characterData:true,subtree:true})}
 
 {const sel=$('#exSel');sel.innerHTML='<optgroup label="✨ اختر تجربتك بنفسك"><option value="custom">✨ اختر تجربتك بنفسك — مواد وشروط ومعادلة</option></optgroup>'+TOPICS.map(t=>`<optgroup label="${t.t}">`+t.ix.map(i=>`<option value="${i}">${EXP[i].t}</option>`).join('')+'</optgroup>').join('');sel.value=EQ;sel.onchange=()=>sel.value==='custom'?cbOpen():gxLoad(+sel.value)}
+/* ---------- الصفحة الرئيسية: مرحلة ← سنة ← ترم ← تجارب ---------- */
+{
+const YT={0:'p5.1',1:'p4.1',2:'p4.2',3:'p6.1',4:'p6.2',52:'p6.2',5:'e1.1',6:'e1.1',7:'e1.2',53:'e1.2',8:'e2.1',9:'e2.1',10:'e2.2',11:'e3.1',12:'e3.1',13:'e3.2',14:'e3.2',54:'e3.2',15:'s1.1',16:'s1.1',17:'s1.1',21:'s1.1',22:'s1.1',18:'s1.2',19:'s1.2',20:'s1.2',23:'s1.2',24:'s2.1',25:'s2.1',26:'s2.2'};
+[34,36,50,51,55,56,48,49,42,58,59,60,61,62,33,35,37,38,39,40,41,63].forEach(i=>YT[i]='s3.1');
+[43,44,45,46,47,64,27,28,29,30,31,32,57,65,66,67,68,69].forEach(i=>YT[i]='s3.2');
+const ORD=['الأول','الثاني','الثالث','الرابع','الخامس','السادس'];
+const STS=[{k:'p',t:'المرحلة الابتدائية',e:'🎒',n:6},{k:'e',t:'المرحلة الإعدادية',e:'🔬',n:3},{k:'s',t:'المرحلة الثانوية',e:'🧪',n:3}];
+const TERMS=['الترم الأول','الترم الثاني'];
+const home=$('#home'),body=$('#hmBody'),nav=$('#hmNav'),crumb=$('#hmCrumb');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const inGroup=(s,y,t)=>Object.keys(YT).map(Number).filter(i=>YT[i]===s+y+'.'+t).sort((x,y2)=>x-y2);
+const inYear=(s,y)=>inGroup(s,y,1).length+inGroup(s,y,2).length;
+const inStage=s=>{let c=0;for(let y=1;y<=6;y++)c+=inYear(s,y);return c};
+const yname=(s,y)=>'الصف '+ORD[y-1]+({p:' الابتدائي',e:' الإعدادي',s:' الثانوي'}[s]);
+let path=[];
+function opt(attr,val,title,sub,cls,dis){return `<button class="hopt ${cls||''}" type="button" ${attr}="${val}"${dis?' disabled':''}><b>${title}</b>${sub?`<small>${sub}</small>`:''}</button>`}
+function setPage(){document.body.classList.add('home-on');$('header').inert=true;$('.grid').inert=true;render();home.scrollTop=0}
+function leave(){document.body.classList.remove('home-on');$('header').inert=false;$('.grid').inert=false;scrollTo({top:0})}
+function render(){
+  const [si,y,t]=path,st=si!==undefined?STS[si]:null;let h='';
+  nav.hidden=!path.length;
+  if(!path.length){
+    h=`<h1>🧪 المختبر الكيميائي الشامل</h1><p class="hlead">جرّب تفاعلات الكيمياء بنفسك على الشاشة، من الابتدائي حتى الثانوية العامة.</p>
+    <h2>كيف تبدأ؟</h2>
+    <div class="hsteps"><div class="hstep"><b>1</b><span>اختر مرحلتك، ثم السنة، ثم الترم.</span></div><div class="hstep"><b>2</b><span>اختر تجربة، ثم اضغط أزرار المواد بالترتيب لإضافتها إلى الكأس.</span></div><div class="hstep"><b>3</b><span>اقرأ «ماذا حدث؟» لتفهم التفاعل، ثم غيّر الحرارة لترى الفرق.</span></div></div>
+    <h2>اختر مرحلتك</h2><div class="hopts">${STS.map((s,i)=>opt('data-st',i,s.e+' '+s.t,inStage(s.k)+' تجربة')).join('')}</div>
+    <h2>أو ابدأ مباشرة</h2><div class="hopts g2">${opt('data-go','3','⚡ تجربة سريعة','كاشف الكرنب الأحمر','pri')}${opt('data-go','custom','✨ اختر تجربتك بنفسك','اختر المواد وشاهد النتيجة')}</div>`;
+  }else if(y===undefined){
+    crumb.textContent=st.t;
+    h=`<h1>${st.e} ${st.t}</h1><h2>اختر السنة</h2><div class="hopts g2">${Array.from({length:st.n},(_,i)=>{const c=inYear(st.k,i+1);return opt('data-yr',i+1,yname(st.k,i+1),c?c+' تجربة':'قريبًا','',!c)}).join('')}</div>`;
+  }else if(t===undefined){
+    crumb.textContent=st.t+' › '+yname(st.k,y);
+    h=`<h1>${yname(st.k,y)}</h1><h2>اختر الترم</h2><div class="hopts g2">${[1,2].map(n=>{const c=inGroup(st.k,y,n).length;return opt('data-tm',n,TERMS[n-1],c?c+' تجربة':'قريبًا','',!c)}).join('')}</div>`;
+  }else{
+    crumb.textContent=yname(st.k,y)+' › '+TERMS[t-1];
+    const ids=inGroup(st.k,y,t),pos=i=>{const k=TOPIC_OF[i].k,o=TOPICS.findIndex(x=>x.k===k);return o<0?99:o};
+    ids.sort((p,q)=>pos(p)-pos(q)||p-q);let last='';
+    h=`<h1>${TERMS[t-1]}</h1><div class="hopts">`+ids.map(i=>{const tp=TOPIC_OF[i],hd=tp.k!=='rev'&&tp.k!==last?`</div><div class="hgrp">${esc(tp.t)}</div><div class="hopts">`:'';last=tp.k;
+      return hd+opt('data-go',i,esc(EXP[i].t)+(EXP[i].en?'<span class="htag">إثرائي</span>':''),esc(EXP[i].n))}).join('')+'</div>';
+  }
+  body.innerHTML=h;const f=body.querySelector('h1');if(f){f.tabIndex=-1;f.focus({preventScroll:true})}
+}
+home.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  if(b.id==='hmBack'){path.pop();render();home.scrollTop=0;return}
+  const d=b.dataset;
+  if(d.st!==undefined){path=[+d.st]}else if(d.yr!==undefined){path=[path[0],+d.yr]}else if(d.tm!==undefined){path=[path[0],path[1],+d.tm]}
+  else if(d.go!==undefined){leave();if(d.go==='custom')openMine('');else{gxSel(+d.go);goTab('lab')}return}
+  render();home.scrollTop=0});
+$('#homeBtn').addEventListener('click',setPage);
+setPage();
+}
 resize();stepsUpdate();setButtons();
 let last=performance.now();
 (function frame(now){
