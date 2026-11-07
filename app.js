@@ -636,13 +636,6 @@ $('#modalOpts').addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;
   if(b.hasAttribute('data-d')){
     $('#modal').hidden=true;pendingPred=b.dataset.d;startAction(pendingAct);pendingAct=null;
-  } else if(b.hasAttribute('data-q')) {
-    $('#modal').hidden=true;
-    const k=+b.dataset.k; done.add(k); exSave();
-    const d=$(`details[data-idx="${k}"]`);
-    if(d){d.classList.add('dn');d.querySelector('button[data-k]').textContent='↩ إلغاء';d.querySelector('summary>span').firstChild.nodeValue='✓ '+EXP[k].t;}
-    exCount();
-    toast('✅ إجابة صحيحة! تم تسجيل إنجاز التجربة.');
   }
 });
 addEventListener('resize',resize);
@@ -774,101 +767,6 @@ const TOPICS=[
 {const used=new Set(TOPICS.flatMap(t=>t.ix));TOPICS.push({k:'rev',t:'📘 مراجعة المراحل السابقة',ix:EXP.map((x,i)=>i).filter(i=>!used.has(i))})}
 const TOPIC_OF=[];TOPICS.forEach(t=>t.ix.forEach(i=>{if(TOPIC_OF[i])console.warn('مكررة',i);TOPIC_OF[i]=t}));
 EXP.forEach((x,i)=>{if(!TOPIC_OF[i])console.warn('بدون تصنيف',i)});
-let fs='all',fq='',done=new Set();
-try{done=new Set(JSON.parse(localStorage.getItem('chemDone')||'[]'))}catch(e){console.warn('LocalStorage unavailable');}
-const exSave=()=>{try{localStorage.setItem('chemDone',JSON.stringify([...done]))}catch(e){console.warn('Cannot save to LocalStorage');}};
-const exCount=()=>{$('#exP').textContent=done.size+' / '+EXP.length;$('#exB').style.width=done.size/EXP.length*100+'%'};
-
-const CUSTOM_CARD='<div class="cbg">✨ اختر تجربتك بنفسك</div><div class="card" style="margin-top:6px"><div class="note">اختر المواد والشروط بنفسك، ويحوّلها المعمل إلى معادلة موزونة ويحسب المولات والكتل والمادة المحدِّدة.</div><div class="row"><button class="pill b" data-my="">✨ ابدأ تجربتك بنفسك</button></div></div>';
-function exRender(){
-  const list=fs==='custom'?[]:EXP.map((x,i)=>({...x,i})).filter(x=>(fs==='all'||TOPIC_OF[x.i].k===fs)&&(!fq||(x.t+x.n).includes(fq)));
-  const ord=TOPICS.map(t=>t.k);list.sort((a,b)=>ord.indexOf(TOPIC_OF[a.i].k)-ord.indexOf(TOPIC_OF[b.i].k)||a.i-b.i);let lastT='';
-  const cc=(fs==='all'||fs==='custom')&&!fq?CUSTOM_CARD:'';
-  $('#exList').innerHTML=cc+list.map(x=>{
-    const tpc=TOPIC_OF[x.i],hd=tpc.k!==lastT?`<div class="cbg" style="margin-top:12px">${tpc.t}</div>`:'';lastT=tpc.k;
-    const d=done.has(x.i);
-    const enBadge = x.en ? '<span class="badge en" style="margin-inline-start:6px;font-size:.6rem;padding:0 6px">إثرائي</span>' : '';
-    return hd+`<details class="${d?'dn':''}" data-idx="${x.i}"><summary><span>${d?'✓ ':''}${x.t}${enBadge}<span class="exs">${STG[x.s]}</span></span></summary><p>🔎 ${x.n}</p><div class="exb"><button data-k="${x.i}">${d?'↩ إلغاء':'✓ اختبر فهمي'}</button><button data-go="${x.i}">▶ افتح في المعمل</button>${x.l?'':`<button data-my="${x.i}">🧪 تجربتي بنفس المواد</button>`}</div></details>`
-  }).join('')||(cc?'':'<div class="note">لا توجد نتائج.</div>');
-  exCount();
-}
-
-// Quick Quiz mapping for experiments
-const quickQuiz = {
-  0: {q: 'ما هي الخاصية التي تعتمد عليها عملية الترشيح؟', o: ['الاختلاف في الكثافة', 'الاختلاف في حجم الجسيمات/الذوبانية', 'الاختلاف في درجة الغليان'], a: 1},
-  1: {q: 'لماذا يذوب السكر أسرع في الماء الساخن؟', o: ['لأن حرارة الماء تكسر جزيئات السكر كيميائياً', 'لأن الطاقة الحركية للجزيئات تزيد فتسرع التصادمات', 'لأن الماء الساخن يحتوي على أكسجين أكثر'], a: 1},
-  3: {q: 'ماذا يحدث للون ورقة عباد الشمس الحمراء في وسط قاعدي؟', o: ['تبقى حمراء', 'تتحول إلى أزرق', 'تتحول إلى عديمة اللون'], a: 1},
-  5: {q: 'كيف نفصل الحديد عن الكبريت في الخليط؟', o: ['بالتسخين', 'بالمغناطيس', 'بإضافة الماء'], a: 1}
-};
-// Default generic question if not found
-const genericQ = {q: 'هل لاحظت النتيجة المتوقعة في التجربة؟', o: ['نعم، فهمت التفسير العلمي', 'لا، أحتاج لمراجعة المنهج'], a: 0};
-
-$('#exF').innerHTML=[['all','الكل ('+EXP.length+')'],['custom','✨ اختر تجربتك بنفسك'],...TOPICS.map(t=>[t.k,t.t.replace('تجارب ','')+' ('+t.ix.length+')'])].map(([k,v])=>`<button class="chip${k==='all'?' on':''}" data-s="${k}">${v}</button>`).join('');
-$('#exF').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;fs=b.dataset.s;document.querySelectorAll('#exF .chip').forEach(c=>c.classList.toggle('on',c===b));exRender()});
-$('#exq').addEventListener('input',e=>{fq=e.target.value.trim();exRender()});
-
-$('#exList').addEventListener('click',e=>{
-  const b=e.target.closest('button');if(!b)return;
-  if(b.dataset.my!==undefined)return;
-  if(b.dataset.go){gxSel(+b.dataset.go);document.querySelector('.tab[data-p=lab]').click();scrollTo({top:0,behavior:'smooth'});return}
-  
-  const k=+b.dataset.k;
-  if(done.has(k)){
-    // Undo
-    done.delete(k);exSave();
-    const d=b.closest('details');d.classList.remove('dn');
-    b.textContent='✓ اختبر فهمي';
-    d.querySelector('summary>span').firstChild.nodeValue=EXP[k].t;
-    exCount();
-    return;
-  }
-
-  // Show Quick Quiz
-  const qData = quickQuiz[k] || genericQ;
-  $('#modalTitle').textContent='🧠 اختبر فهمك';
-  $('#mq').textContent=qData.q;
-  $('#modalOpts').innerHTML = qData.o.map((t,i)=>`<button data-q="${i}" data-k="${k}" ${i===qData.a ? 'data-ans="1"':''}>${t}</button>`).join('') + `<div style="font-size:.75rem;color:var(--mut);margin-top:8px">اختر الإجابة الصحيحة لتسجيل إنجاز التجربة.</div>`;
-  $('#modal').hidden=false;
-  
-  // Store correct answer temporarily on the modal for checking
-  $('#modalOpts').setAttribute('data-correct', qData.a);
-});
-
-// Handle Quiz Modal logic (modified to support both prediction and quiz)
-// Note: The event listener at the top handles the prediction. We need to intercept here before it.
-// Actually, it's easier to handle the quiz response inside the main `#modalOpts` listener.
-// Let's modify the `#modalOpts` listener.
-$('#modalOpts').addEventListener('click', e => {
-  const b = e.target.closest('button');
-  if(!b) return;
-  
-  if(b.hasAttribute('data-d')) { // Prediction mode
-    $('#modal').hidden=true; pendingPred=b.dataset.d; startAction(pendingAct); pendingAct=null;
-  } else if(b.hasAttribute('data-q')) { // Quiz mode
-    const correct = +$('#modalOpts').getAttribute('data-correct');
-    const chosen = +b.dataset.q;
-    if(chosen === correct) {
-      $('#modal').hidden = true;
-      const k = +b.dataset.k;
-      done.add(k); exSave();
-      const d = $(`details[data-idx="${k}"]`);
-      if(d) {
-        d.classList.add('dn');
-        d.querySelector('button[data-k]').textContent = '↩ إلغاء';
-        d.querySelector('summary>span').firstChild.nodeValue = '✓ ' + EXP[k].t;
-      }
-      exCount();
-      toast('✅ إجابة صحيحة! تم تسجيل إنجاز التجربة.');
-    } else {
-      b.style.background = 'var(--red)'; b.style.color = '#fff';
-      setTimeout(() => { b.style.background = ''; b.style.color = ''; }, 1000);
-      toast('❌ إجابة خاطئة، حاول مرة أخرى أو راجع التجربة.');
-    }
-  }
-});
-
-exRender();
-
 /* ---------- المحرك العام: كل التجارب تفاعليًا على الكأس ---------- */
 const CLR='#dfeef8',HX=c=>[1,3,5].map(i=>parseInt(c.substr(i,2),16)),nu=(v,d)=>(v===undefined||v==='')?d:+v;
 const EQ=EXP.findIndex(x=>x.l),DS=[];
@@ -1016,11 +914,146 @@ function gxClear(){
   window.GX.set.clear();window.GX.order=[];window.GX.heated=window.GX.cooled=0;window.GX.fb=0;window.GX.ft=0;window.GX.lo=0;window.GX.tr=HX(CLR);window.GX.ta=.15;window.GX.g=0;$('#gxEq').textContent='—';
   $('#why').textContent='اضغط على أحد الأزرار أسفل الكأس لإضافة المادة، وراقب اللون والرواسب والغازات.';stepsUpdate();setButtons();
 }
+/* ---------- معادلة لكل تجربة ---------- */
+const EQN={};`0|فصل فيزيائي|رمل + ماء ⟶ رمل (على الورقة) + ماء رائق|لا يوجد تفاعل كيميائي، فالترشيح يفصل حسب حجم الجسيمات
+1|السكر|C₁₂H₂₂O₁₁(s) ⟶ C₁₂H₂₂O₁₁(aq)|يذوب كجزيئات دون تأين
+1|الملح|NaCl(s) ⟶ Na⁺(aq) + Cl⁻(aq)|يذوب ويتأين
+2|تغير الحالة|H₂O(s) ⇌ H₂O(l) ⇌ H₂O(g)|تغيّر فيزيائي: الصيغة لا تتغير
+3|الحمض|HCl ⟶ H⁺ + Cl⁻|الكرنب الأحمر يبقى أحمر
+3|القاعدة|NaOH ⟶ Na⁺ + OH⁻|الكرنب يتحول إلى الأخضر أو الأزرق
+4|الصدأ|4Fe + 3O₂ + 2xH₂O ⟶ 2Fe₂O₃·xH₂O|يحتاج الحديد إلى الأكسجين والماء معًا
+5|تكوين مركب|Fe + S —Δ→ FeS|الخليط يُفصل بالمغناطيس، أما المركب FeS فلا
+6|فصل فيزيائي|NaCl(aq) —Δ→ NaCl(s) + H₂O(g)|التقطير: H₂O(g) ⟶ H₂O(l) عند التبريد
+7|الماغنسيوم|2Mg + O₂ —Δ→ 2MgO|تغيّر كيميائي
+7|الشمعة|C₂₅H₅₂ + 38O₂ ⟶ 25CO₂ + 26H₂O|انصهار الشمع تغيّر فيزيائي واحتراقه كيميائي
+8|الأكسجين|2H₂O₂ —MnO₂→ 2H₂O + O₂↑|MnO₂ عامل مساعد يتفاعل دون أن يُستهلك
+9|ثاني أكسيد الكربون|CaCO₃ + 2HCl ⟶ CaCl₂ + H₂O + CO₂↑|
+9|الكشف|CO₂ + Ca(OH)₂ ⟶ CaCO₃↓ + H₂O|يتعكر ماء الجير
+10|الهيدروجين|Zn + 2HCl ⟶ ZnCl₂ + H₂↑|يُكشف بفرقعة عند تقريب لهب
+11|الحمض|HCl ⟶ H⁺ + Cl⁻|الحمض يعطي H⁺
+11|القاعدة|NaOH ⟶ Na⁺ + OH⁻|القاعدة تعطي OH⁻
+12|جزيئية|NaOH + HCl ⟶ NaCl + H₂O|
+12|أيونية|H⁺ + OH⁻ ⟶ H₂O|يزول اللون الوردي للفينولفثالين عند التعادل
+13|مع الماء|2Na + 2H₂O ⟶ 2NaOH + H₂↑|
+13|مع الحمض|Mg + 2HCl ⟶ MgCl₂ + H₂↑|
+13|مع الحمض|Zn + 2HCl ⟶ ZnCl₂ + H₂↑|
+13|النحاس|Cu + HCl ⟶ لا يتفاعل|النحاس أقل نشاطًا من الهيدروجين
+14|التحليل الكهربي|2H₂O ⟶ 2H₂↑ + O₂↑|بالتيار الكهربي، وH₂ ضعف حجم O₂
+15|الإثارة|M⁺ —لهب→ M⁺* ⟶ M⁺ + ضوء|لا تفاعل كيميائي: Na أصفر، K بنفسجي، Ca أحمر طوبي، Cu أخضر مزرق
+16|الصوديوم|2Na + 2H₂O ⟶ 2NaOH + H₂↑|
+16|الكالسيوم|Ca + 2H₂O ⟶ Ca(OH)₂ + H₂↑|
+16|الماغنسيوم|Mg + 2H₂O —Δ→ Mg(OH)₂ + H₂↑|
+17|جزيئية|Zn + CuSO₄ ⟶ ZnSO₄ + Cu↓|
+17|أيونية|Zn + Cu²⁺ ⟶ Zn²⁺ + Cu|Zn أنشط من Cu فيحل محله
+18|AgCl|AgNO₃ + NaCl ⟶ AgCl↓ + NaNO₃|راسب أبيض
+18|أيونية|Ag⁺ + Cl⁻ ⟶ AgCl↓|
+18|BaSO₄|BaCl₂ + Na₂SO₄ ⟶ BaSO₄↓ + 2NaCl|راسب أبيض
+18|أيونية|Ba²⁺ + SO₄²⁻ ⟶ BaSO₄↓|
+19|جزيئية|Cu + 2AgNO₃ ⟶ Cu(NO₃)₂ + 2Ag↓|
+19|أيونية|Cu + 2Ag⁺ ⟶ Cu²⁺ + 2Ag|أكسدة Cu واختزال Ag⁺
+20|إلكتروليت|NaCl ⟶ Na⁺ + Cl⁻|توجد أيونات حرة فيوصّل التيار
+20|غير إلكتروليت|C₁₂H₂₂O₁₁(aq)|السكر لا يتأين فلا يوصّل
+21|ماء التبلر|CuSO₄·5H₂O —Δ→ CuSO₄ + 5H₂O↑|من الأزرق إلى الأبيض
+22|بقاء الكتلة|AgNO₃ + NaCl ⟶ AgCl↓ + NaNO₃|كتلة المتفاعلات = كتلة النواتج في الدورق المغلق
+23|تحضير ملح|CuO + H₂SO₄ —Δ→ CuSO₄ + H₂O|ثم يبلور المحلول المركز
+24|التركيز|Na₂S₂O₃ + 2HCl ⟶ 2NaCl + S↓ + SO₂↑ + H₂O|تزيد السرعة بزيادة التركيز
+25|الحرارة|Na₂S₂O₃ + 2HCl ⟶ 2NaCl + S↓ + SO₂↑ + H₂O|تزيد السرعة بارتفاع الحرارة
+26|العامل المساعد|2H₂O₂ —MnO₂→ 2H₂O + O₂↑|يزيد السرعة دون أن يُستهلك
+27|الإيثين|C₂H₅OH —(H₂SO₄ conc., 170°C)→ C₂H₄↑ + H₂O|نزع ماء
+27|الكشف|C₂H₄ + Br₂ ⟶ C₂H₄Br₂|يزول لون ماء البروم
+28|الأسيتيلين|CaC₂ + 2H₂O ⟶ Ca(OH)₂ + C₂H₂↑|
+29|الأسترة|CH₃COOH + C₂H₅OH ⇌ CH₃COOC₂H₅ + H₂O|بوجود H₂SO₄ المركز والتسخين
+30|مع الصوديوم|2C₂H₅OH + 2Na ⟶ 2C₂H₅ONa + H₂↑|
+30|كشف الحمض|2CH₃COOH + Na₂CO₃ ⟶ 2CH₃COONa + H₂O + CO₂↑|
+31|التصبّن|(RCOO)₃C₃H₅ + 3NaOH —Δ→ 3RCOONa + C₃H₅(OH)₃|دهن + قلوي ⟶ صابون + جلسرين
+32|فهلنج|RCHO + 2Cu²⁺ + 5OH⁻ —Δ→ RCOO⁻ + Cu₂O↓ + 3H₂O|راسب أحمر طوبي مع السكريات المختزلة
+32|النشا|(C₆H₁₀O₅)ₙ + I₂ ⟶ معقد أزرق داكن|
+34|الاتزان|[Co(H₂O)₆]²⁺ + 4Cl⁻ ⇌ [CoCl₄]²⁻ + 6H₂O|تفاعل ماص (ΔH > 0): التسخين يرجّح الأزرق والتبريد يرجّح الوردي
+35|الاتزان|N₂O₄ ⇌ 2NO₂|ماص (ΔH > 0): التسخين يزيد NO₂ البني
+36|الاتزان|2CrO₄²⁻ + 2H⁺ ⇌ Cr₂O₇²⁻ + H₂O|الحمض يعطي برتقالي، والقلوي يعيد الأصفر
+37|الأمونيا|NH₄OH ⇌ NH₄⁺ + OH⁻|
+37|الأيون المشترك|NH₄Cl ⟶ NH₄⁺ + Cl⁻|يقل OH⁻ فيزول اللون الوردي
+38|حمض قوي|HCl ⟶ H⁺ + Cl⁻|تأين تام
+38|حمض ضعيف|CH₃COOH ⇌ CH₃COO⁻ + H⁺|تأين جزئي
+39|المنظم|CH₃COOH ⇌ CH₃COO⁻ + H⁺|
+39|عند إضافة حمض|CH₃COO⁻ + H⁺ ⟶ CH₃COOH|يبقى pH شبه ثابت
+40|NH₄Cl|NH₄⁺ + H₂O ⇌ NH₃ + H₃O⁺|محلول حمضي
+40|CH₃COONa|CH₃COO⁻ + H₂O ⇌ CH₃COOH + OH⁻|محلول قاعدي
+40|NaCl|NaCl ⟶ Na⁺ + Cl⁻|متعادل، فلا يحدث تميؤ
+41|الذوبان|NaCl(s) ⇌ Na⁺(aq) + Cl⁻(aq)|
+41|الأيون المشترك|Na⁺ + Cl⁻ ⟶ NaCl(s)↓|زيادة Cl⁻ من HCl تُرسّب NaCl
+42|المعايرة|Na₂CO₃ + 2HCl ⟶ 2NaCl + H₂O + CO₂↑|الميثيل البرتقالي: أصفر إلى برتقالي عند نقطة النهاية
+43|الأنود|Zn ⟶ Zn²⁺ + 2e⁻|أكسدة
+43|الكاثود|Cu²⁺ + 2e⁻ ⟶ Cu|اختزال
+43|الكلية|Zn + Cu²⁺ ⟶ Zn²⁺ + Cu|E° = 0.34 − (−0.76) = 1.10 V
+44|إزاحة|Zn + CuSO₄ ⟶ ZnSO₄ + Cu|
+44|إزاحة|Cu + 2AgNO₃ ⟶ Cu(NO₃)₂ + 2Ag|الترتيب: Zn ثم Cu ثم Ag
+45|الأنود|Cu ⟶ Cu²⁺ + 2e⁻|النحاس غير النقي يتآكل
+45|الكاثود|Cu²⁺ + 2e⁻ ⟶ Cu|يترسب نحاس نقي
+46|الكاثود|Cu²⁺ + 2e⁻ ⟶ Cu|الجسم المراد طلاؤه
+46|فاراداي|m = (M × I × t) ÷ (z × 96500)|الكتلة المترسبة تتناسب مع كمية الكهربية
+47|التعادل|NaOH + HCl ⟶ NaCl + H₂O|طارد للحرارة: ΔH ≈ −57 kJ/mol
+47|الذوبان|NH₄NO₃(s) ⟶ NH₄⁺ + NO₃⁻|ماص للحرارة (ΔH > 0): تنخفض درجة الحرارة
+48|الكلوريد|Ag⁺ + Cl⁻ ⟶ AgCl↓|راسب أبيض
+48|الكبريتات|Ba²⁺ + SO₄²⁻ ⟶ BaSO₄↓|راسب أبيض لا يذوب في الحمض
+48|الكربونات|CO₃²⁻ + 2H⁺ ⟶ H₂O + CO₂↑|
+49|Fe³⁺|Fe³⁺ + 3OH⁻ ⟶ Fe(OH)₃↓|بني محمر
+49|Fe²⁺|Fe²⁺ + 2OH⁻ ⟶ Fe(OH)₂↓|أخضر
+49|Cu²⁺|Cu²⁺ + 2OH⁻ ⟶ Cu(OH)₂↓|أزرق
+49|NH₄⁺|NH₄⁺ + OH⁻ —Δ→ NH₃↑ + H₂O|رائحة نفاذة
+50|الكلور|MnO₂ + 4HCl —Δ→ MnCl₂ + Cl₂↑ + 2H₂O|
+50|الأكسدة|Cl₂ + 2Fe²⁺ ⟶ 2Fe³⁺ + 2Cl⁻|
+51|الترسيب|Cu²⁺ + 2OH⁻ ⟶ Cu(OH)₂↓|
+51|المعقد|Cu²⁺ + 4NH₃ ⟶ [Cu(NH₃)₄]²⁺|أزرق داكن
+52|الكشف|(C₆H₁₀O₅)ₙ + I₂ ⟶ معقد النشا واليود|أزرق داكن
+53|الكشف عن الماء|CuSO₄ + 5H₂O ⟶ CuSO₄·5H₂O|من الأبيض إلى الأزرق
+54|جزيئية|Fe + CuSO₄ ⟶ FeSO₄ + Cu↓|
+54|أيونية|Fe + Cu²⁺ ⟶ Fe²⁺ + Cu|
+55|Fe²⁺|3Fe²⁺ + 2[Fe(CN)₆]³⁻ ⟶ Fe₃[Fe(CN)₆]₂↓|أزرق ترنبول
+55|Fe³⁺|4Fe³⁺ + 3[Fe(CN)₆]⁴⁻ ⟶ Fe₄[Fe(CN)₆]₃↓|أزرق بروسيا
+56|الكلية|2KMnO₄ + 10FeSO₄ + 8H₂SO₄ ⟶ K₂SO₄ + 2MnSO₄ + 5Fe₂(SO₄)₃ + 8H₂O|
+56|أيونية|MnO₄⁻ + 5Fe²⁺ + 8H⁺ ⟶ Mn²⁺ + 5Fe³⁺ + 4H₂O|يزول اللون البنفسجي
+57|الكلية|3C₂H₅OH + 2K₂Cr₂O₇ + 8H₂SO₄ —Δ→ 3CH₃COOH + 2Cr₂(SO₄)₃ + 2K₂SO₄ + 11H₂O|
+57|أيونية|3C₂H₅OH + 2Cr₂O₇²⁻ + 16H⁺ ⟶ 3CH₃COOH + 4Cr³⁺ + 11H₂O|من البرتقالي إلى الأخضر
+58|الكربونات|Na₂CO₃ + 2HCl ⟶ 2NaCl + H₂O + CO₂↑|
+58|الكبريتيت|Na₂SO₃ + 2HCl ⟶ 2NaCl + H₂O + SO₂↑|رائحة نفاذة
+58|ماء الجير|CO₂ + Ca(OH)₂ ⟶ CaCO₃↓ + H₂O|يتعكر مع CO₂
+59|الكبريتيد|Na₂S + 2HCl ⟶ 2NaCl + H₂S↑|رائحة البيض الفاسد
+59|الكشف|H₂S + Pb(CH₃COO)₂ ⟶ PbS↓ + 2CH₃COOH|يسوّد الورقة
+60|الحلقة|3Fe²⁺ + NO₃⁻ + 4H⁺ ⟶ 3Fe³⁺ + NO↑ + 2H₂O|
+60|المعقد|Fe²⁺ + NO ⟶ [Fe(NO)]²⁺|حلقة بنية عند التقاء السائلين
+61|Al³⁺|Al³⁺ + 3OH⁻ ⟶ Al(OH)₃↓|ثم Al(OH)₃ + OH⁻ ⟶ [Al(OH)₄]⁻ فيذوب
+61|Zn²⁺|Zn²⁺ + 2OH⁻ ⟶ Zn(OH)₂↓|ثم Zn(OH)₂ + 2OH⁻ ⟶ [Zn(OH)₄]²⁻ فيذوب
+62|جزيئية|Pb(NO₃)₂ + 2KI ⟶ PbI₂↓ + 2KNO₃|
+62|أيونية|Pb²⁺ + 2I⁻ ⟶ PbI₂↓|راسب أصفر ذهبي
+63|الحمض القوي|HCl ⟶ H⁺ + Cl⁻|pH منخفض
+63|الحمض الضعيف|CH₃COOH ⇌ CH₃COO⁻ + H⁺|pH متوسط
+63|القاعدة القوية|NaOH ⟶ Na⁺ + OH⁻|pH مرتفع
+63|القاعدة الضعيفة|NH₄OH ⇌ NH₄⁺ + OH⁻|
+63|العلاقة|pH = −log[H⁺]|
+64|الكلية|2NaCl + 2H₂O ⟶ 2NaOH + H₂↑ + Cl₂↑|بالتيار الكهربي
+64|الكاثود|2H₂O + 2e⁻ ⟶ H₂↑ + 2OH⁻|
+64|الأنود|2Cl⁻ ⟶ Cl₂↑ + 2e⁻|
+65|الألكان|C₆H₁₄ + Br₂ ⟶ لا يتفاعل|مشبع فلا يزول لون البروم
+65|الألكين|C₆H₁₂ + Br₂ ⟶ C₆H₁₂Br₂|غير مشبع فيزول اللون
+66|فهلنج|CH₃CHO + 2Cu²⁺ + 5OH⁻ —Δ→ CH₃COO⁻ + Cu₂O↓ + 3H₂O|راسب أحمر طوبي
+66|تولنز|CH₃CHO + 2[Ag(NH₃)₂]⁺ + 3OH⁻ —Δ→ CH₃COO⁻ + 2Ag↓ + 4NH₃ + 2H₂O|مرآة فضية
+66|الكيتون|CH₃COCH₃ + كاشف فهلنج أو تولنز ⟶ لا يتفاعل|
+67|الكشف|6C₆H₅OH + Fe³⁺ ⟶ [Fe(OC₆H₅)₆]³⁻ + 6H⁺|لون بنفسجي
+68|الميثان|CH₃COONa + NaOH —(CaO, Δ)→ CH₄↑ + Na₂CO₃|
+68|الاحتراق|CH₄ + 2O₂ —Δ→ CO₂ + 2H₂O|
+69|التخمر|C₆H₁₂O₆ —(zymase)→ 2C₂H₅OH + 2CO₂↑|
+69|الكشف|CO₂ + Ca(OH)₂ ⟶ CaCO₃↓ + H₂O|يتعكر ماء الجير`.split('\n').forEach(l=>{const[i,lab,eq,nt]=l.split('|');(EQN[i]=EQN[i]||[]).push([lab,eq,nt||''])});
+const eh=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function calcCan(i){if(!DS[i])return false;const have=new Set(gxParse(DS[i]).r.map(q=>{const s=spOf({l:q.l});return s&&s.f}).filter(Boolean));return REAC.some(r=>r.re.every(([f])=>have.has(f)))}
+function rxShow(i){const c=$('#rxCard'),L=EQN[i];if(!c)return;if(!L){c.hidden=true;return}
+  $('#rxEq').innerHTML=L.map(([lab,eq,nt])=>`<div class="rxl"><span class="rxn">${eh(lab)}</span><span class="rxe">${eh(eq)}</span>${nt?`<span class="rxt">${eh(nt)}</span>`:''}</div>`).join('');
+  const b=$('#rxCalc');b.hidden=!calcCan(i);b.dataset.my=i;c.hidden=false}
 function gxLoad(i){
-  if(act)return;resetAll();document.body.classList.remove('cb');
+  if(act)return;resetAll();document.body.classList.remove('cb');if($('#rxCard'))$('#rxCard').hidden=true;
   const eq=i===EQ||!DS[i];document.body.classList.toggle('gx',!eq);STEPS.length=0;
   if(eq){window.GX=null;STEPS.push(...STEPS0);$('h1').innerHTML=H0[0];$('header .sub').innerHTML=H0[1];stepsUpdate();setButtons();myIntro();return}
-  gxStart(gxParse(DS[i]),i,'🧪 '+EXP[i].t,TOPIC_OF[i].t+' — أضف المواد بالترتيب • اسحب الكأس لتدويره',EXP[i].n,false);
+  gxStart(gxParse(DS[i]),i,'🧪 '+EXP[i].t,TOPIC_OF[i].t+' — أضف المواد بالترتيب • اسحب الكأس لتدويره',EXP[i].n,false);rxShow(i);
 }
 function gxStart(c,i,title,sub,note,custom){
   STEPS.length=0;window.GX={c,i,n:note,custom,set:new Set(),order:[],rgb:HX(CLR),tr:HX(CLR),a:.15,ta:.15,g:0,pc:'#fafafa',heated:0,cooled:0,fb:0,ft:0,fc:'#ff9a2e',fbA:0,ftA:0,hl:0,lo:0,lA:0};
@@ -1090,8 +1123,8 @@ $('#cbPre').innerHTML='<option value="">⚡ ابدأ من تجربة جاهزة�
 $('#cbPre').onchange=e=>{const v=e.target.value;if(v==='')return;const o=CB.src.find(x=>x.i===+v);CB.sel=o.c.r.map(ckey).slice(0,CB.max);e.target.value='';cbRender()};
 
 /* ---------- حاسبة المعادلات: معادلة موزونة + مولات + كتل ---------- */
-const AM_E={H:1,C:12,N:14,O:16,Na:23,Mg:24,S:32,Cl:35.5,K:39,Ca:40,Mn:55,Fe:56,Cu:63.5,Zn:65,Ag:108,Ba:137};
-const AM_X={H:1.008,C:12.011,N:14.007,O:15.999,Na:22.990,Mg:24.305,S:32.06,Cl:35.45,K:39.098,Ca:40.078,Mn:54.938,Fe:55.845,Cu:63.546,Zn:65.38,Ag:107.87,Ba:137.33};
+const AM_E={H:1,C:12,N:14,O:16,Na:23,Mg:24,S:32,Cl:35.5,K:39,Ca:40,Mn:55,Fe:56,Cu:63.5,Zn:65,Ag:108,Ba:137,Pb:207,I:127,Cr:52,Br:80,Al:27};
+const AM_X={H:1.008,C:12.011,N:14.007,O:15.999,Na:22.990,Mg:24.305,S:32.06,Cl:35.45,K:39.098,Ca:40.078,Mn:54.938,Fe:55.845,Cu:63.546,Zn:65.38,Ag:107.87,Ba:137.33,Pb:207.2,I:126.904,Cr:51.996,Br:79.904,Al:26.982};
 function fparse(f){const st=[{}];let i=0;const dg=()=>{let m='';while(i<f.length&&/\d/.test(f[i]))m+=f[i++];return +m||1};
   while(i<f.length){const ch=f[i];
     if(ch==='('||ch==='['){st.push({});i++}
@@ -1155,8 +1188,29 @@ SO2|ثاني أكسيد الكبريت|g
 C2H5OH|الإيثانول|l|0.789
 CH3COOC2H5|أسيتات الإيثيل (إستر)|l|0.902
 C2H4|الإيثين|g
-C2H5ONa|إيثوكسيد الصوديوم|s`.split('\n').forEach(l=>{const[f,n,st,d]=l.split('|');SP[f]={f,n,st,d:+d||0,M:molM(f,0),Mx:molM(f,1)}});
-const ALIAS={'إيثانول':'C2H5OH','ماء':'H2O'};
+C2H5ONa|إيثوكسيد الصوديوم|s
+Na2S|كبريتيد الصوديوم|s
+H2S|كبريتيد الهيدروجين|g
+Na2SO3|كبريتيت الصوديوم|s
+Pb(NO3)2|نترات الرصاص II|aq
+KI|يوديد البوتاسيوم|aq
+PbI2|يوديد الرصاص II|p
+KNO3|نترات البوتاسيوم|aq
+KMnO4|برمنجنات البوتاسيوم|aq
+FeSO4|كبريتات الحديد II|aq
+Fe2(SO4)3|كبريتات الحديد III|aq
+K2SO4|كبريتات البوتاسيوم|aq
+MnSO4|كبريتات المنجنيز II|aq
+K2Cr2O7|دايكرومات البوتاسيوم|aq
+Cr2(SO4)3|كبريتات الكروم III|aq
+CH4|الميثان|g
+C6H12O6|الجلوكوز|s
+C6H12|الهكسين|l|0.673
+Br2|ماء البروم|aq
+C6H12Br2|ثنائي بروموهكسان|l
+Pb(CH3COO)2|أسيتات الرصاص II|aq
+PbS|كبريتيد الرصاص II|p`.split('\n').forEach(l=>{const[f,n,st,d]=l.split('|');SP[f]={f,n,st,d:+d||0,M:molM(f,0),Mx:molM(f,1)}});
+const ALIAS={'إيثانول':'C2H5OH','ماء':'H2O','ماء بروم':'Br2','هكسين':'C6H12','جلوكوز':'C6H12O6','خلات رصاص':'Pb(CH3COO)2','جير صودي':'NaOH','H2SO4 مركز':'H2SO4','HCl مركز':'HCl','NaOH زائد':'NaOH','NaCl مشبع':'NaCl','ثيو 0.2M':'Na2S2O3','ثيو 0.05M':'Na2S2O3'};
 const REAC=`AgNO3+NaCl=AgCl+NaNO3
 2AgNO3+BaCl2=2AgCl+Ba(NO3)2
 BaCl2+Na2SO4=BaSO4+2NaCl
@@ -1191,7 +1245,20 @@ C2H5OH=C2H4+H2O|h,cat:H2SO4
 2C2H5OH+2Na=2C2H5ONa+H2
 2H2O=2H2+O2|cur
 Cu+2H2SO4=CuSO4+SO2+2H2O|h,conc
-NH4Cl+NaOH=NaCl+NH3+H2O|h`.split('\n').map((line,id)=>{
+NH4Cl+NaOH=NaCl+NH3+H2O|h
+Fe+CuSO4=FeSO4+Cu
+2CuSO4+2H2O=2Cu+O2+2H2SO4|cur
+2NaCl+2H2O=2NaOH+H2+Cl2|cur
+Na2SO3+2HCl=2NaCl+H2O+SO2
+Na2S+2HCl=2NaCl+H2S
+Pb(CH3COO)2+H2S=PbS+2CH3COOH
+Pb(NO3)2+2KI=PbI2+2KNO3
+2KMnO4+10FeSO4+8H2SO4=K2SO4+2MnSO4+5Fe2(SO4)3+8H2O
+3C2H5OH+2K2Cr2O7+8H2SO4=3CH3COOH+2Cr2(SO4)3+2K2SO4+11H2O|h
+C6H12+Br2=C6H12Br2
+CH3COONa+NaOH=CH4+Na2CO3|h
+CH4+2O2=CO2+2H2O|h
+C6H12O6=2C2H5OH+2CO2`.split('\n').map((line,id)=>{
   const[eq,cd='']=line.split('|'),[l,r]=eq.split('='),side=t=>t.split('+').map(x=>{const m=x.match(/^(\d*)(.+)$/);return[m[2],+m[1]||1]}),c={};
   cd.split(',').filter(Boolean).forEach(x=>{if(x.startsWith('cat:'))c.cat=x.slice(4);else c[x]=1});
   return{id,re:side(l),pr:side(r),c}});
@@ -1223,7 +1290,7 @@ function calcRun(){
     const o=spc[sp.f]||(spc[sp.f]={sp,n:0,rows:[],st});o.n+=n;o.rows.push({v,a,n,st})});
   const have=Object.keys(spc).filter(f=>spc[f].n>0);
   if(rows.length<1){out.innerHTML='';$('#cdRL').hidden=true;return}
-  const app=REAC.filter(r=>r.re.every(([f])=>have.includes(f)));
+  const app=REAC.filter(r=>r.re.every(([f])=>have.includes(f))).sort((x,y)=>y.re.length-x.re.length);
   if(!app.length){$('#cdRL').hidden=true;out.innerHTML='<div class="cwarn">'+(have.length<2&&!REAC.some(r=>r.re.length===1&&have.includes(r.re[0][0]))?'اختر مادتين أو أكثر وأدخل كميتيهما.':'لا يوجد تفاعل مسجّل بين هذه المواد. جرّب مثلًا: AgNO₃ + NaCl أو Zn + HCl أو Fe + S.')+'</div>';return}
   const heat=$('#cdT').value==='h'||T>=50,cat=$('#cdC').value;
   const miss=r=>{const m=[];if(r.c.h&&!heat)m.push('تسخين');if(r.c.conc&&!$('#cdK').checked)m.push('حمض مركّز');if(r.c.cur&&!$('#cdE').checked)m.push('تيار كهربي');
@@ -1309,7 +1376,7 @@ function render(){
     <h2>كيف تبدأ؟</h2>
     <div class="hsteps"><div class="hstep"><b>1</b><span>اختر مرحلتك، ثم السنة، ثم الترم.</span></div><div class="hstep"><b>2</b><span>اختر تجربة، ثم اضغط أزرار المواد بالترتيب لإضافتها إلى الكأس.</span></div><div class="hstep"><b>3</b><span>اقرأ «ماذا حدث؟» لتفهم التفاعل، ثم غيّر الحرارة لترى الفرق.</span></div></div>
     <h2>اختر مرحلتك</h2><div class="hopts">${STS.map((s,i)=>opt('data-st',i,s.e+' '+s.t,inStage(s.k)+' تجربة')).join('')}</div>
-    <h2>أو ابدأ مباشرة</h2><div class="hopts g2">${opt('data-go','3','⚡ تجربة سريعة','كاشف الكرنب الأحمر','pri')}${opt('data-go','custom','✨ اختر تجربتك بنفسك','اختر المواد وشاهد النتيجة')}</div>`;
+    <h2>أو ابدأ مباشرة</h2><div class="hopts g2">${opt('data-go','3','⚡ تجربة سريعة','كاشف الكرنب الأحمر','pri')}${opt('data-go','custom','✨ اختر تجربتك بنفسك','اختر المواد والشروط ← معادلة وكتل ومولات')}</div>`;
   }else if(y===undefined){
     crumb.textContent=st.t;
     h=`<h1>${st.e} ${st.t}</h1><h2>اختر السنة</h2><div class="hopts g2">${Array.from({length:st.n},(_,i)=>{const c=inYear(st.k,i+1);return opt('data-yr',i+1,yname(st.k,i+1),c?c+' تجربة':'قريبًا','',!c)}).join('')}</div>`;

@@ -165,9 +165,9 @@ body.gx #gp{flex-wrap:wrap;justify-content:center;overflow:visible}
   .left{position:sticky;top:20px;display:flex;justify-content:center}
   .stage{width:100%;max-width:560px}
   #scene{aspect-ratio:4/5;max-height:70vh}
-  .tabs{display:grid;grid-template-columns:repeat(6,1fr);width:100%}
+  .tabs{display:grid;grid-template-columns:repeat(5,1fr);width:100%}
   .tab{padding:10px 4px;text-align:center}
-  body.gx .tabs{grid-template-columns:repeat(5,1fr)}
+  body.gx .tabs{grid-template-columns:repeat(4,1fr)}
   .exsel{max-width:500px;margin:10px auto 0;display:block}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -224,6 +224,13 @@ body.home-on #home{display:block}
 @media(max-width:480px){.hm .hopts.g2{grid-template-columns:1fr 1fr}.hm h1{font-size:1.3rem}}
 .hm h1:focus{outline:0}
 </style>
+<style>
+#rxCard{display:none}body.gx #rxCard:not([hidden]){display:block}body.cb #rxCard{display:none!important}
+.rxl{padding:7px 0;border-top:1px solid var(--line)}.rxl:first-of-type{border-top:0}
+.rxn{display:block;color:var(--gold);font-size:.78rem;font-weight:800}
+.rxe{display:block;direction:ltr;text-align:left;font-size:1.05rem;line-height:1.8;overflow-wrap:anywhere}
+.rxt{display:block;color:var(--mut);font-size:.8rem}
+</style>
 </head>
 <body class="home-on">
 <main id="home" aria-label="الصفحة الرئيسية">
@@ -267,7 +274,6 @@ body.home-on #home{display:block}
       <button class="tab" data-p="data" role="tab">📊 القياسات</button>
       <button class="tab" data-p="steps" role="tab">📋 الخطوات</button>
       <button class="tab" data-p="study" role="tab">📚 المنهج</button>
-      <button class="tab" data-p="all" role="tab">🗂️ كل التجارب</button>
     </nav>
 
     <div class="panel" id="p-lab">
@@ -285,6 +291,8 @@ body.home-on #home{display:block}
       </div>
 
       <div class="card" id="gxCard"><h3>⚗️ المواد المضافة</h3><div class="eq" id="gxEq">—</div><div class="note" id="gxH" style="margin-top:6px"></div></div>
+
+      <div class="card" id="rxCard" hidden><h3>⚖️ معادلة التفاعل</h3><div id="rxEq"></div><div class="row"><button class="pill b" id="rxCalc" type="button" data-my="" hidden>🧮 احسب الكتل والمولات</button></div></div>
 
       <div class="card">
         <h3>💬 ماذا حدث؟</h3>
@@ -482,18 +490,7 @@ body.home-on #home{display:block}
         <h3>📝 اختبر نفسك</h3>
         <div id="qz"></div>
       </div>
-    </div>
-
-    <div class="panel" id="p-all" hidden>
-      <div class="card">
-        <h3>🗂️ تجارب الكيمياء — كل المراحل</h3>
-        <div class="prog"><span id="exP">0 / 0</span><i><span id="exB"></span></i></div>
-        <div class="chips" id="exF"></div>
-        <input id="exq" type="search" placeholder="🔍 ابحث عن تجربة…">
-        <div class="note" style="margin-top:6px">التجارب المعلّمة بـ <span class="badge en" style="padding:0 6px">إثرائي</span> قد تكون خارج صلب منهج الثانوية العامة وقد تختلف حسب الطبعة. التجارب البسيطة (غير التجربة الأولى) هي محاكاة لقواعد اللون/الراسب.</div>
-        <div id="exList"></div>
-      </div>
-      <div class="card">
+    <div class="card">
         <h3>🧰 مرجع المعمل السريع</h3>
         <details open><summary>🥽 قواعد الأمان</summary><ul>
           <li>ارتدِ النظارة والمعطف والجوانتي، ولا تأكل أو تشرب في المعمل.</li>
@@ -519,6 +516,8 @@ body.home-on #home{display:block}
           <tr><td>الكشف عن الغازات</td><td>O₂ يوهّج العود، H₂ يفرقع، CO₂ يعكّر ماء الجير، NH₃ يزرّق عباد الشمس الأحمر</td></tr></table></details>
       </div>
     </div>
+
+    
   </section>
 </div>
 
